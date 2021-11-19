@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.*;
 import net.tropicraft.core.common.block.TikiTorchBlock.TorchSection;
@@ -45,7 +44,7 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
         simpleBlock(TropicraftBlocks.CHUNK, applyRotations());
 
         // Ores and storage blocks
-        simpleBlock(TropicraftBlocks.AZURITE_ORE);
+        simpleBlock(() -> TropicraftBlocks.AZURITE_ORE);
         simpleBlock(TropicraftBlocks.EUDIALYTE_ORE);
         simpleBlock(TropicraftBlocks.MANGANESE_ORE);
         simpleBlock(TropicraftBlocks.SHAKA_ORE);
@@ -66,10 +65,10 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
 
         // Purified sand
         ModelFile normal = cubeAll(TropicraftBlocks.PURIFIED_SAND);
-        ModelFile calcified = cubeTop(TropicraftBlocks.PURIFIED_SAND, "calcified");
-        ModelFile dune1 = cubeTop(TropicraftBlocks.PURIFIED_SAND, "dune1");
-        ModelFile dune2 = cubeTop(TropicraftBlocks.PURIFIED_SAND, "dune2");
-        ModelFile starfish = cubeTop(TropicraftBlocks.PURIFIED_SAND, "starfish");
+        ModelFile calcified = cubeTop(() -> TropicraftBlocks.PURIFIED_SAND, "calcified");
+        ModelFile dune1 = cubeTop(() -> TropicraftBlocks.PURIFIED_SAND, "dune1");
+        ModelFile dune2 = cubeTop(() -> TropicraftBlocks.PURIFIED_SAND, "dune2");
+        ModelFile starfish = cubeTop(() -> TropicraftBlocks.PURIFIED_SAND, "starfish");
 
         getVariantBuilder(TropicraftBlocks.PURIFIED_SAND.get())
             .partialState().with(BlockTropicraftSand.UNDERWATER, false)
@@ -93,58 +92,58 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
                 allYRotations(models.cubeAll("mud", modBlockLoc("mud")), 0, false, 5),
                 allYRotations(models.cubeAll("mud_with_stones", modBlockLoc("mud_with_stones")), 0, false, 1)
         );
-        simpleBlock(TropicraftBlocks.MUD.get(), mudModels);
-        simpleBlock(TropicraftBlocks.MUD_WITH_PIANGUAS, applyYRotations(0));
+        simpleBlock(TropicraftBlocks.MUD, mudModels);
+        simpleBlock(() -> TropicraftBlocks.MUD_WITH_PIANGUAS, applyYRotations(0));
 
         // Bundles
-        axisBlock(TropicraftBlocks.BAMBOO_BUNDLE, "bamboo");
-        axisBlock(TropicraftBlocks.THATCH_BUNDLE, "thatch");
+        axisBlock(() -> TropicraftBlocks.BAMBOO_BUNDLE, "bamboo");
+        axisBlock(() -> TropicraftBlocks.THATCH_BUNDLE, "thatch");
 
         // Planks & Logs
         simpleBlock(TropicraftBlocks.MAHOGANY_PLANKS);
         simpleBlock(TropicraftBlocks.PALM_PLANKS);
         simpleBlock(TropicraftBlocks.MANGROVE_PLANKS);
 
-        logBlock(TropicraftBlocks.MAHOGANY_LOG.get());
-        logBlock(TropicraftBlocks.PALM_LOG.get());
-        woodBlock(TropicraftBlocks.MAHOGANY_WOOD, TropicraftBlocks.MAHOGANY_LOG);
-        woodBlock(TropicraftBlocks.PALM_WOOD, TropicraftBlocks.PALM_LOG);
+        logBlock(TropicraftBlocks.MAHOGANY_LOG);
+        logBlock(TropicraftBlocks.PALM_LOG);
+        woodBlock(() -> TropicraftBlocks.MAHOGANY_WOOD, () -> TropicraftBlocks.MAHOGANY_LOG);
+        woodBlock(() -> TropicraftBlocks.PALM_WOOD, () -> TropicraftBlocks.PALM_LOG);
 
-        logBlock(TropicraftBlocks.RED_MANGROVE_LOG.get());
-        woodBlock(TropicraftBlocks.RED_MANGROVE_WOOD, TropicraftBlocks.RED_MANGROVE_LOG);
-        logBlock(TropicraftBlocks.LIGHT_MANGROVE_LOG.get());
-        woodBlock(TropicraftBlocks.LIGHT_MANGROVE_WOOD, TropicraftBlocks.LIGHT_MANGROVE_LOG);
-        logBlock(TropicraftBlocks.BLACK_MANGROVE_LOG.get());
-        woodBlock(TropicraftBlocks.BLACK_MANGROVE_WOOD, TropicraftBlocks.BLACK_MANGROVE_LOG);
+        logBlock(TropicraftBlocks.RED_MANGROVE_LOG);
+        woodBlock(() -> TropicraftBlocks.RED_MANGROVE_WOOD, () -> TropicraftBlocks.RED_MANGROVE_LOG);
+        logBlock(TropicraftBlocks.LIGHT_MANGROVE_LOG);
+        woodBlock(() -> TropicraftBlocks.LIGHT_MANGROVE_WOOD, () -> TropicraftBlocks.LIGHT_MANGROVE_LOG);
+        logBlock(TropicraftBlocks.BLACK_MANGROVE_LOG);
+        woodBlock(() -> TropicraftBlocks.BLACK_MANGROVE_WOOD, () -> TropicraftBlocks.BLACK_MANGROVE_LOG);
 
-        mangroveRoots(TropicraftBlocks.RED_MANGROVE_ROOTS);
-        mangroveRoots(TropicraftBlocks.LIGHT_MANGROVE_ROOTS);
-        mangroveRoots(TropicraftBlocks.BLACK_MANGROVE_ROOTS);
+        mangroveRoots(() -> TropicraftBlocks.RED_MANGROVE_ROOTS);
+        mangroveRoots(() -> TropicraftBlocks.LIGHT_MANGROVE_ROOTS);
+        mangroveRoots(() -> TropicraftBlocks.BLACK_MANGROVE_ROOTS);
 
-        logBlock(TropicraftBlocks.STRIPPED_MANGROVE_LOG.get());
-        woodBlock(TropicraftBlocks.STRIPPED_MANGROVE_WOOD, TropicraftBlocks.STRIPPED_MANGROVE_LOG);
+        logBlock(TropicraftBlocks.STRIPPED_MANGROVE_LOG);
+        woodBlock(() -> TropicraftBlocks.STRIPPED_MANGROVE_WOOD, () -> TropicraftBlocks.STRIPPED_MANGROVE_LOG);
 
-        logBlock(TropicraftBlocks.PAPAYA_LOG.get());
-        woodBlock(TropicraftBlocks.PAPAYA_WOOD, TropicraftBlocks.PAPAYA_LOG);
+        logBlock(TropicraftBlocks.PAPAYA_LOG);
+        woodBlock(() -> TropicraftBlocks.PAPAYA_WOOD, () -> TropicraftBlocks.PAPAYA_LOG);
 
         // Stairs & Slabs
-        stairsBlock(TropicraftBlocks.BAMBOO_STAIRS, "bamboo_side", "bamboo_end");
-        stairsBlock(TropicraftBlocks.THATCH_STAIRS, "thatch_side", "thatch_end");
-        stairsBlock(TropicraftBlocks.CHUNK_STAIRS, "chunk");
-        stairsBlock(TropicraftBlocks.PALM_STAIRS, "palm_planks");
-        stairsBlock(TropicraftBlocks.MAHOGANY_STAIRS, "mahogany_planks");
-        stairsBlock(TropicraftBlocks.MANGROVE_STAIRS, "mangrove_planks");
+        stairsBlock(() -> TropicraftBlocks.BAMBOO_STAIRS, "bamboo_side", "bamboo_end");
+        stairsBlock(() -> TropicraftBlocks.THATCH_STAIRS, "thatch_side", "thatch_end");
+        stairsBlock(() -> TropicraftBlocks.CHUNK_STAIRS, "chunk");
+        stairsBlock(() -> TropicraftBlocks.PALM_STAIRS, "palm_planks");
+        stairsBlock(() -> TropicraftBlocks.MAHOGANY_STAIRS, "mahogany_planks");
+        stairsBlock(() -> TropicraftBlocks.MANGROVE_STAIRS, "mangrove_planks");
 
         ModelFile fuzzyThatch = fuzzyStairs("thatch_stairs_fuzzy", "thatch_side", "thatch_end", "thatch_grass");
         ModelFile fuzzyThatchOuter = fuzzyStairsOuter("thatch_stairs_fuzzy_outer", "thatch_side", "thatch_end", "thatch_grass");
-        stairsBlock(TropicraftBlocks.THATCH_STAIRS_FUZZY.get(), fuzzyThatch, models.getExistingFile(modLoc("thatch_stairs_inner")), fuzzyThatchOuter);
+        stairsBlock(TropicraftBlocks.THATCH_STAIRS_FUZZY, fuzzyThatch, models.getExistingFile(modLoc("thatch_stairs_inner")), fuzzyThatchOuter);
 
-        slabBlock(TropicraftBlocks.BAMBOO_SLAB, TropicraftBlocks.BAMBOO_BUNDLE, "bamboo_side", "bamboo_end");
-        slabBlock(TropicraftBlocks.THATCH_SLAB, TropicraftBlocks.THATCH_BUNDLE, "thatch_side", "thatch_end");
-        slabBlock(TropicraftBlocks.CHUNK_SLAB, TropicraftBlocks.CHUNK);
-        slabBlock(TropicraftBlocks.PALM_SLAB, TropicraftBlocks.PALM_PLANKS);
-        slabBlock(TropicraftBlocks.MAHOGANY_SLAB, TropicraftBlocks.MAHOGANY_PLANKS);
-        slabBlock(TropicraftBlocks.MANGROVE_SLAB, TropicraftBlocks.MANGROVE_PLANKS);
+        slabBlock(() -> TropicraftBlocks.BAMBOO_SLAB, () -> TropicraftBlocks.BAMBOO_BUNDLE, "bamboo_side", "bamboo_end");
+        slabBlock(() -> TropicraftBlocks.THATCH_SLAB, () -> TropicraftBlocks.THATCH_BUNDLE, "thatch_side", "thatch_end");
+        slabBlock(() -> TropicraftBlocks.CHUNK_SLAB, () -> TropicraftBlocks.CHUNK);
+        slabBlock(() -> TropicraftBlocks.PALM_SLAB, () -> TropicraftBlocks.PALM_PLANKS);
+        slabBlock(() -> TropicraftBlocks.MAHOGANY_SLAB, () -> TropicraftBlocks.MAHOGANY_PLANKS);
+        slabBlock(() -> TropicraftBlocks.MANGROVE_SLAB, () -> TropicraftBlocks.MANGROVE_PLANKS);
 
         // Leaves
         simpleBlock(TropicraftBlocks.MAHOGANY_LEAVES);
@@ -163,107 +162,107 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
         simpleBlock(TropicraftBlocks.BLACK_MANGROVE_LEAVES);
 
         // Saplings
-        plant(TropicraftBlocks.MAHOGANY_SAPLING);
-        plant(TropicraftBlocks.PALM_SAPLING);
-        plant(TropicraftBlocks.GRAPEFRUIT_SAPLING);
-        plant(TropicraftBlocks.LEMON_SAPLING);
-        plant(TropicraftBlocks.LIME_SAPLING);
-        plant(TropicraftBlocks.ORANGE_SAPLING);
-        plant(TropicraftBlocks.PAPAYA_SAPLING);
+        plant(() -> TropicraftBlocks.MAHOGANY_SAPLING);
+        plant(() -> TropicraftBlocks.PALM_SAPLING);
+        plant(() -> TropicraftBlocks.GRAPEFRUIT_SAPLING);
+        plant(() -> TropicraftBlocks.LEMON_SAPLING);
+        plant(() -> TropicraftBlocks.LIME_SAPLING);
+        plant(() -> TropicraftBlocks.ORANGE_SAPLING);
+        plant(() -> TropicraftBlocks.PAPAYA_SAPLING);
 
-        propagule(TropicraftBlocks.RED_MANGROVE_PROPAGULE);
-        propagule(TropicraftBlocks.TALL_MANGROVE_PROPAGULE);
-        propagule(TropicraftBlocks.TEA_MANGROVE_PROPAGULE);
-        propagule(TropicraftBlocks.BLACK_MANGROVE_PROPAGULE);
+        propagule(() -> TropicraftBlocks.RED_MANGROVE_PROPAGULE);
+        propagule(() -> TropicraftBlocks.TALL_MANGROVE_PROPAGULE);
+        propagule(() -> TropicraftBlocks.TEA_MANGROVE_PROPAGULE);
+        propagule(() -> TropicraftBlocks.BLACK_MANGROVE_PROPAGULE);
 
         // Fences, Gates, and Walls
-        fenceBlock(TropicraftBlocks.BAMBOO_FENCE, "bamboo_side");
-        fenceBlock(TropicraftBlocks.THATCH_FENCE, "thatch_side");
-        fenceBlock(TropicraftBlocks.CHUNK_FENCE, "chunk");
-        fenceBlock(TropicraftBlocks.PALM_FENCE, "palm_planks");
-        fenceBlock(TropicraftBlocks.MAHOGANY_FENCE, "mahogany_planks");
-        fenceBlock(TropicraftBlocks.MANGROVE_FENCE, "mangrove_planks");
+        fenceBlock(() -> TropicraftBlocks.BAMBOO_FENCE, "bamboo_side");
+        fenceBlock(() -> TropicraftBlocks.THATCH_FENCE, "thatch_side");
+        fenceBlock(() -> TropicraftBlocks.CHUNK_FENCE, "chunk");
+        fenceBlock(() -> TropicraftBlocks.PALM_FENCE, "palm_planks");
+        fenceBlock(() -> TropicraftBlocks.MAHOGANY_FENCE, "mahogany_planks");
+        fenceBlock(() -> TropicraftBlocks.MANGROVE_FENCE, "mangrove_planks");
 
-        fenceGateBlock(TropicraftBlocks.BAMBOO_FENCE_GATE, "bamboo_side");
-        fenceGateBlock(TropicraftBlocks.THATCH_FENCE_GATE, "thatch_side");
-        fenceGateBlock(TropicraftBlocks.CHUNK_FENCE_GATE, "chunk");
-        fenceGateBlock(TropicraftBlocks.PALM_FENCE_GATE, "palm_planks");
-        fenceGateBlock(TropicraftBlocks.MAHOGANY_FENCE_GATE, "mahogany_planks");
-        fenceGateBlock(TropicraftBlocks.MANGROVE_FENCE_GATE, "mangrove_planks");
+        fenceGateBlock(() -> TropicraftBlocks.BAMBOO_FENCE_GATE, "bamboo_side");
+        fenceGateBlock(() -> TropicraftBlocks.THATCH_FENCE_GATE, "thatch_side");
+        fenceGateBlock(() -> TropicraftBlocks.CHUNK_FENCE_GATE, "chunk");
+        fenceGateBlock(() -> TropicraftBlocks.PALM_FENCE_GATE, "palm_planks");
+        fenceGateBlock(() -> TropicraftBlocks.MAHOGANY_FENCE_GATE, "mahogany_planks");
+        fenceGateBlock(() -> TropicraftBlocks.MANGROVE_FENCE_GATE, "mangrove_planks");
 
-        wallBlock(TropicraftBlocks.CHUNK_WALL, "chunk");
+        wallBlock(() -> TropicraftBlocks.CHUNK_WALL, "chunk");
 
         // Doors and Trapdoors
-        doorBlock(TropicraftBlocks.BAMBOO_DOOR);
-        doorBlock(TropicraftBlocks.THATCH_DOOR);
-        doorBlock(TropicraftBlocks.PALM_DOOR);
-        doorBlock(TropicraftBlocks.MAHOGANY_DOOR);
-        doorBlock(TropicraftBlocks.MANGROVE_DOOR);
+        doorBlock(() -> TropicraftBlocks.BAMBOO_DOOR);
+        doorBlock(() -> TropicraftBlocks.THATCH_DOOR);
+        doorBlock(() -> TropicraftBlocks.PALM_DOOR);
+        doorBlock(() -> TropicraftBlocks.MAHOGANY_DOOR);
+        doorBlock(() -> TropicraftBlocks.MANGROVE_DOOR);
 
-        trapdoorBlock(TropicraftBlocks.BAMBOO_TRAPDOOR);
-        trapdoorBlock(TropicraftBlocks.THATCH_TRAPDOOR);
-        trapdoorBlock(TropicraftBlocks.PALM_TRAPDOOR);
-        trapdoorBlock(TropicraftBlocks.MAHOGANY_TRAPDOOR);
-        trapdoorBlock(TropicraftBlocks.MANGROVE_TRAPDOOR);
+        trapdoorBlock(() -> TropicraftBlocks.BAMBOO_TRAPDOOR);
+        trapdoorBlock(() -> TropicraftBlocks.THATCH_TRAPDOOR);
+        trapdoorBlock(() -> TropicraftBlocks.PALM_TRAPDOOR);
+        trapdoorBlock(() -> TropicraftBlocks.MAHOGANY_TRAPDOOR);
+        trapdoorBlock(() -> TropicraftBlocks.MANGROVE_TRAPDOOR);
 
         // Misc remaining blocks
-        doublePlant(TropicraftBlocks.IRIS);
-        doublePlant(TropicraftBlocks.PINEAPPLE);
+        doublePlant(() -> TropicraftBlocks.IRIS);
+        doublePlant(() -> TropicraftBlocks.PINEAPPLE);
 
-        reedsBlock(TropicraftBlocks.REEDS);
+        reedsBlock(() -> TropicraftBlocks.REEDS);
 
-        bongo(TropicraftBlocks.SMALL_BONGO_DRUM);
-        bongo(TropicraftBlocks.MEDIUM_BONGO_DRUM);
-        bongo(TropicraftBlocks.LARGE_BONGO_DRUM);
+        bongo(() -> TropicraftBlocks.SMALL_BONGO_DRUM);
+        bongo(() -> TropicraftBlocks.MEDIUM_BONGO_DRUM);
+        bongo(() -> TropicraftBlocks.LARGE_BONGO_DRUM);
 
-        ModelFile bambooLadder = models.withExistingParent(name(TropicraftBlocks.BAMBOO_LADDER), "ladder")
+        ModelFile bambooLadder = models.withExistingParent(name(() -> TropicraftBlocks.BAMBOO_LADDER), "ladder")
                 .texture("particle", blockTexture(TropicraftBlocks.BAMBOO_LADDER))
                 .texture("texture", blockTexture(TropicraftBlocks.BAMBOO_LADDER));
-        getVariantBuilder(TropicraftBlocks.BAMBOO_LADDER.get()) // TODO make horizontalBlock etc support this case
+        getVariantBuilder(TropicraftBlocks.BAMBOO_LADDER) // TODO make horizontalBlock etc support this case
             .forAllStatesExcept(state -> ConfiguredModel.builder()
                     .modelFile(bambooLadder)
                     .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                     .build(),
                 LadderBlock.WATERLOGGED);
 
-        boardwalk(TropicraftBlocks.BAMBOO_BOARDWALK, modBlockLoc("bamboo_side"));
-        boardwalk(TropicraftBlocks.PALM_BOARDWALK, blockTexture(TropicraftBlocks.PALM_PLANKS));
-        boardwalk(TropicraftBlocks.MAHOGANY_BOARDWALK, blockTexture(TropicraftBlocks.MAHOGANY_PLANKS));
-        boardwalk(TropicraftBlocks.MANGROVE_BOARDWALK, blockTexture(TropicraftBlocks.MANGROVE_PLANKS));
+        boardwalk(() -> TropicraftBlocks.BAMBOO_BOARDWALK, modBlockLoc("bamboo_side"));
+        boardwalk(() -> TropicraftBlocks.PALM_BOARDWALK, blockTexture(TropicraftBlocks.PALM_PLANKS));
+        boardwalk(() -> TropicraftBlocks.MAHOGANY_BOARDWALK, blockTexture(TropicraftBlocks.MAHOGANY_PLANKS));
+        boardwalk(() -> TropicraftBlocks.MANGROVE_BOARDWALK, blockTexture(TropicraftBlocks.MANGROVE_PLANKS));
 
-        noModelBlock(TropicraftBlocks.BAMBOO_CHEST, modBlockLoc("bamboo_side"));
-        simpleBlock(TropicraftBlocks.SIFTER);
-        noModelBlock(TropicraftBlocks.DRINK_MIXER, blockTexture(TropicraftBlocks.CHUNK));
-        noModelBlock(TropicraftBlocks.AIR_COMPRESSOR, blockTexture(TropicraftBlocks.CHUNK));
+        noModelBlock(() -> TropicraftBlocks.BAMBOO_CHEST, modBlockLoc("bamboo_side"));
+        simpleBlock(() -> TropicraftBlocks.SIFTER);
+        noModelBlock(() -> TropicraftBlocks.DRINK_MIXER, blockTexture(TropicraftBlocks.CHUNK));
+        noModelBlock(() -> TropicraftBlocks.AIR_COMPRESSOR, blockTexture(TropicraftBlocks.CHUNK));
 
-        getVariantBuilder(TropicraftBlocks.COFFEE_BUSH.get())
+        getVariantBuilder(TropicraftBlocks.COFFEE_BUSH)
             .forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(coffeeBush(state.getValue(CoffeeBushBlock.AGE))).build());
 
-        plant(TropicraftBlocks.GOLDEN_LEATHER_FERN, modBlockLoc("small_golden_leather_fern"));
-        doublePlant(TropicraftBlocks.TALL_GOLDEN_LEATHER_FERN);
-        hugePlant(TropicraftBlocks.LARGE_GOLDEN_LEATHER_FERN, modBlockLoc("large_golden_leather_fern"), blockTexture(TropicraftBlocks.GOLDEN_LEATHER_FERN));
+        plant(() -> TropicraftBlocks.GOLDEN_LEATHER_FERN, modBlockLoc("small_golden_leather_fern"));
+        doublePlant(() -> TropicraftBlocks.TALL_GOLDEN_LEATHER_FERN);
+        hugePlant(() -> TropicraftBlocks.LARGE_GOLDEN_LEATHER_FERN, modBlockLoc("large_golden_leather_fern"), blockTexture(TropicraftBlocks.GOLDEN_LEATHER_FERN));
 
         simpleBlock(TropicraftBlocks.VOLCANO, models.getExistingFile(mcLoc("block/bedrock")));
 
         ModelFile tikiLower = models.torch("tiki_torch_lower", modBlockLoc("tiki_torch_lower"));
         ModelFile tikiUpper = models.torch("tiki_torch_upper", modBlockLoc("tiki_torch_upper"));
-        getVariantBuilder(TropicraftBlocks.TIKI_TORCH.get())
+        getVariantBuilder(TropicraftBlocks.TIKI_TORCH)
             .forAllStates(state -> ConfiguredModel.builder()
                     .modelFile(state.getValue(TikiTorchBlock.SECTION) == TorchSection.UPPER ? tikiUpper : tikiLower).build());
 
         simpleBlock(TropicraftBlocks.COCONUT, models.cross("coconut", modBlockLoc("coconut")));
 
-        flowerPot(TropicraftBlocks.BAMBOO_FLOWER_POT, TropicraftBlocks.BAMBOO_FLOWER_POT, modBlockLoc("bamboo_side"));
+        flowerPot(() -> TropicraftBlocks.BAMBOO_FLOWER_POT, () -> TropicraftBlocks.BAMBOO_FLOWER_POT, modBlockLoc("bamboo_side"));
 
-        for (RegistryObject<FlowerPotBlock> block : TropicraftBlocks.BAMBOO_POTTED_TROPICS_PLANTS) {
-            flowerPot(block, TropicraftBlocks.BAMBOO_FLOWER_POT, modBlockLoc("bamboo_side"));
+        for (FlowerPotBlock block : TropicraftBlocks.BAMBOO_POTTED_TROPICS_PLANTS) {
+            flowerPot(() -> block, () -> TropicraftBlocks.BAMBOO_FLOWER_POT, modBlockLoc("bamboo_side"));
         }
-        for (RegistryObject<FlowerPotBlock> block : TropicraftBlocks.VANILLA_POTTED_TROPICS_PLANTS) {
-            flowerPot(block, Blocks.FLOWER_POT.delegate);
+        for (FlowerPotBlock block : TropicraftBlocks.VANILLA_POTTED_TROPICS_PLANTS) {
+            flowerPot(() -> block, () -> Blocks.FLOWER_POT);
         }
-        for (RegistryObject<FlowerPotBlock> block : TropicraftBlocks.BAMBOO_POTTED_VANILLA_PLANTS) {
-            flowerPot(block, TropicraftBlocks.BAMBOO_FLOWER_POT, modBlockLoc("bamboo_side"));
+        for (FlowerPotBlock block : TropicraftBlocks.BAMBOO_POTTED_VANILLA_PLANTS) {
+            flowerPot(() -> block, () -> TropicraftBlocks.BAMBOO_FLOWER_POT, modBlockLoc("bamboo_side"));
         }
 
         models.withExistingParent("bamboo_item_frame", "item_frame")
@@ -274,7 +273,7 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
             .texture("particle", modBlockLoc("bamboo_side"))
             .texture("wood", modBlockLoc("bamboo_side"));
 
-        TropicraftBlocks.JIGARBOV_WALL_TORCHES.forEach((type, block) -> jigarbovTorch(block, type));
+        TropicraftBlocks.JIGARBOV_WALL_TORCHES.forEach((type, block) -> jigarbovTorch(() -> block, type));
 
         models.withExistingParent("papaya_stage0", "cocoa_stage2")
                 .texture("particle", modBlockLoc("papaya_stage0"))
@@ -558,16 +557,16 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
     private void flowerPot(Supplier<? extends FlowerPotBlock> full, Supplier<? extends Block> empty, ResourceLocation particle) {
         Block flower = full.get().getContent();
         boolean isVanilla = flower.getRegistryName().getNamespace().equals("minecraft");
-        String parent = flower == Blocks.AIR ? "flower_pot" : !isVanilla ? "flower_pot_cross" : ModelProvider.BLOCK_FOLDER + "/potted_" + name(flower.delegate);
+        String parent = flower == Blocks.AIR ? "flower_pot" : !isVanilla ? "flower_pot_cross" : ModelProvider.BLOCK_FOLDER + "/potted_" + name(() -> flower);
         BlockModelBuilder model = models().withExistingParent(name(full), parent)
                 .texture("flowerpot", blockTexture(empty))
                 .texture("dirt", mcLoc("block/dirt"))
                 .texture("particle", modBlockLoc("bamboo_side"));
         if (!isVanilla) {
             if (flower instanceof TropicsFlowerBlock) {
-                model.texture("plant", modLoc(ModelProvider.BLOCK_FOLDER + "/flower/" + name(flower.delegate)));
+                model.texture("plant", modLoc(ModelProvider.BLOCK_FOLDER + "/flower/" + name(() -> flower)));
             } else if (flower instanceof TallFlowerBlock) {
-                model.texture("plant", modLoc(ModelProvider.BLOCK_FOLDER + "/"+ name(flower.delegate) + "_top"));
+                model.texture("plant", modLoc(ModelProvider.BLOCK_FOLDER + "/"+ name(() -> flower) + "_top"));
             } else {
                 model.texture("plant", blockTexture(flower));
             }

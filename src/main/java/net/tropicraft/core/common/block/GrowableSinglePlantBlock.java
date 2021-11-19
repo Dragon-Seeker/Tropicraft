@@ -21,9 +21,9 @@ import java.util.function.Supplier;
 public final class GrowableSinglePlantBlock extends BushBlock implements BonemealableBlock {
     private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 
-    private final Supplier<RegistryObject<DoublePlantBlock>> growInto;
+    private final Supplier<DoublePlantBlock> growInto;
 
-    public GrowableSinglePlantBlock(Properties properties, Supplier<RegistryObject<DoublePlantBlock>> growInto) {
+    public GrowableSinglePlantBlock(Properties properties, Supplier<DoublePlantBlock> growInto) {
         super(properties);
         this.growInto = growInto;
     }
@@ -45,7 +45,7 @@ public final class GrowableSinglePlantBlock extends BushBlock implements Bonemea
 
     @Override
     public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
-        DoublePlantBlock growBlock = this.growInto.get().get();
+        DoublePlantBlock growBlock = this.growInto.get();
         BlockState growState = growBlock.defaultBlockState();
         if (growState.canSurvive(world, pos) && world.isEmptyBlock(pos.above())) {
             growBlock.placeAt(world, state, pos, Constants.BlockFlags.BLOCK_UPDATE);

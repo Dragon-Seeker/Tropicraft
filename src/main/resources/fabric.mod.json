@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "tropicraft",
+  "version": "${version}",
+
+  "name": "Tropicraft Fabric Port",
+  "description": "A fabric port of the popular tropical mod: Tropicraft. (Unoffical)",
+  "authors": [
+    "Forge Developers: Cojomax99, Corosus, tterrag, Gegy", "Fabric Developers: Dragon_Seeker"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/Dragon-Seeker/Tropicraft-Fabric-Port"
+  },
+  "contributors":[
+    "Mr_okushama, MrRube, newthead, pablomittens, fotoply, and others who have contributed over the years <3"
+  ],
+
+  "license": "mpl-2.0",
+  "icon": "assets/tropicraft/logo.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.tropicraft.Tropicraft"
+    ],
+    "client": [
+      "net.tropicraft.core.client.ClientSetup"
+    ]
+  },
+  "mixins": [
+    "tropicraft.mixins.json",
+    "tropicraft.mixins.shadow.json"
+  ],
+
+  "accessWidener" : "tropicraftFabric.accesswidener",
+
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "fabric": "*",
+    "minecraft": "1.17.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
