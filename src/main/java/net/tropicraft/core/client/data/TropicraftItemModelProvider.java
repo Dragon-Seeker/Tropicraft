@@ -37,68 +37,68 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         
         // BLOCKS
         
-        blockItem(TropicraftBlocks.CHUNK);
+        blockItem(() -> TropicraftBlocks.CHUNK);
         
         // Ores and storage blocks
-        blockItem(TropicraftBlocks.AZURITE_ORE);
-        blockItem(TropicraftBlocks.EUDIALYTE_ORE);
-        blockItem(TropicraftBlocks.MANGANESE_ORE);
-        blockItem(TropicraftBlocks.SHAKA_ORE);
-        blockItem(TropicraftBlocks.ZIRCON_ORE);
+        blockItem(() -> TropicraftBlocks.AZURITE_ORE);
+        blockItem(() -> TropicraftBlocks.EUDIALYTE_ORE);
+        blockItem(() -> TropicraftBlocks.MANGANESE_ORE);
+        blockItem(() -> TropicraftBlocks.SHAKA_ORE);
+        blockItem(() -> TropicraftBlocks.ZIRCON_ORE);
         
-        blockItem(TropicraftBlocks.AZURITE_BLOCK);
-        blockItem(TropicraftBlocks.EUDIALYTE_BLOCK);
-        blockItem(TropicraftBlocks.MANGANESE_BLOCK);
-        blockItem(TropicraftBlocks.SHAKA_BLOCK);
-        blockItem(TropicraftBlocks.ZIRCON_BLOCK);
-        blockItem(TropicraftBlocks.ZIRCONIUM_BLOCK);
+        blockItem(() -> TropicraftBlocks.AZURITE_BLOCK);
+        blockItem(() -> TropicraftBlocks.EUDIALYTE_BLOCK);
+        blockItem(() -> TropicraftBlocks.MANGANESE_BLOCK);
+        blockItem(() -> TropicraftBlocks.SHAKA_BLOCK);
+        blockItem(() -> TropicraftBlocks.ZIRCON_BLOCK);
+        blockItem(() -> TropicraftBlocks.ZIRCONIUM_BLOCK);
         
         // All flowers
         TropicraftBlocks.FLOWERS.entrySet().forEach(e ->
-            blockSprite(e.getValue(), modLoc("block/flower/" + e.getKey().getId())));
+            blockSprite(() -> e.getValue(), modLoc("block/flower/" + e.getKey().getId())));
         
         // Sands
-        blockItem(TropicraftBlocks.PURIFIED_SAND);
-        blockItem(TropicraftBlocks.PACKED_PURIFIED_SAND);
-        blockItem(TropicraftBlocks.CORAL_SAND);
-        blockItem(TropicraftBlocks.FOAMY_SAND);
-        blockItem(TropicraftBlocks.VOLCANIC_SAND);
-        blockItem(TropicraftBlocks.MINERAL_SAND);
+        blockItem(() -> TropicraftBlocks.PURIFIED_SAND);
+        blockItem(() -> TropicraftBlocks.PACKED_PURIFIED_SAND);
+        blockItem(() -> TropicraftBlocks.CORAL_SAND);
+        blockItem(() -> TropicraftBlocks.FOAMY_SAND);
+        blockItem(() -> TropicraftBlocks.VOLCANIC_SAND);
+        blockItem(() -> TropicraftBlocks.MINERAL_SAND);
 
         // Mud
-        blockItem(TropicraftBlocks.MUD);
-        blockItem(TropicraftBlocks.MUD_WITH_PIANGUAS);
+        blockItem(() -> TropicraftBlocks.MUD);
+        blockItem(() -> TropicraftBlocks.MUD_WITH_PIANGUAS);
 
         // Bundles
-        blockItem(TropicraftBlocks.BAMBOO_BUNDLE);
-        blockItem(TropicraftBlocks.THATCH_BUNDLE);
+        blockItem(() -> TropicraftBlocks.BAMBOO_BUNDLE);
+        blockItem(() -> TropicraftBlocks.THATCH_BUNDLE);
         
         // Planks & Logs
-        blockItem(TropicraftBlocks.MAHOGANY_PLANKS);
-        blockItem(TropicraftBlocks.PALM_PLANKS);
+        blockItem(() -> TropicraftBlocks.MAHOGANY_PLANKS);
+        blockItem(() -> TropicraftBlocks.PALM_PLANKS);
         
-        blockItem(TropicraftBlocks.MAHOGANY_LOG);
-        blockItem(TropicraftBlocks.PALM_LOG);
+        blockItem(() -> TropicraftBlocks.MAHOGANY_LOG);
+        blockItem(() -> TropicraftBlocks.PALM_LOG);
         
-        blockItem(TropicraftBlocks.MAHOGANY_WOOD);
-        blockItem(TropicraftBlocks.PALM_WOOD);
+        blockItem(() -> TropicraftBlocks.MAHOGANY_WOOD);
+        blockItem(() -> TropicraftBlocks.PALM_WOOD);
 
-        blockItem(TropicraftBlocks.PAPAYA_LOG);
-        blockItem(TropicraftBlocks.PAPAYA_WOOD);
+        blockItem(() -> TropicraftBlocks.PAPAYA_LOG);
+        blockItem(() -> TropicraftBlocks.PAPAYA_WOOD);
 
-        blockItem(TropicraftBlocks.RED_MANGROVE_LOG);
-        blockItem(TropicraftBlocks.RED_MANGROVE_WOOD);
+        blockItem(() -> TropicraftBlocks.RED_MANGROVE_LOG);
+        blockItem(() -> TropicraftBlocks.RED_MANGROVE_WOOD);
 
-        blockItem(TropicraftBlocks.LIGHT_MANGROVE_LOG);
-        blockItem(TropicraftBlocks.LIGHT_MANGROVE_WOOD);
+        blockItem(() -> TropicraftBlocks.LIGHT_MANGROVE_LOG);
+        blockItem(() -> TropicraftBlocks.LIGHT_MANGROVE_WOOD);
 
-        blockItem(TropicraftBlocks.BLACK_MANGROVE_LOG);
-        blockItem(TropicraftBlocks.BLACK_MANGROVE_WOOD);
+        blockItem(() -> TropicraftBlocks.BLACK_MANGROVE_LOG);
+        blockItem(() -> TropicraftBlocks.BLACK_MANGROVE_WOOD);
 
-        blockItem(TropicraftBlocks.STRIPPED_MANGROVE_LOG);
-        blockItem(TropicraftBlocks.STRIPPED_MANGROVE_WOOD);
+        blockItem(() -> TropicraftBlocks.STRIPPED_MANGROVE_LOG);
+        blockItem(() -> TropicraftBlocks.STRIPPED_MANGROVE_WOOD);
 
-        blockItem(TropicraftBlocks.MANGROVE_PLANKS);
+        blockItem(() -> TropicraftBlocks.MANGROVE_PLANKS);
 
         withExistingParent(name(TropicraftBlocks.RED_MANGROVE_ROOTS), modLoc("block/red_mangrove_roots_stem"));
         withExistingParent(name(TropicraftBlocks.LIGHT_MANGROVE_ROOTS), modLoc("block/light_mangrove_roots_stem"));

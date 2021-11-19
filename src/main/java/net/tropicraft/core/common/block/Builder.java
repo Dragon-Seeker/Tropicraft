@@ -44,7 +44,7 @@ public class Builder {
     }
     
     public static Supplier<TropicsFlowerBlock> flower(TropicraftFlower type) {
-        return block(p -> new TropicsFlowerBlock(type.getEffect(), type.getEffectDuration(), type.getShape(), p), lazyProp(Blocks.POPPY.delegate));
+        return block(p -> new TropicsFlowerBlock(type.getEffect(), type.getEffectDuration(), type.getShape(), p), lazyProp(() -> Blocks.POPPY));
     }
 
     public static Supplier<BlockTropicraftSand> sand(final MaterialColor color) {
@@ -82,8 +82,8 @@ public class Builder {
         return block(RotatedPillarBlock::new, logProperties(topColor, sideColor));
     }
 
-    public static Supplier<RotatedPillarBlock> log(final MaterialColor topColor, final MaterialColor sideColor, Supplier<RegistryObject<RotatedPillarBlock>> stripped) {
-        return block(properties -> new TropicraftLogBlock(properties, () -> stripped.get().get()), logProperties(topColor, sideColor));
+    public static Supplier<RotatedPillarBlock> log(final MaterialColor topColor, final MaterialColor sideColor, Supplier<RotatedPillarBlock> stripped) {
+        return block(properties -> new TropicraftLogBlock(properties, () -> stripped.get()), logProperties(topColor, sideColor));
     }
 
     private static BlockBehaviour.Properties logProperties(MaterialColor topColor, MaterialColor sideColor) {
@@ -94,15 +94,15 @@ public class Builder {
         return block(RotatedPillarBlock::new, woodProperties(color));
     }
 
-    public static Supplier<RotatedPillarBlock> wood(final MaterialColor color, Supplier<RegistryObject<RotatedPillarBlock>> stripped) {
-        return block(properties -> new TropicraftLogBlock(properties, () -> stripped.get().get()), woodProperties(color));
+    public static Supplier<RotatedPillarBlock> wood(final MaterialColor color, Supplier<RotatedPillarBlock> stripped) {
+        return block(properties -> new TropicraftLogBlock(properties, () -> stripped.get()), woodProperties(color));
     }
 
     private static BlockBehaviour.Properties woodProperties(MaterialColor color) {
         return prop(Material.WOOD, color).strength(2.0F).sound(SoundType.WOOD);
     }
 
-    public static Supplier<StairBlock> stairs(final RegistryObject<? extends Block> source) {
+    public static Supplier<StairBlock> stairs(final Supplier<? extends Block> source) {
         return block(p -> new StairBlock(source.lazyMap(Block::defaultBlockState), p), lazyProp(source));
     }
 
@@ -111,11 +111,11 @@ public class Builder {
     }
 
     public static Supplier<LeavesBlock> leaves(boolean decay) {
-        return block(decay ? LeavesBlock::new : TropicraftLeavesBlock::new, lazyProp(Blocks.OAK_LEAVES.delegate));
+        return block(decay ? LeavesBlock::new : TropicraftLeavesBlock::new, lazyProp(() -> Blocks.OAK_LEAVES));
     }
 
-    public static Supplier<LeavesBlock> mangroveLeaves(Supplier<RegistryObject<PropaguleBlock>> propagule) {
-        return block(properties -> new MangroveLeavesBlock(properties.randomTicks(), () -> propagule.get().get()), lazyProp(Blocks.OAK_LEAVES.delegate));
+    public static Supplier<LeavesBlock> mangroveLeaves(Supplier<PropaguleBlock> propagule) {
+        return block(properties -> new MangroveLeavesBlock(properties.randomTicks(), () -> propagule.get()), lazyProp(() -> Blocks.OAK_LEAVES));
     }
 
     public static Supplier<Block> mangroveRoots() {
@@ -140,15 +140,15 @@ public class Builder {
                     return Arrays.stream(validPlantBlocks).map(Supplier::get).anyMatch(b -> b == block);
                 }
             }
-        }, lazyProp(Blocks.OAK_SAPLING.delegate));
+        }, lazyProp(() -> Blocks.OAK_SAPLING));
     }
 
     public static Supplier<SaplingBlock> waterloggableSapling(final AbstractTreeGrower tree) {
-        return block(p -> new WaterloggableSaplingBlock(tree, p), lazyProp(Blocks.OAK_SAPLING.delegate));
+        return block(p -> new WaterloggableSaplingBlock(tree, p), lazyProp(() -> Blocks.OAK_SAPLING));
     }
 
     public static Supplier<PropaguleBlock> propagule(final AbstractTreeGrower tree) {
-        return block(p -> new PropaguleBlock(tree, p), lazyProp(Blocks.OAK_SAPLING.delegate));
+        return block(p -> new PropaguleBlock(tree, p), lazyProp(() -> Blocks.OAK_SAPLING));
     }
 
     public static Supplier<FenceBlock> fence(final Supplier<? extends Block> source) {
@@ -172,15 +172,15 @@ public class Builder {
     }
 
     public static Supplier<FlowerPotBlock> tropicraftPot() {
-        return pot(null, Blocks.AIR.delegate, lazyProp(Material.DECORATION).then(p -> p.strength(0.2F, 5.0F).sound(SoundType.BAMBOO)));
+        return pot(null, () -> Blocks.AIR, lazyProp(Material.DECORATION).then(p -> p.strength(0.2F, 5.0F).sound(SoundType.BAMBOO)));
     }
 
     public static Supplier<FlowerPotBlock> tropicraftPot(final Supplier<? extends Block> block) {
-        return pot(TropicraftBlocks.BAMBOO_FLOWER_POT, block, lazyProp(Material.DECORATION).then(p -> p.strength(0.2F, 5.0F).sound(SoundType.BAMBOO)));
+        return pot(() -> TropicraftBlocks.BAMBOO_FLOWER_POT, block, lazyProp(Material.DECORATION).then(p -> p.strength(0.2F, 5.0F).sound(SoundType.BAMBOO)));
     }
 
     public static Supplier<FlowerPotBlock> vanillaPot(final Supplier<? extends Block> block) {
-        return pot(() -> (FlowerPotBlock) Blocks.FLOWER_POT.delegate.get(), block, lazyProp(Blocks.FLOWER_POT.delegate));
+        return pot(() -> (FlowerPotBlock) Blocks.FLOWER_POT, block, lazyProp(() -> Blocks.FLOWER_POT));
     }
 
     private static Block.Properties prop(final Material material) {
