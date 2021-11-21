@@ -1,36 +1,32 @@
 package net.tropicraft.core.common.item;
 
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.*;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tropicraft.core.common.drinks.*;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import net.minecraft.world.item.Item.Properties;
-
-import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
+import net.tropicraft.core.common.drinks.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CocktailItem extends Item implements IColoredItem {
 
@@ -51,7 +47,7 @@ public class CocktailItem extends Item implements IColoredItem {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
         Drink drink = getDrink(stack);
 
@@ -80,7 +76,7 @@ public class CocktailItem extends Item implements IColoredItem {
         return DEFAULT_COLOR;
     }
 
-    public static @Nonnull ItemStack makeCocktail(MixerRecipe recipe) {
+    public static @NotNull ItemStack makeCocktail(MixerRecipe recipe) {
         final ItemStack stack = MixerRecipes.getItemStack(recipe.getCraftingResult());
         CompoundTag nbt = new CompoundTag();
         Drink drink = recipe.getCraftingResult();
@@ -116,9 +112,9 @@ public class CocktailItem extends Item implements IColoredItem {
         return stack;
     }
 
-    public static @Nonnull ItemStack makeCocktail(final NonNullList<ItemStack> itemStacks) {
+    public static @NotNull ItemStack makeCocktail(final NonNullList<ItemStack> itemStacks) {
         // TODO fixme this is so ugly ugh
-        final ItemStack stack = new ItemStack(TropicraftItems.COCKTAILS.get(Drink.COCKTAIL).get());
+        final ItemStack stack = new ItemStack(TropicraftItems.COCKTAILS.get(Drink.COCKTAIL));
         CompoundTag nbt = new CompoundTag();
         nbt.putByte("DrinkID", (byte) Drink.COCKTAIL.drinkId);
         ListTag tagList = new ListTag();
@@ -207,7 +203,7 @@ public class CocktailItem extends Item implements IColoredItem {
             drink.onDrink(player);
         }
 
-        return new ItemStack(TropicraftItems.BAMBOO_MUG.get());
+        return new ItemStack(TropicraftItems.BAMBOO_MUG);
     }
 
     /**
@@ -215,7 +211,7 @@ public class CocktailItem extends Item implements IColoredItem {
      * the Item before the action is complete.
      */
     @Override
-    public ItemStack finishUsingItem(@Nonnull ItemStack stack, @Nonnull Level worldIn, @Nonnull LivingEntity entityLiving) {
+    public ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
         if (entityLiving instanceof Player) {
             final Player player = (Player) entityLiving;
             onFoodEaten(stack, worldIn, player);
@@ -227,7 +223,7 @@ public class CocktailItem extends Item implements IColoredItem {
             }
         }
 
-        return new ItemStack(TropicraftItems.BAMBOO_MUG.get());
+        return new ItemStack(TropicraftItems.BAMBOO_MUG);
     }
 
     @Override

@@ -25,6 +25,7 @@ import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.entity.hostile.TropicraftCreatureEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
 import net.tropicraft.core.common.sound.Sounds;
+import org.jetbrains.annotations.Nullable;
 
 public class EIHEntity extends TropicraftCreatureEntity {
 
@@ -38,9 +39,10 @@ public class EIHEntity extends TropicraftCreatureEntity {
         xpReward = 10;
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.EIH_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.EIH_SPAWN_EGG);
     }
 
     @Override
@@ -149,7 +151,7 @@ public class EIHEntity extends TropicraftCreatureEntity {
                             final ItemStack itemstack = player.getInventory().getSelected();
 
                             if (!itemstack.isEmpty()) {
-                                if (isAware() && itemstack.getItem() == TropicraftBlocks.CHUNK.get().asItem()) {
+                                if (isAware() && itemstack.getItem() == TropicraftBlocks.CHUNK.asItem()) {
                                     setAngry(true);
                                     setImmobile(false);
                                 }

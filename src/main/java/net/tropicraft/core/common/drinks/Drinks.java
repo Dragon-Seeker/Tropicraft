@@ -1,11 +1,11 @@
 package net.tropicraft.core.common.drinks;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.NonNullList;
 import net.tropicraft.core.common.item.CocktailItem;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -47,11 +47,11 @@ public class Drinks {
         return false;
     }
 
-    public static boolean isRegisteredIngredient(@Nonnull Item item) {
+    public static boolean isRegisteredIngredient(@NotNull Item item) {
         return isRegisteredIngredient(new ItemStack(item));
     }
 
-    public static @Nonnull ItemStack getResult(final NonNullList<ItemStack> ingredients) {
+    public static @NotNull ItemStack getResult(final NonNullList<ItemStack> ingredients) {
         for (final MixerRecipe recipe : recipes) {
             int validIngredientsFound = 0;
 

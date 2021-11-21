@@ -22,6 +22,7 @@ import net.minecraft.world.phys.HitResult;
 import net.tropicraft.core.common.Easings;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -133,9 +134,10 @@ public class SpiderMonkeyEntity extends Animal {
         return null;
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.SPIDER_MONKEY_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.SPIDER_MONKEY_SPAWN_EGG);
     }
 
     @Override

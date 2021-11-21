@@ -1,14 +1,15 @@
 package net.tropicraft.core.common.network.message;
 
 import com.google.common.reflect.TypeToken;
-
+import net.api.network.ISimplePacket;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.tropicraft.core.common.network.TropicraftMessage;
 
 /**
@@ -16,7 +17,7 @@ import net.tropicraft.core.common.network.TropicraftMessage;
  *
  * Licensed under CC0.
  */
-public abstract class MessageTileEntity<T extends BlockEntity> implements TropicraftMessage {
+public abstract class MessageTileEntity<T extends BlockEntity> extends ISimplePacket implements TropicraftMessage {
 	protected long pos;
 	@Deprecated
 	protected int x;
@@ -31,16 +32,16 @@ public abstract class MessageTileEntity<T extends BlockEntity> implements Tropic
 		pos = tile.getBlockPos().asLong();
 	}
 
-	protected static void encode(final MessageTileEntity<?> message, FriendlyByteBuf buf) {
-		buf.writeLong(message.pos);
+	public void encode(FriendlyByteBuf buf) {
+		buf.writeLong(this.pos);
 	}
 
-	protected static void decode(final MessageTileEntity<?> message, FriendlyByteBuf buf) {
-		message.pos = buf.readLong();
-		BlockPos bp = message.getPos();
-		message.x = bp.getX();
-		message.y = bp.getY();
-		message.z = bp.getZ();
+	public void decode(FriendlyByteBuf buf) {
+		this.pos = buf.readLong();
+		BlockPos bp = this.getPos();
+		this.x = bp.getX();
+		this.y = bp.getY();
+		this.z = bp.getZ();
 	}
 
 	public BlockPos getPos() {
@@ -48,7 +49,11 @@ public abstract class MessageTileEntity<T extends BlockEntity> implements Tropic
 	}
 
 	protected T getClientTileEntity() {
-		return getTileEntity(DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level));
+		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT){
+			return getTileEntity(Minecraft.getInstance().level);
+		}
+		return null;
+		//return getTileEntity(DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -66,5 +71,19 @@ public abstract class MessageTileEntity<T extends BlockEntity> implements Tropic
 			return (T) te;
 		}
 		return null;
+	}
+
+	@Override
+	public void onMessage(Player playerEntity) {
+		Handler.onMessage(this);
+	}
+
+	public static class Handler {
+
+		public static boolean onMessage(MessageTileEntity message) {
+			Minecraft.getInstance().execute(() -> {
+			});
+			return true;
+		}
 	}
 }

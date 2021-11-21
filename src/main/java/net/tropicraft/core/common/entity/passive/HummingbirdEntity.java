@@ -29,11 +29,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Random;
 
@@ -102,9 +101,10 @@ public class HummingbirdEntity extends Animal implements FlyingAnimal {
         return null;
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.HUMMINGBIRD_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.HUMMINGBIRD_SPAWN_EGG);
     }
 
     @Override

@@ -23,6 +23,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -285,7 +286,7 @@ public class ChairEntity extends FurnitureEntity {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.CHAIRS.get(DyeColor.byId(getColor().getId())).get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.CHAIRS.get(DyeColor.byId(getColor().getId())));
     }
 }

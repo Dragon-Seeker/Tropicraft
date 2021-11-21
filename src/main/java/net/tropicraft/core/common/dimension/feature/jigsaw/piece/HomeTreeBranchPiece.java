@@ -24,7 +24,6 @@ import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElemen
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import net.minecraftforge.common.util.Constants.BlockFlags;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 
@@ -32,7 +31,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 public final class HomeTreeBranchPiece extends StructurePoolElement implements PieceWithGenerationBounds {
     public static final Codec<HomeTreeBranchPiece> CODEC = RecordCodecBuilder.create(instance -> {

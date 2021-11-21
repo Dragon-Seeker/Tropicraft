@@ -21,7 +21,7 @@ public class TropicraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
 
     @Override
     protected void addTags() {
-        appendToTag(EntityTypeTags.BEEHIVE_INHABITORS, TropicraftEntities.TROPI_BEE);
+        appendToTag(EntityTypeTags.BEEHIVE_INHABITORS, () -> TropicraftEntities.TROPI_BEE);
     }
 
     @SafeVarargs

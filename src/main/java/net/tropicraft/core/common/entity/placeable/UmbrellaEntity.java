@@ -14,7 +14,7 @@ public class UmbrellaEntity extends FurnitureEntity {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.UMBRELLAS.get(DyeColor.byId(getColor().getId())).get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.UMBRELLAS.get(DyeColor.byId(getColor().getId())));
     }
 }

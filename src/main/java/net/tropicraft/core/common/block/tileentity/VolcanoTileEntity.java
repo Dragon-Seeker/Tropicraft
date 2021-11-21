@@ -47,7 +47,7 @@ public class VolcanoTileEntity extends BlockEntity
 	private int heightOffset = Integer.MIN_VALUE;
 
 	public VolcanoTileEntity(BlockPos pos, BlockState state) {
-		super(TropicraftTileEntityTypes.VOLCANO.get(), pos, state);
+		super(TropicraftTileEntityTypes.VOLCANO, pos, state);
 	}
 
 	public static void tick(Level world, BlockPos pos, BlockState state, VolcanoTileEntity blockEntity) {

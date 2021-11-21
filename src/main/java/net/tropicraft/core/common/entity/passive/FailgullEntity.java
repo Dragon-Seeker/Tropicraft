@@ -17,7 +17,6 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
-import net.minecraft.world.entity.ai.util.RandomPos;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.projectile.Snowball;
@@ -26,12 +25,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class FailgullEntity extends Animal implements FlyingAnimal {
@@ -194,9 +192,10 @@ public class FailgullEntity extends Animal implements FlyingAnimal {
 		return Vector3d2 != null ? new BlockPos(Vector3d2) : groundTarget != null ? new BlockPos(groundTarget) : null;
 	}
 
+	@Nullable
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(TropicraftItems.FAILGULL_SPAWN_EGG.get());
+	public ItemStack getPickResult() {
+		return new ItemStack(TropicraftItems.FAILGULL_SPAWN_EGG);
 	}
 
 	class FollowLeaderGoal extends Goal {
@@ -222,7 +221,7 @@ public class FailgullEntity extends Animal implements FlyingAnimal {
 		public void start() {
 			final Entity flockLeader = getFlockLeader();
 			final PathNavigation navigator = getNavigation();
-			if (flockLeader != null && flockLeader.getType() == TropicraftEntities.FAILGULL.get()) {
+			if (flockLeader != null && flockLeader.getType() == TropicraftEntities.FAILGULL) {
 				navigator.moveTo(navigator.createPath(flockLeader.blockPosition(), 1), 1.0D);
 				return;
 			}

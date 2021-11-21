@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -57,15 +59,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.ai.*;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class EntityKoaBase extends Villager {
@@ -116,7 +115,7 @@ public class EntityKoaBase extends Villager {
 
     public int druggedTime = 0;
 
-    private static final Set<RegistryObject<Item>> TEMPTATION_ITEMS = Sets.newHashSet(TropicraftItems.NIGEL_STACHE);
+    private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(TropicraftItems.NIGEL_STACHE);
 
     private boolean isMating;
     private boolean isPlaying;
@@ -241,7 +240,7 @@ public class EntityKoaBase extends Villager {
      * @param koa
      * @param id
      */
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void scheduleEntityLookup(EntityKoaBase koa, int id) {
         Minecraft.getInstance().execute(() -> {
             Entity ent = level.getEntity(id);
@@ -279,7 +278,7 @@ public class EntityKoaBase extends Villager {
         @Override
         public MerchantOffer getOffer(Entity entity, Random random) {
             ItemStack itemstack = new ItemStack(this.item, this.count);
-            return new MerchantOffer(itemstack, new ItemStack(TropicraftItems.WHITE_PEARL.get()), this.maxUses, this.givenXP, this.priceMultiplier);
+            return new MerchantOffer(itemstack, new ItemStack(TropicraftItems.WHITE_PEARL), this.maxUses, this.givenXP, this.priceMultiplier);
         }
     }
 
@@ -294,19 +293,19 @@ public class EntityKoaBase extends Villager {
             offers = toIntMap(ImmutableMap.of(1,
                     new VillagerTrades.ItemListing[]{
                             new KoaTradeForPearls(Items.TROPICAL_FISH, 20, 8, 2),
-                            new KoaTradeForPearls(TropicraftItems.FISHING_NET.get(), 1, 8, 2),
+                            new KoaTradeForPearls(TropicraftItems.FISHING_NET, 1, 8, 2),
                             new KoaTradeForPearls(Items.FISHING_ROD, 1, 8, 2),
-                            new KoaTradeForPearls(TropicraftItems.FRESH_MARLIN.get(), 3, 8, 2),
-                            new KoaTradeForPearls(TropicraftItems.SARDINE_BUCKET.get(), 1, 4, 2),
-                            new KoaTradeForPearls(TropicraftItems.PIRANHA_BUCKET.get(), 1, 3, 2),
-                            new KoaTradeForPearls(TropicraftItems.TROPICAL_FERTILIZER.get(), 5, 8, 2)
+                            new KoaTradeForPearls(TropicraftItems.FRESH_MARLIN, 3, 8, 2),
+                            new KoaTradeForPearls(TropicraftItems.SARDINE_BUCKET, 1, 4, 2),
+                            new KoaTradeForPearls(TropicraftItems.PIRANHA_BUCKET, 1, 3, 2),
+                            new KoaTradeForPearls(TropicraftItems.TROPICAL_FERTILIZER, 5, 8, 2)
                     }));
         } else if (getRole() == Roles.HUNTER) {
             offers = toIntMap(ImmutableMap.of(1,
                     new VillagerTrades.ItemListing[]{
-                            new KoaTradeForPearls(TropicraftItems.FROG_LEG.get(), 5, 8, 2),
-                            new KoaTradeForPearls(TropicraftItems.IGUANA_LEATHER.get(), 2, 8, 2),
-                            new KoaTradeForPearls(TropicraftItems.SCALE.get(), 5, 8, 2)
+                            new KoaTradeForPearls(TropicraftItems.FROG_LEG, 5, 8, 2),
+                            new KoaTradeForPearls(TropicraftItems.IGUANA_LEATHER, 2, 8, 2),
+                            new KoaTradeForPearls(TropicraftItems.SCALE, 5, 8, 2)
                     }));
         }
 
@@ -510,7 +509,7 @@ public class EntityKoaBase extends Villager {
 
     @Override
     public Villager getBreedOffspring(ServerLevel world, AgeableMob ageable) {
-        EntityKoaHunter child = new EntityKoaHunter(TropicraftEntities.KOA_HUNTER.get(), this.level);
+        EntityKoaHunter child = new EntityKoaHunter(TropicraftEntities.KOA_HUNTER, this.level);
         child.finalizeSpawn(world, world.getCurrentDifficultyAt(child.blockPosition()), MobSpawnType.BREEDING, null, null);
         return child;
     }
@@ -651,7 +650,7 @@ public class EntityKoaBase extends Villager {
             if (!this.level.isClientSide) {
 
                 ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-                if (!stack.isEmpty() && stack.getItem() == TropicraftItems.POISON_FROG_SKIN.get()) {
+                if (!stack.isEmpty() && stack.getItem() == TropicraftItems.POISON_FROG_SKIN) {
                     doTrade = false;
 
                     //drug the koa and make him forget everything
@@ -909,7 +908,7 @@ public class EntityKoaBase extends Villager {
     }
 
     public void setFightingItem() {
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TropicraftItems.DAGGER.get()));
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TropicraftItems.DAGGER));
     }
 
     public void monitorHomeVillage() {
@@ -1642,8 +1641,9 @@ public class EntityKoaBase extends Villager {
         return this.isPlaying;
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.KOA_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.KOA_SPAWN_EGG);
     }
 }

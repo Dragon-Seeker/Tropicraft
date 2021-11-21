@@ -1,9 +1,6 @@
 package net.tropicraft.core.client.entity.render;
 
-import javax.annotation.Nullable;
-
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -11,6 +8,7 @@ import net.tropicraft.Constants;
 import net.tropicraft.core.client.ClientSetup;
 import net.tropicraft.core.client.entity.model.EIHModel;
 import net.tropicraft.core.common.entity.neutral.EIHEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class EIHRenderer extends MobRenderer<EIHEntity, EIHModel> {
 

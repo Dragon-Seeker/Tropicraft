@@ -9,7 +9,6 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.Tropicraft;
 import net.tropicraft.core.common.drinks.Drink;
 import net.tropicraft.core.common.drinks.MixerRecipes;
@@ -57,15 +56,15 @@ public class Builder {
     }
 
     public static Supplier<FurnitureItem<UmbrellaEntity>> umbrella(final DyeColor color) {
-        return furniture(TropicraftEntities.UMBRELLA, color);
+        return furniture(() -> TropicraftEntities.UMBRELLA, color);
     }
     
     public static Supplier<FurnitureItem<ChairEntity>> chair(final DyeColor color) {
-        return furniture(TropicraftEntities.CHAIR, color);
+        return furniture(() -> TropicraftEntities.CHAIR, color);
     }
     
     public static Supplier<FurnitureItem<BeachFloatEntity>> beachFloat(final DyeColor color) {
-        return furniture(TropicraftEntities.BEACH_FLOAT, color);
+        return furniture(() -> TropicraftEntities.BEACH_FLOAT, color);
     }
 
     public static <T extends AbstractFish> Supplier<Item> fishBucket(final Supplier<EntityType<T>> type) {
@@ -85,7 +84,7 @@ public class Builder {
             CocktailItem ret = new CocktailItem(drink, p);
             MixerRecipes.setDrinkItem(drink, ret);
             return ret;
-        }, () -> getDefaultProperties().durability(0).stacksTo(1).craftRemainder(TropicraftItems.BAMBOO_MUG.get()));
+        }, () -> getDefaultProperties().durability(0).stacksTo(1).craftRemainder(TropicraftItems.BAMBOO_MUG));
     }
 
     public static Supplier<AshenMaskItem> mask(final AshenMasks mask) {
@@ -96,7 +95,7 @@ public class Builder {
         return item(p -> new TropicalMusicDiscItem(type, p) {}, () -> getDefaultProperties().rarity(Rarity.RARE));
     }
 
-    public static <T extends Entity> Supplier<Item> spawnEgg(final RegistryObject<EntityType<T>> type) {
+    public static <T extends Entity> Supplier<Item> spawnEgg(final Supplier<EntityType<T>> type) {
         return item(p -> new TropicraftSpawnEgg<>(type, p), Builder::getDefaultProperties);
     }
 

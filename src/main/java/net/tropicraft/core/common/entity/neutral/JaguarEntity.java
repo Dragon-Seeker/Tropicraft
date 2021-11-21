@@ -19,6 +19,7 @@ import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.passive.WhiteLippedPeccaryEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -57,11 +58,12 @@ public class JaguarEntity extends Animal {
 
     @Override
     public JaguarEntity getBreedOffspring(ServerLevel world, AgeableMob mate) {
-        return TropicraftEntities.JAGUAR.get().create(this.level);
+        return TropicraftEntities.JAGUAR.create(this.level);
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.JAGUAR_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.JAGUAR_SPAWN_EGG);
     }
 }

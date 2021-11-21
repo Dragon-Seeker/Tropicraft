@@ -11,8 +11,7 @@ import net.tropicraft.core.client.entity.model.AshenModel;
 import net.tropicraft.core.client.entity.render.layer.AshenHeldItemLayer;
 import net.tropicraft.core.client.entity.render.layer.AshenMaskLayer;
 import net.tropicraft.core.common.entity.hostile.AshenEntity;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class AshenRenderer extends MobRenderer<AshenEntity, AshenModel> {
 

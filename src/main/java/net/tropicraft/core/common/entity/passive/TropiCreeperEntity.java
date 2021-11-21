@@ -32,6 +32,7 @@ import net.minecraft.world.phys.HitResult;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.entity.ai.TropiCreeperSwellGoal;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -253,8 +254,9 @@ public class TropiCreeperEntity extends PathfinderMob {
        return Mth.lerp(partialTicks, (float)this.prevTimeSinceIgnited, (float)this.timeSinceIgnited) / (float)(this.fuseTime - 2);
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.TROPICREEPER_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.TROPICREEPER_SPAWN_EGG);
     }
 }

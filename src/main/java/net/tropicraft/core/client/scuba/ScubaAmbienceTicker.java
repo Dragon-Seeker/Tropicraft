@@ -1,5 +1,6 @@
 package net.tropicraft.core.client.scuba;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -22,17 +23,16 @@ import net.tropicraft.Constants;
 import net.tropicraft.core.common.item.scuba.ScubaArmorItem;
 import net.tropicraft.core.common.item.scuba.ScubaData;
 
-@EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MODID, bus = Bus.FORGE)
-public class ScubaAmbienceTicker {
+//@EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MODID, bus = Bus.FORGE)
+public class ScubaAmbienceTicker implements ClientTickEvents.StartTick{
     
     public static final SoundEvent SHALLOW_SCUBA = new SoundEvent(new ResourceLocation(Constants.MODID, "scuba.shallow"));
     public static final SoundEvent DEEP_SCUBA = new SoundEvent(new ResourceLocation(Constants.MODID, "scuba.deep"));
 
     private static SoundEvent currentSound;
 
-    @SubscribeEvent
-    public static void onClientTick(ClientTickEvent event) {
-        if (event.phase != Phase.START) return;
+    @Override
+    public void onStartTick(Minecraft client) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level != null && mc.player != null) {
             Camera renderInfo = mc.getEntityRenderDispatcher().camera;
@@ -67,4 +67,6 @@ public class ScubaAmbienceTicker {
             currentSound = null;
         }
     }
+
+
 }

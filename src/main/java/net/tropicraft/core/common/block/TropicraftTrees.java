@@ -29,7 +29,6 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.placement.WaterDepthThresholdConfiguration;
-import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.dimension.feature.TropicraftFeatures;
 import net.tropicraft.core.common.dimension.feature.tree.CitrusFoliagePlacer;
 import net.tropicraft.core.common.dimension.feature.tree.CitrusTrunkPlacer;

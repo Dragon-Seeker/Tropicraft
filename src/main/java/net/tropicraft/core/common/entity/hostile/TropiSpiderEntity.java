@@ -25,6 +25,7 @@ import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.ai.EntityAIWanderNotLazy;
 import net.tropicraft.core.common.entity.egg.TropiSpiderEggEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 public class TropiSpiderEntity extends Spider {
 
@@ -52,7 +53,7 @@ public class TropiSpiderEntity extends Spider {
     }
 
     public static TropiSpiderEntity haveBaby(final TropiSpiderEntity mother) {
-        final TropiSpiderEntity baby = new TropiSpiderEntity(TropicraftEntities.TROPI_SPIDER.get(), mother.level);
+        final TropiSpiderEntity baby = new TropiSpiderEntity(TropicraftEntities.TROPI_SPIDER, mother.level);
         baby.setSpiderType(Type.CHILD);
         baby.tickCount = 0;
         baby.mother = mother;
@@ -194,7 +195,7 @@ public class TropiSpiderEntity extends Spider {
             }
             
             for (int i = 0; i < r; i++) {
-                TropiSpiderEggEntity egg = TropicraftEntities.TROPI_SPIDER_EGG.get().create(level);
+                TropiSpiderEggEntity egg = TropicraftEntities.TROPI_SPIDER_EGG.create(level);
                 egg.setMotherId(getUUID());
                 egg.setPos(blockPosition().getX() + random.nextFloat(), blockPosition().getY(), blockPosition().getZ() + random.nextFloat());
                 level.addFreshEntity(egg);
@@ -246,8 +247,11 @@ public class TropiSpiderEntity extends Spider {
         refreshDimensions();
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.TROPI_SPIDER_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.TROPI_SPIDER_SPAWN_EGG);
     }
+
+
 }

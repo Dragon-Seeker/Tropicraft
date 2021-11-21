@@ -1,61 +1,55 @@
 package net.tropicraft.core.client.scuba;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.api.components.MyComponents;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.tropicraft.Constants;
 import net.tropicraft.core.client.data.TropicraftLangKeys;
 import net.tropicraft.core.common.item.scuba.ScubaArmorItem;
 import net.tropicraft.core.common.item.scuba.ScubaData;
 import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+//@EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MODID, bus = Bus.FORGE)
+public class ScubaHUD implements HudRenderCallback{
 
-@EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MODID, bus = Bus.FORGE)
-public class ScubaHUD {
-    
-    @SubscribeEvent
-    public static void renderHUD(RenderGameOverlayEvent event) {
+    @Override
+    public void onHudRender(PoseStack matrixStack, float tickDelta) {
         Entity renderViewEntity = Minecraft.getInstance().cameraEntity;
-        if (event.getType() == ElementType.TEXT && renderViewEntity instanceof Player) {
-            Player player = (Player) renderViewEntity;
-            // TODO support other slots than chest?
-            ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
-            Item chestItem = chestStack.getItem();
-            if (chestItem instanceof ScubaArmorItem) {
-                LazyOptional<ScubaData> data = player.getCapability(ScubaData.CAPABILITY);
-                int airRemaining = ((ScubaArmorItem)chestItem).getRemainingAir(chestStack);
-                ChatFormatting airColor = getAirTimeColor(airRemaining, player.level);
-                double depth = ScubaData.getDepth(player);
-                String depthStr;
-                if (depth > 0) {
-                    depthStr = String.format("%.1fm", depth); 
-                } else {
-                    depthStr = TropicraftLangKeys.NA.getLocalizedText();
-                }
-                data.ifPresent(d -> drawHUDStrings(event.getMatrixStack(),
-                    TropicraftLangKeys.SCUBA_AIR_TIME.format(airColor + formatTime(airRemaining)),
-                    TropicraftLangKeys.SCUBA_DIVE_TIME.format(formatTime(d.getDiveTime())),
-                    TropicraftLangKeys.SCUBA_DEPTH.format(depthStr),
-                    TropicraftLangKeys.SCUBA_MAX_DEPTH.format(String.format("%.1fm", d.getMaxDepth()))));
+
+        Player player = (Player) renderViewEntity;
+        // TODO support other slots than chest?
+        ItemStack chestStack = player.getItemBySlot(EquipmentSlot.CHEST);
+        Item chestItem = chestStack.getItem();
+        if (chestItem instanceof ScubaArmorItem) {
+            ScubaData data = MyComponents.SCUBADATA.get(player);
+            //LazyOptional<ScubaData> data = player.getCapability(ScubaData.CAPABILITY);
+            int airRemaining = ((ScubaArmorItem)chestItem).getRemainingAir(chestStack);
+            ChatFormatting airColor = getAirTimeColor(airRemaining, player.level);
+            double depth = ScubaData.getDepth(player);
+            String depthStr;
+            if (depth > 0) {
+                depthStr = String.format("%.1fm", depth);
+            } else {
+                depthStr = TropicraftLangKeys.NA.getLocalizedText();
             }
+            drawHUDStrings(matrixStack,
+                    TropicraftLangKeys.SCUBA_AIR_TIME.format(airColor + formatTime(airRemaining)),
+                    TropicraftLangKeys.SCUBA_DIVE_TIME.format(formatTime(data.getDiveTime())),
+                    TropicraftLangKeys.SCUBA_DEPTH.format(depthStr),
+                    TropicraftLangKeys.SCUBA_MAX_DEPTH.format(String.format("%.1fm", data.getMaxDepth())));
         }
+
     }
     
     public static String formatTime(long time) {
@@ -87,4 +81,6 @@ public class ScubaHUD {
             startY += fr.lineHeight;
         }
     }
+
+
 }

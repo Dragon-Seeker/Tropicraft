@@ -1,7 +1,12 @@
 package net.tropicraft;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Constants {
     public static final String MODID = "tropicraft";
+    public static Logger LOGGER = LogManager.getLogger(MODID);
+
     public static final String ARMOR_LOCATION = MODID + ":textures/models/armor/";
 
     public static final String[] LT17_NAMES = {

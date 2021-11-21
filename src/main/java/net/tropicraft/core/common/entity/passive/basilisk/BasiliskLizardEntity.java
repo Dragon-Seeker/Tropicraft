@@ -29,6 +29,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 public final class BasiliskLizardEntity extends Animal {
     private static final EntityDataAccessor<Boolean> RUNNING = SynchedEntityData.defineId(BasiliskLizardEntity.class, EntityDataSerializers.BOOLEAN);
@@ -85,12 +86,13 @@ public final class BasiliskLizardEntity extends Animal {
         return null;
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        if (getType() == TropicraftEntities.BROWN_BASILISK_LIZARD.get()) {
-            return new ItemStack(TropicraftItems.BROWN_BASILISK_LIZARD_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        if (getType() == TropicraftEntities.BROWN_BASILISK_LIZARD) {
+            return new ItemStack(TropicraftItems.BROWN_BASILISK_LIZARD_SPAWN_EGG);
         } else {
-            return new ItemStack(TropicraftItems.GREEN_BASILISK_LIZARD_SPAWN_EGG.get());
+            return new ItemStack(TropicraftItems.GREEN_BASILISK_LIZARD_SPAWN_EGG);
         }
     }
 

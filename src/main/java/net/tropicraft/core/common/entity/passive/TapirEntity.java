@@ -17,6 +17,7 @@ import net.minecraft.world.phys.HitResult;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -52,11 +53,13 @@ public class TapirEntity extends Animal {
 
     @Override
     public TapirEntity getBreedOffspring(ServerLevel world, AgeableMob mate) {
-        return TropicraftEntities.TAPIR.get().create(this.level);
+        return TropicraftEntities.TAPIR.create(this.level);
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.TAPIR_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.TAPIR_SPAWN_EGG);
     }
+
 }

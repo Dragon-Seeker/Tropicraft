@@ -63,14 +63,14 @@ public class TropicraftItemTagsProvider extends ItemTagsProvider {
                 TropicraftItems.RUBE_NAUTILUS, TropicraftItems.STARFISH, TropicraftItems.TURTLE_SHELL);
         
         // Swords for chunk drops
-        addItemsToTag(SWORDS, Items.WOODEN_SWORD.delegate, Items.STONE_SWORD.delegate, Items.IRON_SWORD.delegate, Items.GOLDEN_SWORD.delegate, Items.DIAMOND_SWORD.delegate, Items.NETHERITE_SWORD.delegate,
+        addItemsToTag(SWORDS, Items.WOODEN_SWORD, Items.STONE_SWORD, Items.IRON_SWORD, Items.GOLDEN_SWORD, Items.DIAMOND_SWORD, Items.NETHERITE_SWORD,
                 TropicraftItems.EUDIALYTE_SWORD, TropicraftItems.ZIRCON_SWORD, TropicraftItems.ZIRCONIUM_SWORD);
 
-        for (RegistryObject<AshenMaskItem> item : TropicraftItems.ASHEN_MASKS.values()) {
+        for (AshenMaskItem item : TropicraftItems.ASHEN_MASKS.values()) {
             addItemsToTag(ASHEN_MASKS, item);
         }
 
-        for (RegistryObject<FlowerBlock> flower : TropicraftBlocks.FLOWERS.values()) {
+        for (FlowerBlock flower : TropicraftBlocks.FLOWERS.values()) {
             addItemsToTag(ItemTags.FLOWERS, flower);
         }
 

@@ -5,8 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.tropicraft.core.client.ClientSetup;
 import net.tropicraft.core.client.entity.model.UmbrellaModel;
 import net.tropicraft.core.common.entity.placeable.UmbrellaEntity;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class UmbrellaRenderer extends FurnitureRenderer<UmbrellaEntity> {
 

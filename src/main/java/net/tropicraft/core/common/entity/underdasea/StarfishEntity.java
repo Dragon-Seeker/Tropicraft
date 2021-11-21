@@ -22,6 +22,7 @@ import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.egg.EggEntity;
 import net.tropicraft.core.common.entity.egg.StarfishEggEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nullable;
 
@@ -94,7 +95,7 @@ public class StarfishEntity extends EchinodermEntity implements IEntityAdditiona
 
 	@Override
 	public EggEntity createEgg() {
-		StarfishEggEntity entity = new StarfishEggEntity(TropicraftEntities.STARFISH_EGG.get(), level);
+		StarfishEggEntity entity = new StarfishEggEntity(TropicraftEntities.STARFISH_EGG, level);
 		entity.setStarfishType(getStarfishType());
 		return entity;
 	}
@@ -139,12 +140,12 @@ public class StarfishEntity extends EchinodermEntity implements IEntityAdditiona
 		super.die(d);
 		// TODO replace with loot table
 		if (!level.isClientSide) {
-			spawnAtLocation(new ItemStack(TropicraftItems.STARFISH.get()), 0);
+			spawnAtLocation(new ItemStack(TropicraftItems.STARFISH), 0);
 		}
 	}
 
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(TropicraftItems.STARFISH.get());
+	public ItemStack getPickResult() {
+		return new ItemStack(TropicraftItems.STARFISH);
 	}
 }

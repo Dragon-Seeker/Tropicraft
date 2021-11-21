@@ -69,9 +69,9 @@ public class EntityAIGoneFishin extends Goal {
         fishingTimeout = fishingTimeoutMax;
 
         listFishables.add(new ItemStack(Items.TROPICAL_FISH));
-        listFishables.add(new ItemStack(TropicraftItems.FRESH_MARLIN.get()));
-        listFishables.add(new ItemStack(TropicraftItems.TROPICAL_FERTILIZER.get()));
-        listFishables.add(new ItemStack(TropicraftItems.RAW_RAY.get()));
+        listFishables.add(new ItemStack(TropicraftItems.FRESH_MARLIN));
+        listFishables.add(new ItemStack(TropicraftItems.TROPICAL_FERTILIZER));
+        listFishables.add(new ItemStack(TropicraftItems.RAW_RAY));
         /*for (int i = 0; i < EntityTropicalFish.NAMES.length; i++) {
             listFishables.add(new ItemStack(ItemRegistry.rawTropicalFish, 1, i));
         }

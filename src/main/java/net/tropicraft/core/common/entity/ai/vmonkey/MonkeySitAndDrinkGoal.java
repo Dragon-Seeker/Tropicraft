@@ -31,7 +31,7 @@ public class MonkeySitAndDrinkGoal extends Goal {
     @Override
     public void stop() {
         entity.setInSittingPose(false);
-        entity.spawnAtLocation(new ItemStack(TropicraftItems.BAMBOO_MUG.get()));
+        entity.spawnAtLocation(new ItemStack(TropicraftItems.BAMBOO_MUG));
         entity.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         waitCounter = DEFAULT_WAIT;
     }
@@ -64,7 +64,7 @@ public class MonkeySitAndDrinkGoal extends Goal {
 
         // If drinking complete
         ItemStack heldStack = entity.getMainHandItem();
-        if (heldStack.getItem() == TropicraftItems.BAMBOO_MUG.get()) {
+        if (heldStack.getItem() == TropicraftItems.BAMBOO_MUG) {
             entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 10 * 20, 2));
         }
     }

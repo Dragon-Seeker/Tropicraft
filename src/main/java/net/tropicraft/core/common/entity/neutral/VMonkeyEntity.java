@@ -20,13 +20,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
 import net.tropicraft.core.common.drinks.Drink;
 import net.tropicraft.core.common.entity.ai.vmonkey.*;
 import net.tropicraft.core.common.item.CocktailItem;
 import net.tropicraft.core.common.item.TropicraftItems;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class VMonkeyEntity extends TamableAnimal {
 
@@ -234,9 +232,10 @@ public class VMonkeyEntity extends TamableAnimal {
         }
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.V_MONKEY_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.V_MONKEY_SPAWN_EGG);
     }
 
     public boolean isMadAboutStolenAlcohol() {

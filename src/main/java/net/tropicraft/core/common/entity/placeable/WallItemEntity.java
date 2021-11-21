@@ -9,6 +9,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
 import net.tropicraft.core.common.entity.BambooItemFrame;
 import net.tropicraft.core.common.entity.TropicraftEntities;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +20,7 @@ public class WallItemEntity extends BambooItemFrame {
     }
 
     public WallItemEntity(Level worldIn, BlockPos pos, Direction on) {
-        super(TropicraftEntities.WALL_ITEM.get(), worldIn, pos, on);
+        super(TropicraftEntities.WALL_ITEM, worldIn, pos, on);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class WallItemEntity extends BambooItemFrame {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
+    public ItemStack getPickResult() {
         return getItem();
     }
 }

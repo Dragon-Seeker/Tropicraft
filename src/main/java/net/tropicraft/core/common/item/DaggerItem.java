@@ -31,7 +31,7 @@ public class DaggerItem extends Item {
         this.tier = tier;
 
         this.defaultModifiers = ImmutableMultimap.<Attribute, AttributeModifier>builder()
-                .putAll(super.getAttributeModifiers(EquipmentSlot.MAINHAND, new ItemStack(this)))
+                .putAll(super.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND))
                 .put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double) tier.getAttackDamageBonus() + 2.5D, AttributeModifier.Operation.ADDITION))
                 .put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", 0, AttributeModifier.Operation.ADDITION))
                 .build();
@@ -78,11 +78,11 @@ public class DaggerItem extends Item {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND) {
             return defaultModifiers;
         } else {
-            return super.getAttributeModifiers(slot, stack);
+            return super.getDefaultAttributeModifiers(slot);
         }
     }
 }

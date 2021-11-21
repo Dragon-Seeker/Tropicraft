@@ -1,6 +1,8 @@
 package net.tropicraft.core.common.block.huge_plant;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -9,38 +11,37 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.DrawSelectionEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.tropicraft.Constants;
 
-@Mod.EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
-public final class HugePlantBlockHighlight {
+//@Mod.EventBusSubscriber(modid = Constants.MODID, value = Dist.CLIENT)
+public final class HugePlantBlockHighlight implements WorldRenderEvents.BlockOutline {
     private static final Minecraft CLIENT = Minecraft.getInstance();
 
-    @SubscribeEvent
-    public static void onHighlightBlock(DrawSelectionEvent.HighlightBlock event) {
+    @Override
+    public boolean onBlockOutline(WorldRenderContext worldRenderContext, WorldRenderContext.BlockOutlineContext blockOutlineContext) {
         ClientLevel world = CLIENT.level;
-        if (world == null) return;
+        if (world == null) return false;
 
-        BlockPos pos = event.getTarget().getBlockPos();
+        BlockPos pos = worldRenderContext.camera().getBlockPosition();;
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof HugePlantBlock) {
-            renderHugePlantHighlight(event, world, pos, state);
+            return renderHugePlantHighlight(worldRenderContext, blockOutlineContext, world, pos, state);
         }
+
+        return false;
     }
 
-    private static void renderHugePlantHighlight(DrawSelectionEvent.HighlightBlock event, ClientLevel world, BlockPos pos, BlockState state) {
+    private boolean renderHugePlantHighlight(WorldRenderContext worldRenderContext, WorldRenderContext.BlockOutlineContext blockOutlineContext, ClientLevel world, BlockPos pos, BlockState state) {
         HugePlantBlock.Shape shape = HugePlantBlock.Shape.matchIncomplete(state.getBlock(), world, pos);
-        if (shape == null) return;
+        if (shape == null) return false;
 
-        VertexConsumer builder = event.getBuffers().getBuffer(RenderType.lines());
+        VertexConsumer builder = worldRenderContext.consumers().getBuffer(RenderType.lines());
 
-        Vec3 view = event.getInfo().getPosition();
+        Vec3 view = worldRenderContext.camera().getPosition();//event.getInfo().getPosition();
         AABB aabb = shape.asAabb().move(-view.x, -view.y, -view.z);
-        LevelRenderer.renderLineBox(event.getMatrix(), builder, aabb, 0.0F, 0.0F, 0.0F, 0.4F);
+        LevelRenderer.renderLineBox(worldRenderContext.matrixStack(), builder, aabb, 0.0F, 0.0F, 0.0F, 0.4F);
 
-        event.setCanceled(true);
+        return true;
     }
+
+
 }

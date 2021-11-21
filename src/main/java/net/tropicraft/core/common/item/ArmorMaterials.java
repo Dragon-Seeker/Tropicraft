@@ -1,23 +1,19 @@
 package net.tropicraft.core.common.item;
 
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.tropicraft.core.common.TropicraftTags;
 
-import javax.annotation.Nullable;
-import java.util.stream.Stream;
-
 public class ArmorMaterials {
-    private static final Ingredient NO_INGREDIENT = new Ingredient(Stream.empty()) {
-        @Override
-        public boolean test(@Nullable ItemStack stack) {
-            return false;
-        }
-    };
+//    private static final Ingredient NO_INGREDIENT = new Ingredient(Stream.empty()) {
+//        @Override
+//        public boolean test(@Nullable ItemStack stack) {
+//            return false;
+//        }
+//    };
 
     public static final ArmorMaterial ASHEN_MASK = new AshenMask();
     public static final ArmorMaterial NIGEL_STACHE = new NigelStache();
@@ -26,7 +22,7 @@ public class ArmorMaterials {
             new int[] {2, 5, 6, 2},
             9,
             SoundEvents.ARMOR_EQUIP_CHAIN,
-            Ingredient.of(TropicraftItems.SCALE.get()),
+            Ingredient.of(TropicraftItems.SCALE),
             "scale",
             0.5f,
             0.0F
@@ -36,7 +32,7 @@ public class ArmorMaterials {
             new int[] {2, 4, 5, 2},
             9,
             SoundEvents.ARMOR_EQUIP_IRON,
-            NO_INGREDIENT,
+            null,
             "fire",
             0.1f,
             0.0F
@@ -46,7 +42,7 @@ public class ArmorMaterials {
             new int[] {0, 0, 0, 0},
             0,
             SoundEvents.ARMOR_EQUIP_GENERIC,
-            NO_INGREDIENT,
+            null,
             "scuba_goggles",
             0,
             0.0F
@@ -118,7 +114,7 @@ public class ArmorMaterials {
 
         @Override
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(TropicraftItems.NIGEL_STACHE.get());
+            return Ingredient.of(TropicraftItems.NIGEL_STACHE);
         }
 
         @Override

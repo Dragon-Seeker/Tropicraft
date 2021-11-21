@@ -25,7 +25,7 @@ public class SpearItem extends TridentItem {
 		this.tier = tier;
 
 		this.defaultModifiers = ImmutableMultimap.<Attribute, AttributeModifier>builder()
-				.putAll(super.getAttributeModifiers(EquipmentSlot.MAINHAND, new ItemStack(this)))
+				.putAll(super.getDefaultAttributeModifiers(EquipmentSlot.MAINHAND))
 				.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", attackDamage, AttributeModifier.Operation.ADDITION))
 				.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION))
 				.build();
@@ -37,12 +37,12 @@ public class SpearItem extends TridentItem {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-		return slot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getAttributeModifiers(slot, stack);
+	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
+		return slot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(slot);
 	}
 
 	@Override
-	public int getItemEnchantability(ItemStack stack) {
+	public int getEnchantmentValue() {
 		return this.tier.getEnchantmentValue();
 	}
 

@@ -6,18 +6,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 
 import java.util.Random;
 
 public class CoffeePlantFeature extends Feature<NoneFeatureConfiguration> {
     public static final BlockState GRASS_BLOCK = Blocks.GRASS_BLOCK.defaultBlockState();
-    public static final BlockState COFE = TropicraftBlocks.COFFEE_BUSH.get().getStateForAge(6);
+    public static final BlockState COFE = TropicraftBlocks.COFFEE_BUSH.getStateForAge(6);
     public static final BlockState FARMLAND = Blocks.FARMLAND.defaultBlockState();
     public static final BlockState WATER = Blocks.WATER.defaultBlockState();
 

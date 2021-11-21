@@ -16,9 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.Constants;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlockTropicraftSand extends FallingBlock {
     public static final BooleanProperty UNDERWATER = BooleanProperty.create("underwater");

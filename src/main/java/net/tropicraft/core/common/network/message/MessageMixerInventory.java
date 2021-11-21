@@ -1,19 +1,19 @@
 package net.tropicraft.core.common.network.message;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.tropicraft.core.common.block.tileentity.DrinkMixerTileEntity;
-
-import java.util.function.Supplier;
 
 public class MessageMixerInventory extends MessageTileEntity<DrinkMixerTileEntity> {
 	private NonNullList<ItemStack> inventory;
 	private ItemStack result = ItemStack.EMPTY;
 
-	public MessageMixerInventory() {
+	public MessageMixerInventory(FriendlyByteBuf buf) {
 		super();
+		this.decode(buf);
 	}
 
 	public MessageMixerInventory(final DrinkMixerTileEntity mixer) {
@@ -22,38 +22,43 @@ public class MessageMixerInventory extends MessageTileEntity<DrinkMixerTileEntit
 		result = mixer.result;
 	}
 
-	public static void encode(final MessageMixerInventory message, final FriendlyByteBuf buf) {
-		MessageTileEntity.encode(message, buf);
+	public void encode(final FriendlyByteBuf buf) {
+		super.encode(buf);
 
-		buf.writeByte(message.inventory.size());
-		for (final ItemStack i : message.inventory) {
+		buf.writeByte(this.inventory.size());
+		for (final ItemStack i : this.inventory) {
 			buf.writeItem(i);
 		}
 
-		buf.writeItem(message.result);
+		buf.writeItem(this.result);
 	}
 
-	public static MessageMixerInventory decode(final FriendlyByteBuf buf) {
-		final MessageMixerInventory message = new MessageMixerInventory();
-		MessageTileEntity.decode(message, buf);
-		message.inventory = NonNullList.withSize(buf.readByte(), ItemStack.EMPTY);
-		for (int i = 0; i < message.inventory.size(); i++) {
-			message.inventory.set(i, buf.readItem());
+	public void decode(final FriendlyByteBuf buf) {
+		super.decode(buf);
+
+		this.inventory = NonNullList.withSize(buf.readByte(), ItemStack.EMPTY);
+		for (int i = 0; i < this.inventory.size(); i++) {
+			this.inventory.set(i, buf.readItem());
 		}
 
-		message.result = buf.readItem();
-
-		return message;
+		this.result = buf.readItem();
 	}
 
-	public static void handle(final MessageMixerInventory message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> {
-			final DrinkMixerTileEntity mixer = message.getClientTileEntity();
-			if (mixer != null) {
-				mixer.ingredients = message.inventory;
-				mixer.result = message.result;
-			}
-		});
-		ctx.get().setPacketHandled(true);
+	@Override
+	public void onMessage(Player playerEntity) {
+		Handler.onMessage(this);
+	}
+
+	public static class Handler {
+		public static boolean onMessage(MessageMixerInventory message) {
+			Minecraft.getInstance().execute(() -> {
+				final DrinkMixerTileEntity mixer = message.getClientTileEntity();
+				if (mixer != null) {
+					mixer.ingredients = message.inventory;
+					mixer.result = message.result;
+				}
+			});
+			return true;
+		}
 	}
 }

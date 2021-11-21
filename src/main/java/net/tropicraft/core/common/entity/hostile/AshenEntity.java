@@ -35,8 +35,7 @@ import net.tropicraft.core.common.item.AshenMaskItem;
 import net.tropicraft.core.common.item.AshenMasks;
 import net.tropicraft.core.common.item.BlowGunItem;
 import net.tropicraft.core.common.item.TropicraftItems;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class AshenEntity extends TropicraftCreatureEntity implements RangedAttackMob {
 
@@ -66,8 +65,8 @@ public class AshenEntity extends TropicraftCreatureEntity implements RangedAttac
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
-        setItemInHand(InteractionHand.OFF_HAND, new ItemStack(TropicraftItems.BLOW_GUN.get()));
-        setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(TropicraftItems.DAGGER.get()));
+        setItemInHand(InteractionHand.OFF_HAND, new ItemStack(TropicraftItems.BLOW_GUN));
+        setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(TropicraftItems.DAGGER));
         setMaskType((byte) AshenMasks.VALUES[world.getRandom().nextInt(AshenMasks.VALUES.length)].ordinal());
         setActionState(AshenState.HOSTILE);
         return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
@@ -176,7 +175,7 @@ public class AshenEntity extends TropicraftCreatureEntity implements RangedAttac
 
     public void dropMask() {
         setActionState(AshenState.LOST_MASK);
-        maskToTrack = new AshenMaskEntity(TropicraftEntities.ASHEN_MASK.get(), level);
+        maskToTrack = new AshenMaskEntity(TropicraftEntities.ASHEN_MASK, level);
         maskToTrack.setMaskType(getMaskType());
         maskToTrack.absMoveTo(getX(), getY(), getZ(), getYRot(), 0);
         level.addFreshEntity(maskToTrack);
@@ -189,9 +188,9 @@ public class AshenEntity extends TropicraftCreatureEntity implements RangedAttac
         mask.remove(RemovalReason.DISCARDED);
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.ASHEN_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.ASHEN_SPAWN_EGG);
     }
-
 }

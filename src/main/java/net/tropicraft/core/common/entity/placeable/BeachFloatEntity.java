@@ -24,20 +24,19 @@ import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
 public class BeachFloatEntity extends FurnitureEntity implements IEntityAdditionalSpawnData {
 
-    @Nonnull
+    @NotNull
     private static final Random rand = new Random(298457L);
-    @Nonnull
+    @NotNull
     private static final PerlinSimplexNoise windNoise = new PerlinSimplexNoise(new WorldgenRandom(298457L), ImmutableList.of(0));
 
     /* Wind */
@@ -195,7 +194,7 @@ public class BeachFloatEntity extends FurnitureEntity implements IEntityAddition
     /* Following three methods copied from EntityBoat for passenger updates */
 
     @Override
-    public void positionRider(@Nonnull Entity passenger) {
+    public void positionRider(@NotNull Entity passenger) {
         if (this.hasPassenger(passenger)) {
             // float yaw = this.rotationYaw;
 
@@ -262,7 +261,7 @@ public class BeachFloatEntity extends FurnitureEntity implements IEntityAddition
     }
 
     @Override
-    public void onPassengerTurned(@Nonnull Entity entityToUpdate) {
+    public void onPassengerTurned(@NotNull Entity entityToUpdate) {
         this.applyYawToEntity(entityToUpdate);
     }
 
@@ -359,7 +358,7 @@ public class BeachFloatEntity extends FurnitureEntity implements IEntityAddition
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.BEACH_FLOATS.get(DyeColor.byId(getColor().getId())).get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.BEACH_FLOATS.get(DyeColor.byId(getColor().getId())));
     }
 }

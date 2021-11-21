@@ -8,8 +8,7 @@ import net.tropicraft.Constants;
 import net.tropicraft.core.client.ClientSetup;
 import net.tropicraft.core.client.entity.model.KoaModel;
 import net.tropicraft.core.common.entity.passive.EntityKoaBase;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class KoaRenderer extends HumanoidMobRenderer<EntityKoaBase, KoaModel> {
 

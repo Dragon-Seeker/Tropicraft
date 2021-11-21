@@ -1,5 +1,7 @@
 package net.tropicraft.core.common.entity.passive;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -8,14 +10,13 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -25,25 +26,20 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.IForgeShearable;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.drinks.Drink;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.item.CocktailItem;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CowktailEntity extends Cow implements IForgeShearable {
+public class CowktailEntity extends Cow implements Shearable {
 	private static final EntityDataAccessor<String> COWKTAIL_TYPE = SynchedEntityData.defineId(CowktailEntity.class, EntityDataSerializers.STRING);
 
 	public CowktailEntity(EntityType<? extends CowktailEntity> type, Level worldIn) {
@@ -64,15 +60,15 @@ public class CowktailEntity extends Cow implements IForgeShearable {
 	@Override
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
-		if (itemstack.getItem() == TropicraftItems.BAMBOO_MUG.get() && !this.isBaby()) {
+		if (itemstack.getItem() == TropicraftItems.BAMBOO_MUG && !this.isBaby()) {
 			if (player.getAbilities().instabuild) {
 				itemstack.shrink(1);
 			}
 
-			final List<RegistryObject<CocktailItem>> cocktails = new ArrayList<>(TropicraftItems.COCKTAILS.values());
+			final List<CocktailItem> cocktails = new ArrayList<>(TropicraftItems.COCKTAILS.values());
 			// Remove generic cocktail from cowktail
-			cocktails.removeIf(cocktail -> cocktail.isPresent() && cocktail.get().getDrink() == Drink.COCKTAIL);
-			final ItemStack cocktailItem = new ItemStack(cocktails.get(random.nextInt(cocktails.size())).get());
+			cocktails.removeIf(cocktail -> player.getMainHandItem().getItem() instanceof CocktailItem && cocktail.getDrink() == Drink.COCKTAIL);
+			final ItemStack cocktailItem = new ItemStack(cocktails.get(random.nextInt(cocktails.size())));
 
 			if (itemstack.isEmpty()) {
 				player.setItemInHand(hand, cocktailItem);
@@ -112,7 +108,7 @@ public class CowktailEntity extends Cow implements IForgeShearable {
 
 	@Override
 	public CowktailEntity getBreedOffspring(ServerLevel world, AgeableMob ageable) {
-		CowktailEntity child = TropicraftEntities.COWKTAIL.get().create(this.level);
+		CowktailEntity child = TropicraftEntities.COWKTAIL.create(this.level);
 		child.setCowktailType(this.getOffspringType((CowktailEntity)ageable));
 		return child;
 	}
@@ -131,13 +127,13 @@ public class CowktailEntity extends Cow implements IForgeShearable {
 	}
 
 	@Override
-	public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
+	public boolean readyForShearing() {
 		return !this.isBaby();
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
-	public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
+	public void shear(SoundSource soundSource) {
 		java.util.List<ItemStack> ret = new java.util.ArrayList<>();
 		this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(0.5D), this.getZ(), 0.0D, 0.0D, 0.0D);
 		if (!this.level.isClientSide) {
@@ -156,7 +152,10 @@ public class CowktailEntity extends Cow implements IForgeShearable {
 			}
 			this.playSound(SoundEvents.MOOSHROOM_SHEAR, 1.0F, 1.0F);
 		}
-		return ret;
+
+		for(ItemStack item : ret) {
+			this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(1.0D), this.getZ(), item));
+		}
 	}
 
 	@Nullable
@@ -165,14 +164,15 @@ public class CowktailEntity extends Cow implements IForgeShearable {
 		return super.finalizeSpawn(world, difficultyInstance, spawnReason, data, nbt);
 	}
 
+	@Nullable
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(TropicraftItems.COWKTAIL_SPAWN_EGG.get());
+	public ItemStack getPickResult() {
+		return new ItemStack(TropicraftItems.COWKTAIL_SPAWN_EGG);
 	}
 
 	public enum Type {
-		IRIS("iris", TropicraftBlocks.IRIS.get().defaultBlockState().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)),
-		ANEMONE("anemone", TropicraftBlocks.FLOWERS.get(TropicraftFlower.ANEMONE).get().defaultBlockState());
+		IRIS("iris", TropicraftBlocks.IRIS.defaultBlockState().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)),
+		ANEMONE("anemone", TropicraftBlocks.FLOWERS.get(TropicraftFlower.ANEMONE).defaultBlockState());
 
 		private final String name;
 		private final BlockState renderState;
@@ -189,7 +189,7 @@ public class CowktailEntity extends Cow implements IForgeShearable {
 		/**
 		 * A block state that is rendered on the back of the mooshroom.
 		 */
-		@OnlyIn(Dist.CLIENT)
+		@Environment(EnvType.CLIENT)
 		public BlockState getRenderState() {
 			return this.renderState;
 		}

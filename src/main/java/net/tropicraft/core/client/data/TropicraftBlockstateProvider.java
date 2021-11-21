@@ -1,6 +1,7 @@
 package net.tropicraft.core.client.data;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
@@ -70,7 +71,7 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
         ModelFile dune2 = cubeTop(() -> TropicraftBlocks.PURIFIED_SAND, "dune2");
         ModelFile starfish = cubeTop(() -> TropicraftBlocks.PURIFIED_SAND, "starfish");
 
-        getVariantBuilder(TropicraftBlocks.PURIFIED_SAND.get())
+        getVariantBuilder(TropicraftBlocks.PURIFIED_SAND)
             .partialState().with(BlockTropicraftSand.UNDERWATER, false)
                 .addModels(allRotations(normal, false, 50))
                 .addModels(allYRotations(calcified, 0, false, 5))
@@ -289,16 +290,16 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
     }
 
     private String name(Supplier<? extends Block> block) {
-        return block.get().getRegistryName().getPath();
+        return Registry.BLOCK.getKey(block.get()).getPath();
     }
 
     private ResourceLocation blockTexture(Supplier<? extends Block> block) {
-        ResourceLocation base = block.get().getRegistryName();
+        ResourceLocation base = Registry.BLOCK.getKey(block.get());
         return new ResourceLocation(base.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + base.getPath());
     }
 
     private ResourceLocation itemTexture(Supplier<? extends ItemLike> item) {
-        ResourceLocation base = item.get().asItem().getRegistryName();
+        ResourceLocation base = Registry.ITEM.getKey(item.get().asItem());
         return new ResourceLocation(base.getNamespace(), ModelProvider.ITEM_FOLDER + "/" + base.getPath());
     }
 
@@ -381,7 +382,7 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
     }
 
     private void slabBlock(Supplier<? extends SlabBlock> block, Supplier<? extends Block> doubleslab, String side, String end) {
-        slabBlock(block.get(), doubleslab.get().getRegistryName(), modBlockLoc(side), modBlockLoc(end), modBlockLoc(end));
+        slabBlock(block.get(), Registry.BLOCK.getKey(doubleslab.get()), modBlockLoc(side), modBlockLoc(end), modBlockLoc(end));
     }
 
     private void plant(Supplier<? extends BushBlock> block) {
@@ -556,7 +557,7 @@ public class TropicraftBlockstateProvider extends BlockStateProvider {
 
     private void flowerPot(Supplier<? extends FlowerPotBlock> full, Supplier<? extends Block> empty, ResourceLocation particle) {
         Block flower = full.get().getContent();
-        boolean isVanilla = flower.getRegistryName().getNamespace().equals("minecraft");
+        boolean isVanilla = Registry.BLOCK.getKey(flower).getNamespace().equals("minecraft");
         String parent = flower == Blocks.AIR ? "flower_pot" : !isVanilla ? "flower_pot_cross" : ModelProvider.BLOCK_FOLDER + "/potted_" + name(() -> flower);
         BlockModelBuilder model = models().withExistingParent(name(full), parent)
                 .texture("flowerpot", blockTexture(empty))

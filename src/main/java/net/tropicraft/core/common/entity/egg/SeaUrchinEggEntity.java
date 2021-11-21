@@ -8,6 +8,7 @@ import net.minecraft.world.phys.HitResult;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.underdasea.SeaUrchinEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 public class SeaUrchinEggEntity extends EchinodermEggEntity {
 	public SeaUrchinEggEntity(final EntityType<? extends SeaUrchinEggEntity> type, Level world) {
@@ -21,11 +22,13 @@ public class SeaUrchinEggEntity extends EchinodermEggEntity {
 
 	@Override
 	public Entity onHatch() {
-		return new SeaUrchinEntity(TropicraftEntities.SEA_URCHIN.get(), level);
+		return new SeaUrchinEntity(TropicraftEntities.SEA_URCHIN, level);
 	}
 
+
+	@Nullable
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(TropicraftItems.SEA_URCHIN_SPAWN_EGG.get());
+	public ItemStack getPickResult() {
+		return new ItemStack(TropicraftItems.SEA_URCHIN_SPAWN_EGG);
 	}
 }

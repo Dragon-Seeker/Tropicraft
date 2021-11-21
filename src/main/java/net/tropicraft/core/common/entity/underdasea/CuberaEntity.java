@@ -47,7 +47,7 @@ public final class CuberaEntity extends AbstractFish {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.CUBERA_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.CUBERA_SPAWN_EGG);
     }
 }

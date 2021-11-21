@@ -12,13 +12,13 @@ public enum TropicraftToolTiers implements Tier {
         return Ingredient.of(Items.BAMBOO);
     }),
     ZIRCON(2, 200, 4.5f, 1f, 14, () -> {
-        return Ingredient.of(TropicraftItems.ZIRCON.get());
+        return Ingredient.of(TropicraftItems.ZIRCON);
     }),
     EUDIALYTE(2, 750, 6.5f, 2f, 14, () -> {
-        return Ingredient.of(TropicraftItems.EUDIALYTE.get());
+        return Ingredient.of(TropicraftItems.EUDIALYTE);
     }),
     ZIRCONIUM(3, 1800, 8.5f, 3f, 10, () -> {
-        return Ingredient.of(TropicraftItems.ZIRCONIUM.get());
+        return Ingredient.of(TropicraftItems.ZIRCONIUM);
     })
     ;
 

@@ -1,18 +1,17 @@
 package net.tropicraft.core.common.entity.underdasea;
 
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
+import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractTexturedFishEntity extends AbstractFish {
     private static final EntityDataAccessor<String> TEXTURE_NAME = SynchedEntityData.defineId(AbstractTexturedFishEntity.class, EntityDataSerializers.STRING);

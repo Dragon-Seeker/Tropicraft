@@ -20,11 +20,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class PineappleBlock extends TallFlowerBlock implements BonemealableBlock, IPlantable {
 

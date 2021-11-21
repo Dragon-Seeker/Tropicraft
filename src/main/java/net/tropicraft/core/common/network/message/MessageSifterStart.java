@@ -1,38 +1,45 @@
 package net.tropicraft.core.common.network.message;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
 import net.tropicraft.core.common.block.tileentity.SifterTileEntity;
-
-import java.util.function.Supplier;
 
 public class MessageSifterStart extends MessageTileEntity<SifterTileEntity> {
 
-	public MessageSifterStart() {
+	public MessageSifterStart(FriendlyByteBuf buf) {
 		super();
+		this.decode(buf);
 	}
 
 	public MessageSifterStart(SifterTileEntity sifter) {
 		super(sifter);
 	}
 
-	public static void encode(final MessageSifterStart message, final FriendlyByteBuf buf) {
-		MessageTileEntity.encode(message, buf);
+	public void encode(final FriendlyByteBuf buf) {
+		super.encode(buf);
 	}
 
-	public static MessageSifterStart decode(final FriendlyByteBuf buf) {
-		final MessageSifterStart message = new MessageSifterStart();
-		MessageTileEntity.decode(message, buf);
-		return message;
+	public void decode(final FriendlyByteBuf buf) {
+		super.decode(buf);
 	}
 
-	public static void handle(final MessageSifterStart message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> {
-			final SifterTileEntity sifter = message.getClientTileEntity();
-			if (sifter != null) {
-				sifter.startSifting();
-			}
-		});
-		ctx.get().setPacketHandled(true);
+	@Override
+	public void onMessage(Player playerEntity) {
+		Handler.onMessage(this);
 	}
+
+	public static class Handler {
+
+		public static boolean onMessage(MessageSifterStart message) {
+			Minecraft.getInstance().execute(() -> {
+				final SifterTileEntity sifter = message.getClientTileEntity();
+				if (sifter != null) {
+					sifter.startSifting();
+				}
+			});
+			return true;
+		}
+	}
+
 }

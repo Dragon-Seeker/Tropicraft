@@ -29,6 +29,10 @@ repositories {
         url 'https://repo.maven.apache.org/maven2'
         name 'Maven Central'
     }
+    maven {
+        name = "Ladysnake Mods"
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+    }
 
     jcenter()
     mavenCentral()
@@ -145,6 +149,9 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    modImplementation "io.github.onyxstudios:Cardinal-Components-API:3.1.1"
+    include "io.github.onyxstudios:Cardinal-Components-API:3.1.1"
 
     //annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }

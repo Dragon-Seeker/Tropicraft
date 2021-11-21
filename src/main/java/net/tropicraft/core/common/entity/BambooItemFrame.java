@@ -21,7 +21,7 @@ public class BambooItemFrame extends ItemFrame implements IEntityAdditionalSpawn
     }
 
     public BambooItemFrame(Level worldIn, BlockPos pos, Direction direction) {
-        this(TropicraftEntities.BAMBOO_ITEM_FRAME.get(), worldIn, pos, direction);
+        this(TropicraftEntities.BAMBOO_ITEM_FRAME, worldIn, pos, direction);
     }
 
     protected BambooItemFrame(final EntityType<? extends BambooItemFrame> type, final Level world, final BlockPos pos,
@@ -35,7 +35,7 @@ public class BambooItemFrame extends ItemFrame implements IEntityAdditionalSpawn
     protected void dropItem(Entity entityIn, boolean dropSelf) {
         super.dropItem(entityIn, false);
         if (dropSelf) {
-            this.spawnAtLocation(TropicraftItems.BAMBOO_ITEM_FRAME.get());
+            this.spawnAtLocation(TropicraftItems.BAMBOO_ITEM_FRAME);
         }
     }
 
@@ -57,7 +57,7 @@ public class BambooItemFrame extends ItemFrame implements IEntityAdditionalSpawn
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.BAMBOO_ITEM_FRAME.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.BAMBOO_ITEM_FRAME);
     }
 }

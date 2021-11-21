@@ -19,7 +19,7 @@ public class ExplodingCoconutEntity extends ThrowableItemProjectile {
     }
     
     public ExplodingCoconutEntity(Level world, LivingEntity thrower) {
-        super(TropicraftEntities.EXPLODING_COCONUT.get(), thrower, world);
+        super(TropicraftEntities.EXPLODING_COCONUT, thrower, world);
     }
 
     @Override
@@ -38,6 +38,6 @@ public class ExplodingCoconutEntity extends ThrowableItemProjectile {
 
     @Override
     protected Item getDefaultItem() {
-        return TropicraftItems.EXPLODING_COCONUT.get();
+        return TropicraftItems.EXPLODING_COCONUT;
     }
 }

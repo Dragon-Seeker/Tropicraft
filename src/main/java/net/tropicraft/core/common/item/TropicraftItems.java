@@ -2,19 +2,12 @@ package net.tropicraft.core.common.item;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tropicraft.Constants;
 import net.tropicraft.Tropicraft;
 import net.tropicraft.core.common.Foods;
@@ -33,198 +26,200 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-@EventBusSubscriber(modid = Constants.MODID, bus = Bus.MOD)
+//@EventBusSubscriber(modid = Constants.MODID, bus = Bus.MOD)
 public class TropicraftItems {
     
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MODID);
+    //public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MODID);
     
-    public static final RegistryObject<Item> AZURITE = register("azurite_gem", Builder.item());
-    public static final RegistryObject<Item> EUDIALYTE = register("eudialyte_gem", Builder.item());
-    public static final RegistryObject<Item> ZIRCON = register("zircon_gem", Builder.item());
-    public static final RegistryObject<Item> SHAKA = register("shaka_ingot", Builder.item());
-    public static final RegistryObject<Item> MANGANESE = register("manganese_ingot", Builder.item());
-    public static final RegistryObject<Item> ZIRCONIUM = register("zirconium_gem", Builder.item());
+    public static final Item AZURITE = register("azurite_gem", Builder.item());
+    public static final Item EUDIALYTE = register("eudialyte_gem", Builder.item());
+    public static final Item ZIRCON = register("zircon_gem", Builder.item());
+    public static final Item SHAKA = register("shaka_ingot", Builder.item());
+    public static final Item MANGANESE = register("manganese_ingot", Builder.item());
+    public static final Item ZIRCONIUM = register("zirconium_gem", Builder.item());
     
-    public static final Map<DyeColor, RegistryObject<FurnitureItem<UmbrellaEntity>>> UMBRELLAS = Arrays.stream(DyeColor.values())
-            .collect(Maps.<DyeColor, DyeColor,RegistryObject<FurnitureItem<UmbrellaEntity>>>toImmutableEnumMap(Function.identity(), c -> register(c.getSerializedName() + "_umbrella", Builder.umbrella(c))));
-    public static final Map<DyeColor, RegistryObject<FurnitureItem<ChairEntity>>> CHAIRS = Arrays.stream(DyeColor.values())
-            .collect(Maps.<DyeColor, DyeColor,RegistryObject<FurnitureItem<ChairEntity>>>toImmutableEnumMap(Function.identity(), c -> register(c.getSerializedName() + "_chair", Builder.chair(c))));
-    public static final Map<DyeColor, RegistryObject<FurnitureItem<BeachFloatEntity>>> BEACH_FLOATS = Arrays.stream(DyeColor.values())
-            .collect(Maps.<DyeColor, DyeColor,RegistryObject<FurnitureItem<BeachFloatEntity>>>toImmutableEnumMap(Function.identity(), c -> register(c.getSerializedName() + "_beach_float", Builder.beachFloat(c))));
+    public static final Map<DyeColor, FurnitureItem<UmbrellaEntity>> UMBRELLAS = Arrays.stream(DyeColor.values())
+            .collect(Maps.<DyeColor, DyeColor,FurnitureItem<UmbrellaEntity>>toImmutableEnumMap(Function.identity(), c -> register(c.getSerializedName() + "_umbrella", Builder.umbrella(c))));
+    public static final Map<DyeColor, FurnitureItem<ChairEntity>> CHAIRS = Arrays.stream(DyeColor.values())
+            .collect(Maps.<DyeColor, DyeColor,FurnitureItem<ChairEntity>>toImmutableEnumMap(Function.identity(), c -> register(c.getSerializedName() + "_chair", Builder.chair(c))));
+    public static final Map<DyeColor, FurnitureItem<BeachFloatEntity>> BEACH_FLOATS = Arrays.stream(DyeColor.values())
+            .collect(Maps.<DyeColor, DyeColor,FurnitureItem<BeachFloatEntity>>toImmutableEnumMap(Function.identity(), c -> register(c.getSerializedName() + "_beach_float", Builder.beachFloat(c))));
 
-    public static final RegistryObject<Item> BAMBOO_STICK = register("bamboo_stick", Builder.item());
+    public static final Item BAMBOO_STICK = register("bamboo_stick", Builder.item());
 
-    public static final RegistryObject<Item> BAMBOO_SPEAR = register(
+    public static final Item BAMBOO_SPEAR = register(
             "bamboo_spear", () -> new SpearItem(TropicraftToolTiers.BAMBOO, 3, -2.4F, new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)));
-    public static final RegistryObject<Item> SOLONOX_SHELL = register("solonox_shell", Builder.shell());
-    public static final RegistryObject<Item> FROX_CONCH = register("frox_conch", Builder.shell());
-    public static final RegistryObject<Item> PAB_SHELL = register("pab_shell", Builder.shell());
-    public static final RegistryObject<Item> RUBE_NAUTILUS = register("rube_nautilus", Builder.shell());
-    public static final RegistryObject<Item> STARFISH = register("starfish", Builder.shell());
-    public static final RegistryObject<Item> TURTLE_SHELL = register("turtle_shell", Builder.shell());
+    public static final Item SOLONOX_SHELL = register("solonox_shell", Builder.shell());
+    public static final Item FROX_CONCH = register("frox_conch", Builder.shell());
+    public static final Item PAB_SHELL = register("pab_shell", Builder.shell());
+    public static final Item RUBE_NAUTILUS = register("rube_nautilus", Builder.shell());
+    public static final Item STARFISH = register("starfish", Builder.shell());
+    public static final Item TURTLE_SHELL = register("turtle_shell", Builder.shell());
 
-    public static final RegistryObject<LoveTropicsShellItem> LOVE_TROPICS_SHELL = register(
+    public static final LoveTropicsShellItem LOVE_TROPICS_SHELL = register(
             "love_tropics_shell", () -> new LoveTropicsShellItem(new Item.Properties()));
-    public static final RegistryObject<Item> LEMON = register("lemon", Builder.food(Foods.LEMON));
-    public static final RegistryObject<Item> LIME = register("lime", Builder.food(Foods.LIME));
-    public static final RegistryObject<Item> GRAPEFRUIT = register("grapefruit", Builder.food(Foods.GRAPEFRUIT));
-    public static final RegistryObject<Item> ORANGE = register("orange", Builder.food(Foods.ORANGE));
-    public static final RegistryObject<Item> PINEAPPLE_CUBES = register("pineapple_cubes", Builder.food(Foods.PINEAPPLE_CUBES));
-    public static final RegistryObject<Item> COCONUT_CHUNK = register("coconut_chunk", Builder.food(Foods.COCONUT_CHUNK));
-    public static final RegistryObject<ItemNameBlockItem> RAW_COFFEE_BEAN = register("raw_coffee_bean", Builder.blockNamedItem(TropicraftBlocks.COFFEE_BUSH));
-    public static final RegistryObject<Item> ROASTED_COFFEE_BEAN = register("roasted_coffee_bean", Builder.item());
-    public static final RegistryObject<Item> COFFEE_BERRY = register("coffee_berry", Builder.item());
-    public static final RegistryObject<Item> BAMBOO_MUG = register("bamboo_mug", Builder.item());
+    public static final Item LEMON = register("lemon", Builder.food(Foods.LEMON));
+    public static final Item LIME = register("lime", Builder.food(Foods.LIME));
+    public static final Item GRAPEFRUIT = register("grapefruit", Builder.food(Foods.GRAPEFRUIT));
+    public static final Item ORANGE = register("orange", Builder.food(Foods.ORANGE));
+    public static final Item PINEAPPLE_CUBES = register("pineapple_cubes", Builder.food(Foods.PINEAPPLE_CUBES));
+    public static final Item COCONUT_CHUNK = register("coconut_chunk", Builder.food(Foods.COCONUT_CHUNK));
+    public static final ItemNameBlockItem RAW_COFFEE_BEAN = register("raw_coffee_bean", Builder.blockNamedItem(() -> TropicraftBlocks.COFFEE_BUSH));
+    public static final Item ROASTED_COFFEE_BEAN = register("roasted_coffee_bean", Builder.item());
+    public static final Item COFFEE_BERRY = register("coffee_berry", Builder.item());
+    public static final Item BAMBOO_MUG = register("bamboo_mug", Builder.item());
 
     // Cocktails
-    public static final ImmutableMap<Drink, RegistryObject<CocktailItem>> COCKTAILS = ImmutableMap.copyOf(
+    public static final ImmutableMap<Drink, CocktailItem> COCKTAILS = ImmutableMap.copyOf(
             Drink.DRINKS.values().stream()
                 .collect(Collectors.toMap(Function.identity(), d -> register(d.name, Builder.cocktail(d)))));
 
-    public static final RegistryObject<Item> WHITE_PEARL = register("white_pearl", Builder.item());
-    public static final RegistryObject<Item> BLACK_PEARL = register("black_pearl", Builder.item());
-    public static final RegistryObject<Item> SCALE = register("scale", Builder.item());
-    public static final RegistryObject<Item> NIGEL_STACHE = register(
+    public static final Item WHITE_PEARL = register("white_pearl", Builder.item());
+    public static final Item BLACK_PEARL = register("black_pearl", Builder.item());
+    public static final Item SCALE = register("scale", Builder.item());
+    public static final Item NIGEL_STACHE = register(
             "nigel_stache", () -> new NigelStacheItem(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)));
 
-    public static final RegistryObject<Item> FRESH_MARLIN = register("fresh_marlin", Builder.food(Foods.FRESH_MARLIN));
-    public static final RegistryObject<Item> SEARED_MARLIN = register("seared_marlin", Builder.food(Foods.SEARED_MARLIN));
-    public static final RegistryObject<Item> RAW_RAY = register("raw_ray", Builder.food(Foods.RAW_RAY));
-    public static final RegistryObject<Item> COOKED_RAY = register("cooked_ray", Builder.food(Foods.COOKED_RAY));
-    public static final RegistryObject<Item> FROG_LEG = register("frog_leg", Builder.food(Foods.RAW_FROG_LEG));
-    public static final RegistryObject<Item> COOKED_FROG_LEG = register("cooked_frog_leg", Builder.food(Foods.COOKED_FROG_LEG));
-    public static final RegistryObject<Item> SEA_URCHIN_ROE = register("sea_urchin_roe", Builder.food(Foods.SEA_URCHIN_ROE));
-    public static final RegistryObject<Item> TOASTED_NORI = register("toasted_nori", Builder.food(Foods.TOASTED_NORI));
-    public static final RegistryObject<Item> RAW_FISH = register("raw_fish", Builder.food(Foods.RAW_FISH));
-    public static final RegistryObject<Item> COOKED_FISH = register("cooked_fish", Builder.food(Foods.COOKED_FISH));
-    public static final RegistryObject<Item> POISON_FROG_SKIN = register("poison_frog_skin", Builder.item());
+    public static final Item FRESH_MARLIN = register("fresh_marlin", Builder.food(Foods.FRESH_MARLIN));
+    public static final Item SEARED_MARLIN = register("seared_marlin", Builder.food(Foods.SEARED_MARLIN));
+    public static final Item RAW_RAY = register("raw_ray", Builder.food(Foods.RAW_RAY));
+    public static final Item COOKED_RAY = register("cooked_ray", Builder.food(Foods.COOKED_RAY));
+    public static final Item FROG_LEG = register("frog_leg", Builder.food(Foods.RAW_FROG_LEG));
+    public static final Item COOKED_FROG_LEG = register("cooked_frog_leg", Builder.food(Foods.COOKED_FROG_LEG));
+    public static final Item SEA_URCHIN_ROE = register("sea_urchin_roe", Builder.food(Foods.SEA_URCHIN_ROE));
+    public static final Item TOASTED_NORI = register("toasted_nori", Builder.food(Foods.TOASTED_NORI));
+    public static final Item RAW_FISH = register("raw_fish", Builder.food(Foods.RAW_FISH));
+    public static final Item COOKED_FISH = register("cooked_fish", Builder.food(Foods.COOKED_FISH));
+    public static final Item POISON_FROG_SKIN = register("poison_frog_skin", Builder.item());
     
-    public static final RegistryObject<Item> IGUANA_LEATHER = register("iguana_leather", Builder.item());
-    public static final RegistryObject<Item> TROPICAL_FERTILIZER = register("tropical_fertilizer", Builder.item(TropicalFertilizerItem::new));
+    public static final Item IGUANA_LEATHER = register("iguana_leather", Builder.item());
+    public static final Item TROPICAL_FERTILIZER = register("tropical_fertilizer", Builder.item(TropicalFertilizerItem::new));
 
-    public static final RegistryObject<Item> BAMBOO_ITEM_FRAME = register(
+    public static final Item BAMBOO_ITEM_FRAME = register(
             "bamboo_item_frame", () -> new BambooItemFrameItem(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)));
     
-    public static final ImmutableMap<RecordMusic, RegistryObject<TropicalMusicDiscItem>> MUSIC_DISCS = Arrays.stream(RecordMusic.values())
-            .collect(Maps.<RecordMusic, RecordMusic, RegistryObject<TropicalMusicDiscItem>>toImmutableEnumMap(Function.identity(), type -> register("music_disc_" + type.name().toLowerCase(Locale.ROOT), Builder.musicDisc(type))));
+    public static final ImmutableMap<RecordMusic, TropicalMusicDiscItem> MUSIC_DISCS = Arrays.stream(RecordMusic.values())
+            .collect(Maps.<RecordMusic, RecordMusic, TropicalMusicDiscItem>toImmutableEnumMap(Function.identity(), type -> register("music_disc_" + type.name().toLowerCase(Locale.ROOT), Builder.musicDisc(type))));
 
-    public static final RegistryObject<Item> TROPICAL_FISH_BUCKET = register("tropical_fish_bucket", Builder.fishBucket(TropicraftEntities.TROPICAL_FISH));
-    public static final RegistryObject<Item> SARDINE_BUCKET = register("sardine_bucket", Builder.fishBucket(TropicraftEntities.RIVER_SARDINE));
-    public static final RegistryObject<Item> PIRANHA_BUCKET = register("piranha_bucket", Builder.fishBucket(TropicraftEntities.PIRANHA));
+    public static final Item TROPICAL_FISH_BUCKET = register("tropical_fish_bucket", Builder.fishBucket(() -> TropicraftEntities.TROPICAL_FISH));
+    public static final Item SARDINE_BUCKET = register("sardine_bucket", Builder.fishBucket(() -> TropicraftEntities.RIVER_SARDINE));
+    public static final Item PIRANHA_BUCKET = register("piranha_bucket", Builder.fishBucket(() -> TropicraftEntities.PIRANHA));
 
-    public static final RegistryObject<Item> KOA_SPAWN_EGG = register("koa_spawn_egg", Builder.spawnEgg(TropicraftEntities.KOA_HUNTER));
-    public static final RegistryObject<Item> TROPICREEPER_SPAWN_EGG = register("tropicreeper_spawn_egg", Builder.spawnEgg(TropicraftEntities.TROPI_CREEPER));
-    public static final RegistryObject<Item> IGUANA_SPAWN_EGG = register("iguana_spawn_egg", Builder.spawnEgg(TropicraftEntities.IGUANA));
-    public static final RegistryObject<Item> TROPISKELLY_SPAWN_EGG = register("tropiskelly_spawn_egg", Builder.spawnEgg(TropicraftEntities.TROPI_SKELLY));
-    public static final RegistryObject<Item> EIH_SPAWN_EGG = register("eih_spawn_egg", Builder.spawnEgg(TropicraftEntities.EIH));
-    public static final RegistryObject<Item> SEA_TURTLE_SPAWN_EGG = register("sea_turtle_spawn_egg", Builder.spawnEgg(TropicraftEntities.SEA_TURTLE));
-    public static final RegistryObject<Item> MARLIN_SPAWN_EGG = register("marlin_spawn_egg", Builder.spawnEgg(TropicraftEntities.MARLIN));
-    public static final RegistryObject<Item> FAILGULL_SPAWN_EGG = register("failgull_spawn_egg", Builder.spawnEgg(TropicraftEntities.FAILGULL));
-    public static final RegistryObject<Item> DOLPHIN_SPAWN_EGG = register("dolphin_spawn_egg", Builder.spawnEgg(TropicraftEntities.DOLPHIN));
-    public static final RegistryObject<Item> SEAHORSE_SPAWN_EGG = register("seahorse_spawn_egg", Builder.spawnEgg(TropicraftEntities.SEAHORSE));
-    public static final RegistryObject<Item> TREE_FROG_SPAWN_EGG = register("tree_frog_spawn_egg", Builder.spawnEgg(TropicraftEntities.TREE_FROG));
-    public static final RegistryObject<Item> SEA_URCHIN_SPAWN_EGG = register("sea_urchin_spawn_egg", Builder.spawnEgg(TropicraftEntities.SEA_URCHIN));
-    public static final RegistryObject<Item> V_MONKEY_SPAWN_EGG = register("v_monkey_spawn_egg", Builder.spawnEgg(TropicraftEntities.V_MONKEY));
-    public static final RegistryObject<Item> PIRANHA_SPAWN_EGG = register("piranha_spawn_egg", Builder.spawnEgg(TropicraftEntities.PIRANHA));
-    public static final RegistryObject<Item> SARDINE_SPAWN_EGG = register("sardine_spawn_egg", Builder.spawnEgg(TropicraftEntities.RIVER_SARDINE));
-    public static final RegistryObject<Item> TROPICAL_FISH_SPAWN_EGG = register("tropical_fish_spawn_egg", Builder.spawnEgg(TropicraftEntities.TROPICAL_FISH));
-    public static final RegistryObject<Item> EAGLE_RAY_SPAWN_EGG = register("eagle_ray_spawn_egg", Builder.spawnEgg(TropicraftEntities.EAGLE_RAY));
-    public static final RegistryObject<Item> TROPI_SPIDER_SPAWN_EGG = register("tropi_spider_spawn_egg", Builder.spawnEgg(TropicraftEntities.TROPI_SPIDER));
-    public static final RegistryObject<Item> ASHEN_SPAWN_EGG = register("ashen_spawn_egg", Builder.spawnEgg(TropicraftEntities.ASHEN));
-    public static final RegistryObject<Item> HAMMERHEAD_SPAWN_EGG = register("hammerhead_spawn_egg", Builder.spawnEgg(TropicraftEntities.HAMMERHEAD));
-    public static final RegistryObject<Item> COWKTAIL_SPAWN_EGG = register("cowktail_spawn_egg", Builder.spawnEgg(TropicraftEntities.COWKTAIL));
-    public static final RegistryObject<Item> MAN_O_WAR_SPAWN_EGG = register("man_o_war_spawn_egg", Builder.spawnEgg(TropicraftEntities.MAN_O_WAR));
-    public static final RegistryObject<Item> TROPIBEE_SPAWN_EGG = register("tropibee_spawn_egg", Builder.spawnEgg(TropicraftEntities.TROPI_BEE));
-    public static final RegistryObject<Item> TAPIR_SPAWN_EGG = register("tapir_spawn_egg", Builder.spawnEgg(TropicraftEntities.TAPIR));
-    public static final RegistryObject<Item> JAGUAR_SPAWN_EGG = register("jaguar_spawn_egg", Builder.spawnEgg(TropicraftEntities.JAGUAR));
-    public static final RegistryObject<Item> BROWN_BASILISK_LIZARD_SPAWN_EGG = register("brown_basilisk_lizard_spawn_egg", Builder.spawnEgg(TropicraftEntities.BROWN_BASILISK_LIZARD));
-    public static final RegistryObject<Item> GREEN_BASILISK_LIZARD_SPAWN_EGG = register("green_basilisk_lizard_spawn_egg", Builder.spawnEgg(TropicraftEntities.GREEN_BASILISK_LIZARD));
-    public static final RegistryObject<Item> HUMMINGBIRD_SPAWN_EGG = register("hummingbird_spawn_egg", Builder.spawnEgg(TropicraftEntities.HUMMINGBIRD));
-    public static final RegistryObject<Item> FIDDLER_CRAB_SPAWN_EGG = register("fiddler_crab_spawn_egg", Builder.spawnEgg(TropicraftEntities.FIDDLER_CRAB));
-    public static final RegistryObject<Item> SPIDER_MONKEY_SPAWN_EGG = register("spider_monkey_spawn_egg", Builder.spawnEgg(TropicraftEntities.SPIDER_MONKEY));
-    public static final RegistryObject<Item> WHITE_LIPPED_PECCARY_SPAWN_EGG = register("white_lipped_peccary_spawn_egg", Builder.spawnEgg(TropicraftEntities.WHITE_LIPPED_PECCARY));
-    public static final RegistryObject<Item> CUBERA_SPAWN_EGG = register("cubera_spawn_egg", Builder.spawnEgg(TropicraftEntities.CUBERA));
+    public static final Item KOA_SPAWN_EGG = register("koa_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.KOA_HUNTER));
+    public static final Item TROPICREEPER_SPAWN_EGG = register("tropicreeper_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.TROPI_CREEPER));
+    public static final Item IGUANA_SPAWN_EGG = register("iguana_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.IGUANA));
+    public static final Item TROPISKELLY_SPAWN_EGG = register("tropiskelly_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.TROPI_SKELLY));
+    public static final Item EIH_SPAWN_EGG = register("eih_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.EIH));
+    public static final Item SEA_TURTLE_SPAWN_EGG = register("sea_turtle_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.SEA_TURTLE));
+    public static final Item MARLIN_SPAWN_EGG = register("marlin_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.MARLIN));
+    public static final Item FAILGULL_SPAWN_EGG = register("failgull_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.FAILGULL));
+    public static final Item DOLPHIN_SPAWN_EGG = register("dolphin_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.DOLPHIN));
+    public static final Item SEAHORSE_SPAWN_EGG = register("seahorse_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.SEAHORSE));
+    public static final Item TREE_FROG_SPAWN_EGG = register("tree_frog_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.TREE_FROG));
+    public static final Item SEA_URCHIN_SPAWN_EGG = register("sea_urchin_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.SEA_URCHIN));
+    public static final Item V_MONKEY_SPAWN_EGG = register("v_monkey_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.V_MONKEY));
+    public static final Item PIRANHA_SPAWN_EGG = register("piranha_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.PIRANHA));
+    public static final Item SARDINE_SPAWN_EGG = register("sardine_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.RIVER_SARDINE));
+    public static final Item TROPICAL_FISH_SPAWN_EGG = register("tropical_fish_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.TROPICAL_FISH));
+    public static final Item EAGLE_RAY_SPAWN_EGG = register("eagle_ray_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.EAGLE_RAY));
+    public static final Item TROPI_SPIDER_SPAWN_EGG = register("tropi_spider_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.TROPI_SPIDER));
+    public static final Item ASHEN_SPAWN_EGG = register("ashen_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.ASHEN));
+    public static final Item HAMMERHEAD_SPAWN_EGG = register("hammerhead_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.HAMMERHEAD));
+    public static final Item COWKTAIL_SPAWN_EGG = register("cowktail_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.COWKTAIL));
+    public static final Item MAN_O_WAR_SPAWN_EGG = register("man_o_war_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.MAN_O_WAR));
+    public static final Item TROPIBEE_SPAWN_EGG = register("tropibee_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.TROPI_BEE));
+    public static final Item TAPIR_SPAWN_EGG = register("tapir_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.TAPIR));
+    public static final Item JAGUAR_SPAWN_EGG = register("jaguar_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.JAGUAR));
+    public static final Item BROWN_BASILISK_LIZARD_SPAWN_EGG = register("brown_basilisk_lizard_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.BROWN_BASILISK_LIZARD));
+    public static final Item GREEN_BASILISK_LIZARD_SPAWN_EGG = register("green_basilisk_lizard_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.GREEN_BASILISK_LIZARD));
+    public static final Item HUMMINGBIRD_SPAWN_EGG = register("hummingbird_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.HUMMINGBIRD));
+    public static final Item FIDDLER_CRAB_SPAWN_EGG = register("fiddler_crab_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.FIDDLER_CRAB));
+    public static final Item SPIDER_MONKEY_SPAWN_EGG = register("spider_monkey_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.SPIDER_MONKEY));
+    public static final Item WHITE_LIPPED_PECCARY_SPAWN_EGG = register("white_lipped_peccary_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.WHITE_LIPPED_PECCARY));
+    public static final Item CUBERA_SPAWN_EGG = register("cubera_spawn_egg", Builder.spawnEgg(() -> TropicraftEntities.CUBERA));
 
-    public static final ImmutableMap<AshenMasks, RegistryObject<AshenMaskItem>> ASHEN_MASKS = Arrays.stream(AshenMasks.values())
-            .collect(Maps.<AshenMasks, AshenMasks, RegistryObject<AshenMaskItem>>toImmutableEnumMap(Function.identity(), type -> register("ashen_mask_" + type.name().toLowerCase(Locale.ROOT), Builder.mask(type))));
+    public static final ImmutableMap<AshenMasks, AshenMaskItem> ASHEN_MASKS = Arrays.stream(AshenMasks.values())
+            .collect(Maps.<AshenMasks, AshenMasks, AshenMaskItem>toImmutableEnumMap(Function.identity(), type -> register("ashen_mask_" + type.name().toLowerCase(Locale.ROOT), Builder.mask(type))));
 
-    public static final RegistryObject<Item> DAGGER = register(
+    public static final Item DAGGER = register(
             "dagger", () -> new DaggerItem(TropicraftToolTiers.ZIRCON, new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP).stacksTo(1)));
 
-    public static final RegistryObject<Item> BLOW_GUN = register(
+    public static final Item BLOW_GUN = register(
             "blow_gun", () -> new BlowGunItem(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP).stacksTo(1)));
 
     // TODO add zirconium tools
 
-    public static final RegistryObject<Item> ZIRCON_HOE = register("zircon_hoe", Builder.hoe(TropicraftToolTiers.ZIRCON));
-    public static final RegistryObject<Item> ZIRCONIUM_HOE = register("zirconium_hoe", Builder.hoe(TropicraftToolTiers.ZIRCONIUM));
-    public static final RegistryObject<Item> EUDIALYTE_HOE = register("eudialyte_hoe", Builder.hoe(TropicraftToolTiers.EUDIALYTE));
+    public static final Item ZIRCON_HOE = register("zircon_hoe", Builder.hoe(TropicraftToolTiers.ZIRCON));
+    public static final Item ZIRCONIUM_HOE = register("zirconium_hoe", Builder.hoe(TropicraftToolTiers.ZIRCONIUM));
+    public static final Item EUDIALYTE_HOE = register("eudialyte_hoe", Builder.hoe(TropicraftToolTiers.EUDIALYTE));
 
-    public static final RegistryObject<Item> ZIRCON_AXE = register("zircon_axe", Builder.axe(TropicraftToolTiers.ZIRCON));
-    public static final RegistryObject<Item> ZIRCONIUM_AXE = register("zirconium_axe", Builder.axe(TropicraftToolTiers.ZIRCONIUM));
-    public static final RegistryObject<Item> EUDIALYTE_AXE = register("eudialyte_axe", Builder.axe(TropicraftToolTiers.EUDIALYTE));
+    public static final Item ZIRCON_AXE = register("zircon_axe", Builder.axe(TropicraftToolTiers.ZIRCON));
+    public static final Item ZIRCONIUM_AXE = register("zirconium_axe", Builder.axe(TropicraftToolTiers.ZIRCONIUM));
+    public static final Item EUDIALYTE_AXE = register("eudialyte_axe", Builder.axe(TropicraftToolTiers.EUDIALYTE));
 
-    public static final RegistryObject<Item> ZIRCON_PICKAXE = register("zircon_pickaxe", Builder.pickaxe(TropicraftToolTiers.ZIRCON));
-    public static final RegistryObject<Item> ZIRCONIUM_PICKAXE = register("zirconium_pickaxe", Builder.pickaxe(TropicraftToolTiers.ZIRCONIUM));
-    public static final RegistryObject<Item> EUDIALYTE_PICKAXE = register("eudialyte_pickaxe", Builder.pickaxe(TropicraftToolTiers.EUDIALYTE));
+    public static final Item ZIRCON_PICKAXE = register("zircon_pickaxe", Builder.pickaxe(TropicraftToolTiers.ZIRCON));
+    public static final Item ZIRCONIUM_PICKAXE = register("zirconium_pickaxe", Builder.pickaxe(TropicraftToolTiers.ZIRCONIUM));
+    public static final Item EUDIALYTE_PICKAXE = register("eudialyte_pickaxe", Builder.pickaxe(TropicraftToolTiers.EUDIALYTE));
 
-    public static final RegistryObject<Item> ZIRCON_SHOVEL = register("zircon_shovel", Builder.shovel(TropicraftToolTiers.ZIRCON));
-    public static final RegistryObject<Item> ZIRCONIUM_SHOVEL = register("zirconium_shovel", Builder.shovel(TropicraftToolTiers.ZIRCONIUM));
-    public static final RegistryObject<Item> EUDIALYTE_SHOVEL = register("eudialyte_shovel", Builder.shovel(TropicraftToolTiers.EUDIALYTE));
+    public static final Item ZIRCON_SHOVEL = register("zircon_shovel", Builder.shovel(TropicraftToolTiers.ZIRCON));
+    public static final Item ZIRCONIUM_SHOVEL = register("zirconium_shovel", Builder.shovel(TropicraftToolTiers.ZIRCONIUM));
+    public static final Item EUDIALYTE_SHOVEL = register("eudialyte_shovel", Builder.shovel(TropicraftToolTiers.EUDIALYTE));
 
-    public static final RegistryObject<Item> ZIRCON_SWORD = register("zircon_sword", Builder.sword(TropicraftToolTiers.ZIRCON));
-    public static final RegistryObject<Item> ZIRCONIUM_SWORD = register("zirconium_sword", Builder.sword(TropicraftToolTiers.ZIRCONIUM));
-    public static final RegistryObject<Item> EUDIALYTE_SWORD = register("eudialyte_sword", Builder.sword(TropicraftToolTiers.EUDIALYTE));
+    public static final Item ZIRCON_SWORD = register("zircon_sword", Builder.sword(TropicraftToolTiers.ZIRCON));
+    public static final Item ZIRCONIUM_SWORD = register("zirconium_sword", Builder.sword(TropicraftToolTiers.ZIRCONIUM));
+    public static final Item EUDIALYTE_SWORD = register("eudialyte_sword", Builder.sword(TropicraftToolTiers.EUDIALYTE));
 
-    public static final RegistryObject<Item> FIRE_BOOTS = register("fire_boots", Builder.fireArmor(EquipmentSlot.FEET));
-    public static final RegistryObject<Item> FIRE_LEGGINGS = register("fire_leggings", Builder.fireArmor(EquipmentSlot.LEGS));
-    public static final RegistryObject<Item> FIRE_CHESTPLATE = register("fire_chestplate", Builder.fireArmor(EquipmentSlot.CHEST));
-    public static final RegistryObject<Item> FIRE_HELMET = register("fire_helmet", Builder.fireArmor(EquipmentSlot.HEAD));
+    public static final Item FIRE_BOOTS = register("fire_boots", Builder.fireArmor(EquipmentSlot.FEET));
+    public static final Item FIRE_LEGGINGS = register("fire_leggings", Builder.fireArmor(EquipmentSlot.LEGS));
+    public static final Item FIRE_CHESTPLATE = register("fire_chestplate", Builder.fireArmor(EquipmentSlot.CHEST));
+    public static final Item FIRE_HELMET = register("fire_helmet", Builder.fireArmor(EquipmentSlot.HEAD));
 
-    public static final RegistryObject<Item> SCALE_BOOTS = register("scale_boots", Builder.scaleArmor(EquipmentSlot.FEET));
-    public static final RegistryObject<Item> SCALE_LEGGINGS = register("scale_leggings", Builder.scaleArmor(EquipmentSlot.LEGS));
-    public static final RegistryObject<Item> SCALE_CHESTPLATE = register("scale_chestplate", Builder.scaleArmor(EquipmentSlot.CHEST));
-    public static final RegistryObject<Item> SCALE_HELMET = register("scale_helmet", Builder.scaleArmor(EquipmentSlot.HEAD));
+    public static final Item SCALE_BOOTS = register("scale_boots", Builder.scaleArmor(EquipmentSlot.FEET));
+    public static final Item SCALE_LEGGINGS = register("scale_leggings", Builder.scaleArmor(EquipmentSlot.LEGS));
+    public static final Item SCALE_CHESTPLATE = register("scale_chestplate", Builder.scaleArmor(EquipmentSlot.CHEST));
+    public static final Item SCALE_HELMET = register("scale_helmet", Builder.scaleArmor(EquipmentSlot.HEAD));
     
-    public static final RegistryObject<ScubaGogglesItem> YELLOW_SCUBA_GOGGLES = register("yellow_scuba_goggles", Builder.scubaGoggles(ScubaType.YELLOW));
-    public static final RegistryObject<ScubaHarnessItem> YELLOW_SCUBA_HARNESS = register("yellow_scuba_harness", Builder.scubaHarness(ScubaType.YELLOW));
-    public static final RegistryObject<ScubaFlippersItem> YELLOW_SCUBA_FLIPPERS = register("yellow_scuba_flippers", Builder.scubaFlippers(ScubaType.YELLOW));
-    public static final RegistryObject<ScubaGogglesItem> PINK_SCUBA_GOGGLES = register("pink_scuba_goggles", Builder.scubaGoggles(ScubaType.PINK));
-    public static final RegistryObject<ScubaHarnessItem> PINK_SCUBA_HARNESS = register("pink_scuba_harness", Builder.scubaHarness(ScubaType.PINK));
-    public static final RegistryObject<ScubaFlippersItem> PINK_SCUBA_FLIPPERS = register("pink_scuba_flippers", Builder.scubaFlippers(ScubaType.PINK));
+    public static final ScubaGogglesItem YELLOW_SCUBA_GOGGLES = register("yellow_scuba_goggles", Builder.scubaGoggles(ScubaType.YELLOW));
+    public static final ScubaHarnessItem YELLOW_SCUBA_HARNESS = register("yellow_scuba_harness", Builder.scubaHarness(ScubaType.YELLOW));
+    public static final ScubaFlippersItem YELLOW_SCUBA_FLIPPERS = register("yellow_scuba_flippers", Builder.scubaFlippers(ScubaType.YELLOW));
+    public static final ScubaGogglesItem PINK_SCUBA_GOGGLES = register("pink_scuba_goggles", Builder.scubaGoggles(ScubaType.PINK));
+    public static final ScubaHarnessItem PINK_SCUBA_HARNESS = register("pink_scuba_harness", Builder.scubaHarness(ScubaType.PINK));
+    public static final ScubaFlippersItem PINK_SCUBA_FLIPPERS = register("pink_scuba_flippers", Builder.scubaFlippers(ScubaType.PINK));
     
-    public static final RegistryObject<PonyBottleItem> YELLOW_PONY_BOTTLE = register("yellow_pony_bottle", Builder.item(PonyBottleItem::new, Builder.getDefaultProperties().stacksTo(1).durability(32)));
-    public static final RegistryObject<PonyBottleItem> PINK_PONY_BOTTLE = register("pink_pony_bottle", Builder.item(PonyBottleItem::new, Builder.getDefaultProperties().stacksTo(1).durability(32)));
+    public static final PonyBottleItem YELLOW_PONY_BOTTLE = register("yellow_pony_bottle", Builder.item(PonyBottleItem::new, Builder.getDefaultProperties().stacksTo(1).durability(32)));
+    public static final PonyBottleItem PINK_PONY_BOTTLE = register("pink_pony_bottle", Builder.item(PonyBottleItem::new, Builder.getDefaultProperties().stacksTo(1).durability(32)));
 
-    public static final RegistryObject<Item> WATER_WAND = register(
+    public static final Item WATER_WAND = register(
             "water_wand", () -> new WaterWandItem(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP).stacksTo(1).durability(2000)));
 
-    public static final RegistryObject<Item> EXPLODING_COCONUT = register(
+    public static final Item EXPLODING_COCONUT = register(
             "exploding_coconut", () -> new ExplodingCoconutItem(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)));
 
-    public static final RegistryObject<Item> FISHING_NET = register("fishing_net", () -> new Item(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP).stacksTo(1)));
+    public static final Item FISHING_NET = register("fishing_net", () -> new Item(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP).stacksTo(1)));
 
-    public static final RegistryObject<Item> PIANGUAS = register("pianguas", () -> new Item(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)));
+    public static final Item PIANGUAS = register("pianguas", () -> new Item(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)));
 
-    private static <T extends Item> RegistryObject<T> register(final String name, final Supplier<T> sup) {
-        return ITEMS.register(name, sup);
+    private static <T extends Item> T register(final String name, final Supplier<T> sup) {
+        return Registry.register(Registry.ITEM, new ResourceLocation(Constants.MODID, name), sup.get());
     }
     
-    @SubscribeEvent
-    public static void onItemRegister(RegistryEvent.Register<Item> event) {
-        ForgeRegistries.BLOCKS.getValues().stream()
-            .filter(b -> b instanceof FlowerPotBlock)
-            .map(b -> (FlowerPotBlock) b)
-            .forEach(b -> {
-                if (b.getEmptyPot().getRegistryName().equals(TropicraftBlocks.BAMBOO_FLOWER_POT.getId()) && b.getEmptyPot() != b) {
-                    addPlant(TropicraftBlocks.BAMBOO_FLOWER_POT.get(), b);
-                } else if (b.getContent().getRegistryName().getNamespace().equals(Constants.MODID)) {
-                    addPlant((FlowerPotBlock) Blocks.FLOWER_POT, b);
-                }
-            });
-    }
-    
-    private static void addPlant(FlowerPotBlock empty, FlowerPotBlock full) {
-        empty.addPlant(full.getContent().getRegistryName(), full.delegate);
-    }
+//    @SubscribeEvent
+//    public static void onItemRegister(RegistryEvent.Register<Item> event) {
+//        ForgeRegistries.BLOCKS.getValues().stream()
+//            .filter(b -> b instanceof FlowerPotBlock)
+//            .map(b -> (FlowerPotBlock) b)
+//            .forEach(b -> {
+//                if (b.getEmptyPot().getRegistryName().equals(TropicraftBlocks.BAMBOO_FLOWER_POT.getId()) && b.getEmptyPot() != b) {
+//                    addPlant(TropicraftBlocks.BAMBOO_FLOWER_POT.get(), b);
+//                } else if (b.getContent().getRegistryName().getNamespace().equals(Constants.MODID)) {
+//                    addPlant((FlowerPotBlock) Blocks.FLOWER_POT, b);
+//                }
+//            });
+//    }
+//
+//    private static void addPlant(FlowerPotBlock empty, FlowerPotBlock full) {
+//        empty.addPlant(full.getContent().getRegistryName(), full.delegate);
+//    }
+
+    public static void init(){}
 }

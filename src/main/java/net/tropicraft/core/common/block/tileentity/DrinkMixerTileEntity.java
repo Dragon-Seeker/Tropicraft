@@ -22,9 +22,9 @@ import net.tropicraft.core.common.item.CocktailItem;
 import net.tropicraft.core.common.network.TropicraftPackets;
 import net.tropicraft.core.common.network.message.MessageMixerInventory;
 import net.tropicraft.core.common.network.message.MessageMixerStart;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,13 +41,13 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
     public ItemStack result = ItemStack.EMPTY;
 
     public DrinkMixerTileEntity(BlockPos pos, BlockState blockState) {
-        super(TropicraftTileEntityTypes.DRINK_MIXER.get(), pos, blockState);
+        super(TropicraftTileEntityTypes.DRINK_MIXER, pos, blockState);
         mixing = false;
         ingredients = NonNullList.withSize(MAX_NUM_INGREDIENTS, ItemStack.EMPTY);
     }
 
     @Override
-    public void load(@Nonnull CompoundTag nbt) {
+    public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
         ticks = nbt.getInt("MixTicks");
         mixing = nbt.getBoolean("Mixing");
@@ -64,7 +64,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
     }
 
     @Override
-    public @Nonnull CompoundTag save(@Nonnull CompoundTag nbt) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
         super.save(nbt);
         nbt.putInt("MixTicks", ticks);
         nbt.putBoolean("Mixing", mixing);
@@ -100,7 +100,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
         return this.ingredients;
     }
     
-    public static List<Ingredient> listIngredients(@Nonnull ItemStack stack) {
+    public static List<Ingredient> listIngredients(@NotNull ItemStack stack) {
         List<Ingredient> is = new ArrayList<>();
 
         if (Drink.isDrink(stack.getItem())) {
@@ -123,7 +123,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
         }
     }
     
-    private void dropItem(@Nonnull ItemStack stack, @Nullable Player at) {
+    private void dropItem(@NotNull ItemStack stack, @Nullable Player at) {
         if (at == null) {
             BlockPos pos = getBlockPos().relative(getBlockState().getValue(DrinkMixerBlock.FACING));
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
@@ -177,7 +177,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
         syncInventory();
     }
 
-    public boolean addToMixer(@Nonnull ItemStack ingredient) {
+    public boolean addToMixer(@NotNull ItemStack ingredient) {
         if (ingredients.get(0).isEmpty()) {
             if (!Drink.isDrink(ingredient.getItem())) {
                 Ingredient i = Ingredient.findMatchingIngredient(ingredient);

@@ -22,6 +22,7 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public abstract class FurnitureEntity extends Entity {
 
@@ -41,8 +42,8 @@ public abstract class FurnitureEntity extends Entity {
     protected double lerpYaw = Double.NaN; // Force first-time sync even if packet is incomplete
     protected double lerpPitch;
     
-    protected FurnitureEntity(EntityType<?> entityTypeIn, Level worldIn, Map<DyeColor, ? extends RegistryObject<? extends Item>> items) {
-        this(entityTypeIn, worldIn, c -> items.get(c).get());        
+    protected FurnitureEntity(EntityType<?> entityTypeIn, Level worldIn, Map<DyeColor, ? extends Item> items) {
+        this(entityTypeIn, worldIn, c -> items.get(c));
     }
 
     protected FurnitureEntity(EntityType<?> entityTypeIn, Level worldIn, Function<DyeColor, Item> itemLookup) {

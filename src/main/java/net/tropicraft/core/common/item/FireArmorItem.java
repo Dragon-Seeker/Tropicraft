@@ -1,24 +1,23 @@
 package net.tropicraft.core.common.item;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class FireArmorItem extends TropicraftArmorItem {
     public FireArmorItem(EquipmentSlot slotType, Properties properties) {
@@ -27,19 +26,21 @@ public class FireArmorItem extends TropicraftArmorItem {
 
     // TODO waiting on Forge
     @Override
-    public void onArmorTick(ItemStack stack, Level world, Player player) {
-        if (world.isClientSide) {
-            clientTick(player);
-        } else {
-            if (player.isOnFire()) player.clearFire();
+    public void inventoryTick(ItemStack stack, Level world, Entity user, int slot, boolean selected) {
+        if(user instanceof Player player) {
+            if (world.isClientSide) {
+                clientTick(player);
+            } else {
+                if (player.isOnFire()) player.clearFire();
 
-            // Repair in the sun?
-            int factor = (int)(40D / (0.001D + world.getBrightness(player.blockPosition())));
-            if (world.getGameTime() % (factor) == 0 && world.canSeeSkyFromBelowWater(new BlockPos(Mth.floor(player.getX()), Mth.floor(player.getY() + 1), Mth.floor(player.getZ())))) {
-                //repair!
-                stack.hurtAndBreak(-1, player, (e) -> {
-                    e.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-                });
+                // Repair in the sun?
+                int factor = (int) (40D / (0.001D + world.getBrightness(player.blockPosition())));
+                if (world.getGameTime() % (factor) == 0 && world.canSeeSkyFromBelowWater(new BlockPos(Mth.floor(player.getX()), Mth.floor(player.getY() + 1), Mth.floor(player.getZ())))) {
+                    //repair!
+                    stack.hurtAndBreak(-1, player, (e) -> {
+                        e.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+                    });
+                }
             }
         }
     }
@@ -53,7 +54,7 @@ public class FireArmorItem extends TropicraftArmorItem {
 //        }
 //    }
 //
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void clientTick(Player player) {
         // Don't show fire particles underwater
         if (player.isInWater()) return;
@@ -77,7 +78,7 @@ public class FireArmorItem extends TropicraftArmorItem {
         ParticleStatus particles = Minecraft.getInstance().options.particles;
         if (particles == ParticleStatus.MINIMAL) return;
 
-        if (this == TropicraftItems.FIRE_BOOTS.get()) {
+        if (this == TropicraftItems.FIRE_BOOTS) {
             boolean onLava = false;
             boolean inLava = false;
             //for (int x = -1; x < 2; x++) {
@@ -147,7 +148,7 @@ public class FireArmorItem extends TropicraftArmorItem {
                 }
             }
 
-        } else if (this == TropicraftItems.FIRE_LEGGINGS.get()) {
+        } else if (this == TropicraftItems.FIRE_LEGGINGS) {
             SimpleParticleType particle = ParticleTypes.FLAME;
             if (rand.nextInt(2) == 0) particle = ParticleTypes.LARGE_SMOKE;
 
@@ -160,7 +161,7 @@ public class FireArmorItem extends TropicraftArmorItem {
                         -0.05F,
                         ((rand.nextFloat() * speed) - (speed/2)));
             }
-        } else if (this == TropicraftItems.FIRE_CHESTPLATE.get()) {
+        } else if (this == TropicraftItems.FIRE_CHESTPLATE) {
             float look = -180F;
             double dist = 0.5F;
 
@@ -180,7 +181,7 @@ public class FireArmorItem extends TropicraftArmorItem {
                         ((rand.nextFloat() * speed) - (speed/2)));
             }
 
-        } else if (this == TropicraftItems.FIRE_HELMET.get()) {
+        } else if (this == TropicraftItems.FIRE_HELMET) {
             float look = -180F;
             double dist = 0.5F;
 

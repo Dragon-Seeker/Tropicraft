@@ -30,14 +30,13 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.tropicraft.core.common.dimension.TropicraftDimension;
 import net.tropicraft.core.common.entity.egg.SeaTurtleEggEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -94,9 +93,9 @@ public class SeaTurtleEntity extends Turtle {
     protected void registerGoals() {
         super.registerGoals();
         // goalSelector
-        GoalSelector goalSelector = ObfuscationReflectionHelper.getPrivateValue(Mob.class, this, "goalSelector");
+        GoalSelector goalSelector = this.goalSelector;//ObfuscationReflectionHelper.getPrivateValue(Mob.class, this, "goalSelector");
         // goals
-        Set<WrappedGoal> goalSet = ObfuscationReflectionHelper.getPrivateValue(GoalSelector.class, goalSelector, "availableGoals");
+        Set<WrappedGoal> goalSet = goalSelector.getAvailableGoals();//.getPrivateValue(GoalSelector.class, goalSelector, "availableGoals");
 
         final Optional<WrappedGoal> eggGoal = goalSet.stream().filter(p -> p.getGoal().toString().contains("Egg")).findFirst();
         if (eggGoal.isPresent()) {
@@ -215,7 +214,7 @@ public class SeaTurtleEntity extends Turtle {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob partner) {
-        return TropicraftEntities.SEA_TURTLE.get().create(this.level)
+        return TropicraftEntities.SEA_TURTLE.create(this.level)
                 .setTurtleType(random.nextBoolean() && partner instanceof SeaTurtleEntity ? ((SeaTurtleEntity)partner).getTurtleType() : getTurtleType())
                 .setIsMature(false);
     }
@@ -414,8 +413,8 @@ public class SeaTurtleEntity extends Turtle {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.SEA_TURTLE_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.SEA_TURTLE_SPAWN_EGG);
     }
 
     @Override
@@ -462,7 +461,7 @@ public class SeaTurtleEntity extends Turtle {
                     Level world = this.turtle.level;
                     world.playSound(null, blockpos, SoundEvents.TURTLE_LAY_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + world.random.nextFloat() * 0.2F);
                     //world.setBlockState(this.destinationBlock.up(), Blocks.TURTLE_EGG.defaultBlockState().with(TurtleEggBlock.EGGS, Integer.valueOf(this.turtle.rand.nextInt(4) + 1)), 3);
-                    final SeaTurtleEggEntity egg = TropicraftEntities.SEA_TURTLE_EGG.get().create(world);
+                    final SeaTurtleEggEntity egg = TropicraftEntities.SEA_TURTLE_EGG.create(world);
                     final BlockPos spawnPos = blockPos.above();
                     egg.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
                     world.addFreshEntity(egg);

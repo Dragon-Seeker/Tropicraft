@@ -25,15 +25,15 @@ import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class TropicraftSpawnEgg<T extends Entity> extends Item {
 
-    private final RegistryObject<EntityType<T>> typeIn;
+    private final Supplier<EntityType<T>> typeIn;
 
-    public TropicraftSpawnEgg(final RegistryObject<EntityType<T>> type, Properties properties) {
+    public TropicraftSpawnEgg(final Supplier<EntityType<T>> type, Properties properties) {
         super(properties);
         this.typeIn = type;
     }

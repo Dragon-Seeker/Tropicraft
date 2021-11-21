@@ -52,7 +52,7 @@ public class SeahorseEntity extends AbstractTexturedFishEntity {
 	}
 
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(TropicraftItems.SEAHORSE_SPAWN_EGG.get());
+	public ItemStack getPickResult() {
+		return new ItemStack(TropicraftItems.SEAHORSE_SPAWN_EGG);
 	}
 }

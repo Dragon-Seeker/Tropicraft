@@ -1,5 +1,6 @@
 package net.tropicraft.core.common.entity.egg;
 
+import net.api.network.ExtraSpawnDataEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -7,13 +8,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.underdasea.StarfishEntity;
 import net.tropicraft.core.common.entity.underdasea.StarfishType;
 import net.tropicraft.core.common.item.TropicraftItems;
+import org.jetbrains.annotations.Nullable;
 
-public class StarfishEggEntity extends EchinodermEggEntity implements IEntityAdditionalSpawnData {
+public class StarfishEggEntity extends EchinodermEggEntity implements ExtraSpawnDataEntity {
 	private StarfishType starfishType;
 
 	public StarfishEggEntity(final EntityType<? extends StarfishEggEntity> type, Level world) {
@@ -58,14 +59,15 @@ public class StarfishEggEntity extends EchinodermEggEntity implements IEntityAdd
 
 	@Override
 	public Entity onHatch() {
-		StarfishEntity baby = new StarfishEntity(TropicraftEntities.STARFISH.get(), level);
+		StarfishEntity baby = new StarfishEntity(TropicraftEntities.STARFISH, level);
 		baby.setBaby();
 		baby.setStarfishType(starfishType);
 		return baby;
 	}
 
+	@Nullable
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(TropicraftItems.STARFISH.get());
+	public ItemStack getPickResult() {
+		return new ItemStack(TropicraftItems.STARFISH);
 	}
 }

@@ -1,38 +1,44 @@
 package net.tropicraft.core.common.network.message;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
 import net.tropicraft.core.common.block.tileentity.DrinkMixerTileEntity;
-
-import java.util.function.Supplier;
 
 public class MessageMixerStart extends MessageTileEntity<DrinkMixerTileEntity> {
 
-	public MessageMixerStart() {
+	public MessageMixerStart(FriendlyByteBuf buf) {
 		super();
+		this.decode(buf);
 	}
 
 	public MessageMixerStart(DrinkMixerTileEntity sifter) {
 		super(sifter);
 	}
 
-	public static void encode(final MessageMixerStart message, final FriendlyByteBuf buf) {
-		MessageTileEntity.encode(message, buf);
+	public void encode(final FriendlyByteBuf buf) {
+		super.encode(buf);
 	}
 
-	public static MessageMixerStart decode(final FriendlyByteBuf buf) {
-		final MessageMixerStart message = new MessageMixerStart();
-		MessageTileEntity.decode(message, buf);
-		return message;
+	public void decode(final FriendlyByteBuf buf) {
+		super.decode(buf);
 	}
 
-	public static void handle(final MessageMixerStart message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> {
-			final DrinkMixerTileEntity te = message.getClientTileEntity();
-			if (te != null) {
-				te.startMixing();
-			}
-		});
-		ctx.get().setPacketHandled(true);
+	@Override
+	public void onMessage(Player playerEntity) {
+		Handler.onMessage(this);
 	}
+
+	public static class Handler {
+		public static boolean onMessage(MessageMixerStart message) {
+			Minecraft.getInstance().execute(() -> {
+				final DrinkMixerTileEntity te = message.getClientTileEntity();
+				if (te != null) {
+					te.startMixing();
+				}
+			});
+			return true;
+		}
+	}
+
 }

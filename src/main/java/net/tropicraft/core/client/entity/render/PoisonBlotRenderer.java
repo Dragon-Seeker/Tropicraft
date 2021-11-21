@@ -2,20 +2,18 @@ package net.tropicraft.core.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import com.mojang.math.Vector3f;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tropicraft.core.client.TropicraftRenderUtils;
 import net.tropicraft.core.common.entity.projectile.PoisonBlotEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
-
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class PoisonBlotRenderer extends EntityRenderer<PoisonBlotEntity> {
 
     public PoisonBlotRenderer(EntityRendererProvider.Context context) {

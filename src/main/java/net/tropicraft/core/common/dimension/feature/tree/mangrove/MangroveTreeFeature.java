@@ -1,25 +1,18 @@
 package net.tropicraft.core.common.dimension.feature.tree.mangrove;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.world.level.block.grower.JungleTreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.DecoratedFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
-import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.TropicraftTags;
-import net.tropicraft.core.common.dimension.feature.config.RainforestVinesConfig;
 
 import javax.annotation.Nullable;
 import java.util.Random;

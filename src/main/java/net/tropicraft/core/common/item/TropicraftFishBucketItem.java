@@ -12,15 +12,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class TropicraftFishBucketItem<T extends AbstractFish> extends MobBucketItem {
     private final Supplier<? extends EntityType<T>> fishType;
 
     public TropicraftFishBucketItem(final Supplier<? extends EntityType<T>> type, Fluid fluid, SoundEvent soundEvent, Properties props) {
-        super(type, () -> fluid, () -> soundEvent, props);
+        super(type.get(), fluid, soundEvent, props);
         this.fishType = type;
     }
 

@@ -1,18 +1,18 @@
 package net.tropicraft.core.common.network.message;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
 import net.tropicraft.core.common.block.tileentity.SifterTileEntity;
-
-import java.util.function.Supplier;
 
 public class MessageSifterInventory extends MessageTileEntity<SifterTileEntity> {
 
 	private ItemStack siftItem;
 
-	public MessageSifterInventory() {
+	public MessageSifterInventory(FriendlyByteBuf buf) {
 		super();
+		this.decode(buf);
 	}
 
 	public MessageSifterInventory(SifterTileEntity sifter) {
@@ -20,25 +20,31 @@ public class MessageSifterInventory extends MessageTileEntity<SifterTileEntity> 
 		siftItem = sifter.getSiftItem();
 	}
 
-	public static void encode(final MessageSifterInventory message, final FriendlyByteBuf buf) {
-		MessageTileEntity.encode(message, buf);
-		buf.writeItem(message.siftItem);
+	public void encode(final FriendlyByteBuf buf) {
+		super.encode(buf);
+		buf.writeItem(siftItem);
 	}
 
-	public static MessageSifterInventory decode(final FriendlyByteBuf buf) {
-		final MessageSifterInventory message = new MessageSifterInventory();
-		MessageTileEntity.decode(message, buf);
-		message.siftItem = buf.readItem();
-		return message;
+	public void decode(final FriendlyByteBuf buf) {
+		super.decode(buf);
+		this.siftItem = buf.readItem();
 	}
 
-	public static void handle(final MessageSifterInventory message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> {
-			SifterTileEntity sifter = message.getClientTileEntity();
-			if (sifter != null) {
-				sifter.setSiftItem(message.siftItem);
-			}
-		});
-		ctx.get().setPacketHandled(true);
+	@Override
+	public void onMessage(Player playerEntity) {
+		Handler.onMessage(this);
+	}
+
+	public class Handler{
+
+		public static boolean onMessage(MessageSifterInventory message) {
+			Minecraft.getInstance().execute(() -> {
+				SifterTileEntity sifter = message.getClientTileEntity();
+				if (sifter != null) {
+					sifter.setSiftItem(message.siftItem);
+				}
+			});
+			return true;
+		}
 	}
 }

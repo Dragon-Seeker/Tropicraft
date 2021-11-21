@@ -2,42 +2,27 @@ package net.tropicraft.core.common.block;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IItemRenderProperties;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tropicraft.Constants;
 import net.tropicraft.Tropicraft;
-import net.tropicraft.core.client.tileentity.SimpleItemStackRenderer;
 import net.tropicraft.core.common.Foods;
 import net.tropicraft.core.common.block.TikiTorchBlock.TorchSection;
 import net.tropicraft.core.common.block.huge_plant.HugePlantBlock;
 import net.tropicraft.core.common.block.jigarbov.JigarbovTorchType;
-import net.tropicraft.core.common.block.tileentity.AirCompressorTileEntity;
-import net.tropicraft.core.common.block.tileentity.BambooChestTileEntity;
-import net.tropicraft.core.common.block.tileentity.DrinkMixerTileEntity;
 import net.tropicraft.core.common.block.tileentity.TropicraftTileEntityTypes;
 
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -237,16 +222,16 @@ public class TropicraftBlocks {
     public static final Block MANGROVE_BOARDWALK = register("mangrove_boardwalk", () -> new BoardwalkBlock(Block.Properties.copy(MANGROVE_SLAB).noOcclusion()));
 
     public static final BambooChestBlock BAMBOO_CHEST = register(
-            "bamboo_chest", () -> new BambooChestBlock(Block.Properties.copy(BAMBOO_BUNDLE).strength(1), () -> TropicraftTileEntityTypes.BAMBOO_CHEST), () -> TropicraftTileEntityTypes.BAMBOO_CHEST.get());
+            "bamboo_chest", () -> new BambooChestBlock(Block.Properties.copy(BAMBOO_BUNDLE).strength(1), () -> TropicraftTileEntityTypes.BAMBOO_CHEST), () -> TropicraftTileEntityTypes.BAMBOO_CHEST);
 
     public static final SifterBlock SIFTER = register(
             "sifter", () -> new SifterBlock(Block.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
 
     public static final DrinkMixerBlock DRINK_MIXER = register(
-            "drink_mixer", () -> new DrinkMixerBlock(Block.Properties.of(Material.STONE).strength(2, 30).noOcclusion()), () -> TropicraftTileEntityTypes.DRINK_MIXER.get());
+            "drink_mixer", () -> new DrinkMixerBlock(Block.Properties.of(Material.STONE).strength(2, 30).noOcclusion()), () -> TropicraftTileEntityTypes.DRINK_MIXER);
 
     public static final AirCompressorBlock AIR_COMPRESSOR = register(
-            "air_compressor", () -> new AirCompressorBlock(Block.Properties.of(Material.STONE).strength(2, 30).noOcclusion()), () -> TropicraftTileEntityTypes.AIR_COMPRESSOR.get());
+            "air_compressor", () -> new AirCompressorBlock(Block.Properties.of(Material.STONE).strength(2, 30).noOcclusion()), () -> TropicraftTileEntityTypes.AIR_COMPRESSOR);
 
     public static final VolcanoBlock VOLCANO = registerNoItem(
             "volcano", () -> new VolcanoBlock(Block.Properties.copy(Blocks.BEDROCK).noDrops()));
@@ -278,18 +263,18 @@ public class TropicraftBlocks {
     );
 
     @SuppressWarnings("unchecked")
-    private static final Set<? extends Block> POTTABLE_PLANTS = ImmutableSet.<RegistryObject<? extends Block>>builder()
+    private static final Set<? extends Block> POTTABLE_PLANTS = ImmutableSet.<Block>builder()
             .add(PALM_SAPLING, MAHOGANY_SAPLING, GRAPEFRUIT_SAPLING, LEMON_SAPLING, LIME_SAPLING, ORANGE_SAPLING)
             .add(IRIS)
             .addAll(FLOWERS.values())
             .build();
     
     public static final List<FlowerPotBlock> BAMBOO_POTTED_TROPICS_PLANTS = ImmutableList.copyOf(POTTABLE_PLANTS.stream()
-            .map(b -> registerNoItem("bamboo_potted_" + b.getId().getPath(), Builder.tropicraftPot(b)))
+            .map(b -> registerNoItem("bamboo_potted_" + Registry.BLOCK.getKey(b).getPath(), Builder.tropicraftPot(() -> b)))
             .collect(Collectors.toList()));
     
     public static final List<FlowerPotBlock> VANILLA_POTTED_TROPICS_PLANTS = ImmutableList.copyOf(POTTABLE_PLANTS.stream()
-            .map(b -> registerNoItem("potted_" + b.getId().getPath(), Builder.vanillaPot(b)))
+            .map(b -> registerNoItem("potted_" + Registry.BLOCK.getKey(b).getPath(), Builder.vanillaPot(() -> b)))
             .collect(Collectors.toList()));
     
     public static final List<FlowerPotBlock> BAMBOO_POTTED_VANILLA_PLANTS = ImmutableList.copyOf(
@@ -298,7 +283,7 @@ public class TropicraftBlocks {
                 Blocks.BLUE_ORCHID, Blocks.ALLIUM, Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP,
                 Blocks.WHITE_TULIP, Blocks.PINK_TULIP, Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.LILY_OF_THE_VALLEY,
                 Blocks.WITHER_ROSE, Blocks.RED_MUSHROOM, Blocks.BROWN_MUSHROOM, Blocks.DEAD_BUSH, Blocks.CACTUS)
-            .map(b -> registerNoItem("bamboo_potted_" + b.getRegistryName().getPath(), Builder.tropicraftPot(() -> b)))
+            .map(b -> registerNoItem("bamboo_potted_" + Registry.BLOCK.getKey(b).getPath(), Builder.tropicraftPot(() -> b)))
             .collect(Collectors.toList()));
     
     public static final List<FlowerPotBlock> ALL_POTTED_PLANTS = ImmutableList.<FlowerPotBlock>builder()
@@ -310,9 +295,9 @@ public class TropicraftBlocks {
     public static final Map<JigarbovTorchType, RedstoneWallTorchBlock> JIGARBOV_WALL_TORCHES = Arrays.stream(JigarbovTorchType.values())
             .collect(Collectors.toMap(Function.identity(),
                     type -> registerNoItem("jigarbov_" + type.getName() + "_wall_torch", () -> {
-                        return new RedstoneWallTorchBlock(Block.Properties.copy(Blocks.REDSTONE_WALL_TORCH).lootFrom(() -> Blocks.REDSTONE_TORCH)) {
+                        return new RedstoneWallTorchBlock(Block.Properties.copy(Blocks.REDSTONE_WALL_TORCH).dropsLike(Blocks.REDSTONE_TORCH)) {
                             @Override
-                            public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+                            public ItemStack getCloneItemStack(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState) {
                                 return new ItemStack(Items.REDSTONE_TORCH);
                             }
                         };
@@ -328,25 +313,25 @@ public class TropicraftBlocks {
     }
 
     private static <T extends Block> T register(String name, Supplier<? extends T> sup, Supplier<? extends BlockEntityType> supBE) {
-        return register(name, sup, block -> item(block, supBE));
+        return register(name, sup, block -> item(() -> block, supBE));
     }
     
     private static <T extends Block> T register(String name, Supplier<? extends T> sup, CreativeModeTab tab) {
-        return register(name, sup, block -> item(block, tab));
+        return register(name, sup, block -> item(() -> block, tab));
     }
     
     private static <T extends Block> T register(String name, Supplier<? extends T> sup, Function<T, Supplier<? extends Item>> itemCreator) {
         T ret = registerNoItem(name, sup);
-        BLOCKITEMS.register(name, itemCreator.apply(ret));
+        Registry.register(Registry.ITEM, new ResourceLocation(Constants.MODID, name), itemCreator.apply(ret).get());
         return ret;
     }
     
     private static <T extends Block> T registerNoItem(String name, Supplier<? extends T> sup) {
-        return BLOCKS.register(name, sup);
+        return Registry.register(Registry.BLOCK, new ResourceLocation(Constants.MODID, name), sup.get());
     }
 
     private static <T extends Block> Supplier<BlockItem> itemDefault(final T block) {
-        return item(block, Tropicraft.TROPICRAFT_ITEM_GROUP);
+        return item(() -> block, Tropicraft.TROPICRAFT_ITEM_GROUP);
     }
 
     private static Supplier<BlockItem> item(final Supplier<? extends Block> block, FoodProperties food) {
@@ -355,15 +340,15 @@ public class TropicraftBlocks {
 
     private static Supplier<BlockItem> item(final Supplier<? extends Block> block, Supplier<? extends BlockEntityType> supBE) {
         return () -> new BlockItem(block.get(), new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)){
-            @Override
-            public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-                consumer.accept(new IItemRenderProperties() {
-                    @Override
-                    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-                        return new SimpleItemStackRenderer(supBE);
-                    }
-                });
-            }
+//            @Override
+//            public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+//                consumer.accept(new IItemRenderProperties() {
+//                    @Override
+//                    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+//                        return new SimpleItemStackRenderer(supBE);
+//                    }
+//                });
+//            }
         };
     }
 

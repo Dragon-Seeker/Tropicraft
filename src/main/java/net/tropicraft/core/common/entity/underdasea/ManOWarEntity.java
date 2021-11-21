@@ -1,5 +1,7 @@
 package net.tropicraft.core.common.entity.underdasea;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
@@ -18,10 +20,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.item.TropicraftItems;
 
@@ -117,7 +116,7 @@ public class ManOWarEntity extends WaterAnimal {
             if (random.nextInt(5) == 0 && attackTimer <= 0) {
                 List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2D, 4D, 2D).move(0.0D, -2.0D, 0.0D), EntitySelector.NO_CREATIVE_OR_SPECTATOR);
                 for (LivingEntity ent : list) {
-                    if (ent.getType() != TropicraftEntities.MAN_O_WAR.get()) {
+                    if (ent.getType() != TropicraftEntities.MAN_O_WAR) {
                         if (ent.isInWater()) {
                             // TODO change so death msg isn't "struck by lightning"
                             ent.hurt(DamageSource.LIGHTNING_BOLT, (float) getAttribute(Attributes.ATTACK_DAMAGE).getValue());
@@ -208,7 +207,7 @@ public class ManOWarEntity extends WaterAnimal {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void handleEntityEvent(byte id) {
         if (id == 19) {
             this.squidRotation = 0.0F;
@@ -228,8 +227,8 @@ public class ManOWarEntity extends WaterAnimal {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.MAN_O_WAR_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.MAN_O_WAR_SPAWN_EGG);
     }
 
     class FleeGoal extends Goal {

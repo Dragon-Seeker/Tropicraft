@@ -79,6 +79,6 @@ public class Drink {
     }
 
     public static boolean isDrink(final Item item) {
-        return TropicraftItems.COCKTAILS.values().stream().anyMatch(ri -> ri.get() == item);
+        return TropicraftItems.COCKTAILS.values().stream().anyMatch(ri -> ri == item);
     }
 }

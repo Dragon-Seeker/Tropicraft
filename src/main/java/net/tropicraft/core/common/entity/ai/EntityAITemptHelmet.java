@@ -7,8 +7,8 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.core.common.entity.passive.EntityKoaBase;
+import net.tropicraft.core.common.item.NigelStacheItem;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -37,15 +37,15 @@ public class EntityAITemptHelmet extends Goal
     private int delayTemptCounter;
     /** True if this EntityAITempt task is running */
     private boolean isRunning;
-    private final Set<RegistryObject<Item>> temptItem;
+    private final Set<Item> temptItem;
     /** Whether the entity using this AI will be scared by the tempter's sudden movement. */
     private final boolean scaredByPlayerMovement;
 
-    public EntityAITemptHelmet(PathfinderMob temptedEntityIn, double speedIn, RegistryObject<Item> temptItemIn, boolean scaredByPlayerMovementIn) {
+    public EntityAITemptHelmet(PathfinderMob temptedEntityIn, double speedIn, Item temptItemIn, boolean scaredByPlayerMovementIn) {
         this(temptedEntityIn, speedIn, scaredByPlayerMovementIn, Sets.newHashSet(temptItemIn));
     }
 
-    public EntityAITemptHelmet(PathfinderMob temptedEntityIn, double speedIn, boolean scaredByPlayerMovementIn, Set<RegistryObject<Item>> temptItemIn) {
+    public EntityAITemptHelmet(PathfinderMob temptedEntityIn, double speedIn, boolean scaredByPlayerMovementIn, Set<Item> temptItemIn) {
         this.temptedEntity = temptedEntityIn;
         this.speed = speedIn;
         this.temptItem = temptItemIn;
@@ -83,15 +83,15 @@ public class EntityAITemptHelmet extends Goal
             }
             else
             {
-                return isTempting(this.temptingPlayer.getInventory().armor.get(3));
+                return isTempting(this.temptingPlayer, this.temptingPlayer.getInventory().armor.get(3));
                 //return this.isTempting(this.temptingPlayer.getHeldItemMainhand()) || this.isTempting(this.temptingPlayer.getHeldItemOffhand());
             }
         }
     }
 
-    protected boolean isTempting(ItemStack stack) {
-        for (RegistryObject<Item> items : temptItem) {
-            if (items.isPresent() && items.get().asItem() == stack.getItem()) {
+    protected boolean isTempting(Player player, ItemStack stack) {
+        for (Item items : temptItem) {
+            if (player.getMainHandItem().getItem() instanceof NigelStacheItem && items.asItem() == stack.getItem()) {
                 return true;
             }
         }

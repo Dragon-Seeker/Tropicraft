@@ -69,7 +69,7 @@ public class MonkeyAngryThrowGoal extends Goal {
 
   @Override
   public void tick() {
-    if (this.trackedMug != null && this.entity.getMainHandItem().getItem() == TropicraftItems.BAMBOO_MUG.get()) {
+    if (this.trackedMug != null && this.entity.getMainHandItem().getItem() == TropicraftItems.BAMBOO_MUG) {
       this.trackedPlayer = nearbyPlayer();
 
       if (this.trackedPlayer != null) {
@@ -163,7 +163,7 @@ public class MonkeyAngryThrowGoal extends Goal {
     if (!list.isEmpty()) {
       for (ItemEntity item : list) {
         if (!item.isInvisible()) {
-          if (item.getItem().sameItem(new ItemStack(TropicraftItems.BAMBOO_MUG.get())) && item.isAlive()) {
+          if (item.getItem().sameItem(new ItemStack(TropicraftItems.BAMBOO_MUG)) && item.isAlive()) {
             return item;
           }
         }

@@ -70,7 +70,7 @@ public class PiranhaEntity extends AbstractSchoolingFish implements IAtlasFish {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.PIRANHA_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.PIRANHA_SPAWN_EGG);
     }
 }

@@ -1,34 +1,33 @@
 package net.tropicraft.core.common.entity.passive;
 
-import net.minecraft.world.level.block.Block;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.util.Mth;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class FishingBobberEntity extends Entity {
    private static final EntityDataAccessor<Integer> DATA_HOOKED_ENTITY = SynchedEntityData.defineId(FishingBobberEntity.class, EntityDataSerializers.INT);
@@ -54,7 +53,7 @@ public class FishingBobberEntity extends Entity {
       this.lureSpeed = Math.max(0, lureSpeed);
    }
 
-   @OnlyIn(Dist.CLIENT)
+   @Environment(EnvType.CLIENT)
    public FishingBobberEntity(Level worldIn, EntityKoaBase p_i47290_2_, double x, double y, double z) {
       this(worldIn, p_i47290_2_, 0, 0);
       this.setPos(x, y, z);
@@ -101,14 +100,14 @@ public class FishingBobberEntity extends Entity {
    }
 
    @Override
-   @OnlyIn(Dist.CLIENT)
+   @Environment(EnvType.CLIENT)
    public boolean shouldRenderAtSqrDistance(double distance) {
       double d0 = 64.0D;
       return distance < 4096.0D;
    }
 
    @Override
-   @OnlyIn(Dist.CLIENT)
+   @Environment(EnvType.CLIENT)
    public void lerpTo(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
    }
 
@@ -361,7 +360,7 @@ public class FishingBobberEntity extends Entity {
     * Handler for {@link }
     */
    @Override
-   @OnlyIn(Dist.CLIENT)
+   @Environment(EnvType.CLIENT)
    public void handleEntityEvent(byte id) {
       if (id == 31 && this.level.isClientSide && this.caughtEntity instanceof Player && ((Player)this.caughtEntity).isLocalPlayer()) {
          this.bringInHookedEntity();

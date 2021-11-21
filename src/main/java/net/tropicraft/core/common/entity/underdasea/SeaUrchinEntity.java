@@ -78,7 +78,7 @@ public class SeaUrchinEntity extends EchinodermEntity {
 
     @Override
     public EggEntity createEgg() {
-        return new SeaUrchinEggEntity(TropicraftEntities.SEA_URCHIN_EGG_ENTITY.get(), level);
+        return new SeaUrchinEggEntity(TropicraftEntities.SEA_URCHIN_EGG_ENTITY, level);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class SeaUrchinEntity extends EchinodermEntity {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.SEA_URCHIN_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.SEA_URCHIN_SPAWN_EGG);
     }
 }

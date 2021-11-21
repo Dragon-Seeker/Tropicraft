@@ -21,15 +21,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.hostile.TropicraftCreatureEntity;
 import net.tropicraft.core.common.entity.projectile.PoisonBlotEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
 import net.tropicraft.core.common.sound.Sounds;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class TreeFrogEntity extends TropicraftCreatureEntity implements Enemy, RangedAttackMob {
 
@@ -155,7 +153,7 @@ public class TreeFrogEntity extends TropicraftCreatureEntity implements Enemy, R
             double d = entity.getX() - getX();
             double d1 = entity.getZ() - getZ();
 
-            final PoisonBlotEntity poison = new PoisonBlotEntity(TropicraftEntities.POISON_BLOT.get(), this, level);
+            final PoisonBlotEntity poison = new PoisonBlotEntity(TropicraftEntities.POISON_BLOT, this, level);
             poison.setPos(poison.getX(), poison.getY() + 1.3999999761581421D, poison.getZ());
             final double shotHeight = (entity.getY() + (double) entity.getEyeHeight()) - 0.20000000298023224D - poison.getY();
             float f1 = Mth.sqrt((float) (d * d + d1 * d1)) * 0.2F;
@@ -167,9 +165,9 @@ public class TreeFrogEntity extends TropicraftCreatureEntity implements Enemy, R
         }
     }
 
+    @Nullable
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        // TODO - add one egg per type
-        return new ItemStack(TropicraftItems.TREE_FROG_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.TREE_FROG_SPAWN_EGG);
     }
 }

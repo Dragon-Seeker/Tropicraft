@@ -157,7 +157,7 @@ public class SharkEntity extends TropicraftFishEntity {
     }
 
     @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(TropicraftItems.HAMMERHEAD_SPAWN_EGG.get());
+    public ItemStack getPickResult() {
+        return new ItemStack(TropicraftItems.HAMMERHEAD_SPAWN_EGG);
     }
 }

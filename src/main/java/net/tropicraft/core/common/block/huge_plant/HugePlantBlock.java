@@ -18,12 +18,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.core.client.ParticleEffects;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -32,14 +30,14 @@ import java.util.function.Supplier;
 public final class HugePlantBlock extends BushBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
 
-    private Supplier<RegistryObject<? extends ItemLike>> pickItem;
+    private Supplier<? extends ItemLike> pickItem;
 
     public HugePlantBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(TYPE, Type.SEED));
     }
 
-    public HugePlantBlock setPickItem(Supplier<RegistryObject<? extends ItemLike>> item) {
+    public HugePlantBlock setPickItem(Supplier<? extends ItemLike> item) {
         this.pickItem = item;
         return this;
     }
@@ -136,7 +134,7 @@ public final class HugePlantBlock extends BushBlock {
             int flags = Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.UPDATE_NEIGHBORS | Constants.BlockFlags.NO_NEIGHBOR_DROPS;
 
             // Play break sound
-            SoundType soundtype = state.getSoundType(world, pos, null);
+            SoundType soundtype = state.getSoundType();
             world.playSound(null, pos, soundtype.getBreakSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
 
             for (BlockPos plantPos : shape) {
@@ -159,11 +157,11 @@ public final class HugePlantBlock extends BushBlock {
     }
 
     @Override
-    public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState) {
         if (this.pickItem != null) {
-            return new ItemStack(this.pickItem.get().get());
+            return new ItemStack(this.pickItem.get());
         }
-        return super.getPickBlock(state, target, world, pos, player);
+        return super.getCloneItemStack(blockGetter, blockPos, blockState);
     }
 
     @Override

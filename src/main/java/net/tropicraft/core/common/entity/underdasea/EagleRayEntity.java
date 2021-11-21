@@ -119,7 +119,7 @@ public class EagleRayEntity extends AbstractFish {
 	}
 
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return new ItemStack(TropicraftItems.EAGLE_RAY_SPAWN_EGG.get());
+	public ItemStack getPickResult() {
+		return new ItemStack(TropicraftItems.EAGLE_RAY_SPAWN_EGG);
 	}
 }

@@ -13,6 +13,7 @@ import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
@@ -25,8 +26,8 @@ import net.tropicraft.core.common.entity.BambooItemFrame;
 import net.tropicraft.core.common.item.TropicraftItems;
 
 public class BambooItemFrameRenderer extends EntityRenderer<BambooItemFrame> {
-    public static final ModelResourceLocation LOCATION_MODEL = new ModelResourceLocation(TropicraftItems.BAMBOO_ITEM_FRAME.getId(), "map=false");
-    private static final ModelResourceLocation LOCATION_MODEL_MAP = new ModelResourceLocation(TropicraftItems.BAMBOO_ITEM_FRAME.getId(), "map=true");
+    public static final ModelResourceLocation LOCATION_MODEL = new ModelResourceLocation(Registry.ITEM.getKey(TropicraftItems.BAMBOO_ITEM_FRAME), "map=false");
+    private static final ModelResourceLocation LOCATION_MODEL_MAP = new ModelResourceLocation(Registry.ITEM.getKey(TropicraftItems.BAMBOO_ITEM_FRAME), "map=true");
     private final Minecraft mc = Minecraft.getInstance();
     private final net.minecraft.client.renderer.entity.ItemRenderer itemRenderer;
 

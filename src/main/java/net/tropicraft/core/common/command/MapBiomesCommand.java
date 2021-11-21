@@ -67,7 +67,7 @@ public class MapBiomesCommand {
 
 
 
-        WritableRegistry<Biome> biomes = source.getLevel().registryAccess().ownedRegistryOrThrow(Registry.BIOME_REGISTRY);
+        Registry<Biome> biomes = source.getLevel().registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
         for (int x = -SIZE2; x < SIZE2; x++) {
             if (x % SIZE8 == 0) {
                 source.sendSuccess(new TextComponent(((x + SIZE2) / (double)SIZE) * 100 + "%"), false);
@@ -92,5 +92,9 @@ public class MapBiomesCommand {
         }
 
         return 0;
+    }
+
+    public String getRegistryName(){
+
     }
 }
