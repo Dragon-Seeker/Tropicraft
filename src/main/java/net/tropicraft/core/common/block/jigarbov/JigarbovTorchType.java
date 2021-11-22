@@ -1,12 +1,12 @@
 package net.tropicraft.core.common.block.jigarbov;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.tropicraft.core.common.block.TropicraftBlocks;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public enum JigarbovTorchType implements StringRepresentable {
@@ -16,9 +16,9 @@ public enum JigarbovTorchType implements StringRepresentable {
     JUNGLE("jungle", () -> Blocks.JUNGLE_LOG),
     OAK("oak", () -> Blocks.OAK_LOG),
     SPRUCE("spruce", () -> Blocks.SPRUCE_LOG),
-    BLACK_MANGROVE("black_mangrove", TropicraftBlocks.BLACK_MANGROVE_LOG),
-    LIGHT_MANGROVE("light_mangrove", TropicraftBlocks.LIGHT_MANGROVE_LOG),
-    RED_MANGROVE("red_mangrove", TropicraftBlocks.RED_MANGROVE_LOG);
+    BLACK_MANGROVE("black_mangrove", () -> TropicraftBlocks.BLACK_MANGROVE_LOG),
+    LIGHT_MANGROVE("light_mangrove", () -> TropicraftBlocks.LIGHT_MANGROVE_LOG),
+    RED_MANGROVE("red_mangrove", () -> TropicraftBlocks.RED_MANGROVE_LOG);
 
     private static final JigarbovTorchType[] VALUES = values();
 

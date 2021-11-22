@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 public class MangroveSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderBaseConfiguration> {
-    private static final SurfaceBuilderBaseConfiguration MUD = new SurfaceBuilderBaseConfiguration(TropicraftBlocks.MUD.get().defaultBlockState(), Blocks.DIRT.defaultBlockState(), TropicraftBlocks.MUD.get().defaultBlockState());
+    private static final SurfaceBuilderBaseConfiguration MUD = new SurfaceBuilderBaseConfiguration(TropicraftBlocks.MUD.defaultBlockState(), Blocks.DIRT.defaultBlockState(), TropicraftBlocks.MUD.defaultBlockState());
 
     private PerlinSimplexNoise mudNoise;
     private PerlinSimplexNoise streamNoise;

@@ -47,7 +47,7 @@ public class UndergrowthFeature extends Feature<NoneFeatureConfiguration> {
         }
 
         world.setBlock(pos.below(), Blocks.DIRT.defaultBlockState(), 3);
-        setBlock(world, pos, TropicraftBlocks.MAHOGANY_LOG.get().defaultBlockState());
+        setBlock(world, pos, TropicraftBlocks.MAHOGANY_LOG.defaultBlockState());
 
         int count = 0;
 
@@ -62,7 +62,7 @@ public class UndergrowthFeature extends Feature<NoneFeatureConfiguration> {
                             int zVariance = z - posTemp.getZ();
                             final BlockPos newPos = new BlockPos(x, y, z);
                             if ((Math.abs(xVariance) != bushWidth || Math.abs(zVariance) != bushWidth || rand.nextInt(2) != 0) && isValidPosition(world, newPos)) {
-                                setBlock(world, newPos, TropicraftBlocks.KAPOK_LEAVES.get().defaultBlockState());
+                                setBlock(world, newPos, TropicraftBlocks.KAPOK_LEAVES.defaultBlockState());
                             }
                         }
                     }

@@ -10,13 +10,14 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.block.ReedsBlock;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 
 import java.util.Random;
 
 public final class ReedsFeature extends Feature<NoneFeatureConfiguration> {
-    private static final BlockState REEDS = TropicraftBlocks.REEDS.get().defaultBlockState();
+    private static final BlockState REEDS = TropicraftBlocks.REEDS.defaultBlockState();
 
     private static final int HEIGHT_ABOVE_WATER = 2;
     private static final int MAX_HEIGHT = 3;

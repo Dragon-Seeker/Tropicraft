@@ -34,7 +34,7 @@ public class TropicraftPackets {
         CHANNEL.registerPacket(MessageSifterStart.class, MessageSifterStart::new, EnvType.CLIENT);
         CHANNEL.registerPacket(MessageMixerInventory.class, MessageMixerInventory::new, EnvType.CLIENT);
         CHANNEL.registerPacket(MessageMixerStart.class, MessageMixerStart::new, EnvType.CLIENT);
-        CHANNEL.registerPacket(MessageAirCompressorInventory.class, MessageAirCompressorInventory::new, EnvType.CLIENT);
+        //CHANNEL.registerPacket(MessageAirCompressorInventory.class, MessageAirCompressorInventory::new, EnvType.CLIENT);
         CHANNEL.registerPacket(MessageSifterInventory.class, MessageSifterInventory::new, EnvType.CLIENT);
 
         //INSTANCE.registerMessage(getUniqueId(), MessageSifterInventory.class, MessageSifterInventory::encode, MessageSifterInventory::decode, MessageSifterInventory::handle);

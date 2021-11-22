@@ -1,25 +1,19 @@
 package net.tropicraft.core.common.block.tileentity;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.tropicraft.core.common.block.AirCompressorBlock;
 import net.tropicraft.core.common.item.scuba.ScubaArmorItem;
-import net.tropicraft.core.common.network.TropicraftPackets;
-import net.tropicraft.core.common.network.message.MessageAirCompressorInventory;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-public class AirCompressorTileEntity extends BlockEntity implements IMachineTile {
+public class AirCompressorTileEntity extends BlockEntity implements IMachineTile, BlockEntityClientSerializable {
 
     /** Is the compressor currently giving air */
     private boolean compressing;
@@ -31,13 +25,13 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
     private static final int fillRate = 5; // fills 5x faster than it's used
     
     /** The stack that is currently being filled */
-    @Nonnull
+    @NotNull
     private ItemStack stack;
     
     private ScubaArmorItem tank;
 
     public AirCompressorTileEntity(BlockPos pos, BlockState blockState) {
-        super(TropicraftTileEntityTypes.AIR_COMPRESSOR.get(), pos, blockState);
+        super(TropicraftTileEntityTypes.AIR_COMPRESSOR, pos, blockState);
         this.stack = ItemStack.EMPTY;
     }
 
@@ -54,7 +48,7 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
     }
 
     @Override
-    public @Nonnull CompoundTag save(@Nonnull CompoundTag nbt) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
         super.save(nbt);
         nbt.putBoolean("Compressing", compressing);
 
@@ -65,17 +59,17 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
         return nbt;
     }
     
-    public void setTank(@Nonnull ItemStack tankItemStack) {
+    public void setTank(@NotNull ItemStack tankItemStack) {
         this.stack = tankItemStack;
         this.tank = !(stack.getItem() instanceof ScubaArmorItem) ? null : (ScubaArmorItem) stack.getItem();
     }
     
-    @Nonnull
+    @NotNull
     public ItemStack getTankStack() {
         return stack;
     }
     
-    @Nullable
+    @NotNull
     public ScubaArmorItem getTank() {
         return tank;
     }
@@ -100,7 +94,7 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
         if (tank == null && stack.getItem() instanceof ScubaArmorItem && ((ScubaArmorItem)stack.getItem()).providesAir()) {
             setTank(stack);
             this.compressing = true;
-            syncInventory();
+            setChanged();
             return true;
         }
 
@@ -116,7 +110,7 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
         }
 
         setTank(ItemStack.EMPTY);
-        syncInventory();
+        setChanged();
         this.ticks = 0;
         this.compressing = false;
     }
@@ -138,13 +132,13 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
 
     public void startCompressing() {
         this.compressing = true;
-        syncInventory();
+        setChanged();
     }
 
     public void finishCompressing() {
         this.compressing = false;
         this.ticks = 0;
-        syncInventory();
+        setChanged();
     }
     
     public float getBreatheProgress(float partialTicks) {
@@ -180,26 +174,49 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
      * @param net The NetworkManager the packet originated from
      * @param pkt The data packet
      */
+//    @Override
+//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+//        this.load(pkt.getTag());
+//    }
+//
+//    protected void syncInventory() {
+//        if (!level.isClientSide) {
+//            PlayerLookup.world((ServerLevel) level).forEach((player) -> TropicraftPackets.CHANNEL.send(player, new MessageAirCompressorInventory(this)));
+//        }
+//    }
+
+//    @Override
+//    @Nullable
+//    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+//        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
+//    }
+//
+//    @Override
+//    public @NotNull CompoundTag getUpdateTag() {
+//        CompoundTag nbttagcompound = this.save(new CompoundTag());
+//        return nbttagcompound;
+//    }
+
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
+    public void fromClientTag(CompoundTag tag) {
+        this.load(tag);
     }
 
-    protected void syncInventory() {
-        if (!level.isClientSide) {
-            TropicraftPackets.INSTANCE.send(PacketDistributor.DIMENSION.with(level::dimension), new MessageAirCompressorInventory(this));
+    @Override
+    public CompoundTag toClientTag(CompoundTag tag) {
+        return save(tag);
+    }
+
+    @Override
+    public void sync() {
+        BlockEntityClientSerializable.super.sync();
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if(!level.isClientSide()){
+            sync();
         }
-    }
-
-    @Override
-    @Nullable
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
-    }
-
-    @Override
-    public @Nonnull CompoundTag getUpdateTag() {
-        CompoundTag nbttagcompound = this.save(new CompoundTag());
-        return nbttagcompound;
     }
 }

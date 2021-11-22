@@ -8,14 +8,13 @@ import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuild
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.BlockTropicraftSand;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.data.WorldgenDataConsumer;
 
 public final class TropicraftConfiguredSurfaceBuilders {
-    private static final LazyLoadedValue<BlockState> PURIFIED_SAND = new LazyLoadedValue<>(() -> TropicraftBlocks.PURIFIED_SAND.get().defaultBlockState());
+    private static final LazyLoadedValue<BlockState> PURIFIED_SAND = new LazyLoadedValue<>(() -> TropicraftBlocks.PURIFIED_SAND.defaultBlockState());
     private static final LazyLoadedValue<BlockState> UNDERWATER_PURIFIED_SAND = new LazyLoadedValue<>(() -> PURIFIED_SAND.get().setValue(BlockTropicraftSand.UNDERWATER, true));
 
     public final ConfiguredSurfaceBuilder<?> tropics;
@@ -54,12 +53,12 @@ public final class TropicraftConfiguredSurfaceBuilders {
             this.worldgen = (WorldgenDataConsumer<ConfiguredSurfaceBuilder<?>>) worldgen;
         }
 
-        public <C extends SurfaceBuilderConfiguration, S extends SurfaceBuilder<C>> ConfiguredSurfaceBuilder<?> register(String id, RegistryObject<S> surfaceBuilder, C config) {
-            return this.register(id, surfaceBuilder.get(), config);
-        }
-
         public <C extends SurfaceBuilderConfiguration, S extends SurfaceBuilder<C>> ConfiguredSurfaceBuilder<?> register(String id, S surfaceBuilder, C config) {
             return this.worldgen.register(new ResourceLocation(Constants.MODID, id), surfaceBuilder.configured(config));
         }
+    }
+
+    public static void init(){
+
     }
 }

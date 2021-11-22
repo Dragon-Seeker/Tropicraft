@@ -1,18 +1,16 @@
 package net.tropicraft.core.common.data;
 
-import net.minecraft.world.level.block.FlowerBlock;
-import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag.Named;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.tags.Tag.Named;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.tropicraft.Constants;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.item.AshenMaskItem;
@@ -26,7 +24,7 @@ import static net.tropicraft.core.common.TropicraftTags.Items.*;
 public class TropicraftItemTagsProvider extends ItemTagsProvider {
 
     public TropicraftItemTagsProvider(DataGenerator generatorIn, BlockTagsProvider blockTags, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, blockTags, Constants.MODID, existingFileHelper);
+        super(generatorIn, blockTags);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class TropicraftItemTagsProvider extends ItemTagsProvider {
         addItemsToTag(ZIRCON_ORE, TropicraftBlocks.ZIRCON_ORE);
         addItemsToTag(MANGANESE_ORE, TropicraftBlocks.MANGANESE_ORE);
         addItemsToTag(SHAKA_ORE, TropicraftBlocks.SHAKA_ORE);
-        appendToTag(Tags.Items.ORES, AZURITE_ORE, EUDIALYTE_ORE, ZIRCON_ORE, MANGANESE_ORE, SHAKA_ORE);
+        appendToTag(TropicraftTags.ItemsExtended.ORES, AZURITE_ORE, EUDIALYTE_ORE, ZIRCON_ORE, MANGANESE_ORE, SHAKA_ORE);
         
         // Add forge tags for our gems/ingots
         addItemsToTag(AZURITE_GEM, TropicraftItems.AZURITE);
@@ -46,14 +44,14 @@ public class TropicraftItemTagsProvider extends ItemTagsProvider {
         addItemsToTag(MANGANESE_INGOT, TropicraftItems.MANGANESE);
         addItemsToTag(SHAKA_INGOT, TropicraftItems.SHAKA);
         addItemsToTag(ZIRCONIUM_GEM, TropicraftItems.ZIRCONIUM);
-        appendToTag(Tags.Items.GEMS, AZURITE_GEM, EUDIALYTE_GEM, ZIRCON_GEM, ZIRCONIUM_GEM);
-        appendToTag(Tags.Items.INGOTS, MANGANESE_INGOT, SHAKA_INGOT);
+        appendToTag(TropicraftTags.ItemsExtended.GEMS, AZURITE_GEM, EUDIALYTE_GEM, ZIRCON_GEM, ZIRCONIUM_GEM);
+        appendToTag(TropicraftTags.ItemsExtended.INGOTS, MANGANESE_INGOT, SHAKA_INGOT);
 
         addItemsToTag(LEATHER, TropicraftItems.IGUANA_LEATHER);
-        appendToTag(Tags.Items.LEATHER, LEATHER);
+        appendToTag(TropicraftTags.ItemsExtended.LEATHER, LEATHER);
 
         // Add bamboo sticks to forge ore tag
-        addItemsToTag(Tags.Items.RODS_WOODEN, TropicraftItems.BAMBOO_STICK);
+        addItemsToTag(TropicraftTags.ItemsExtended.RODS_WOODEN, TropicraftItems.BAMBOO_STICK);
         
         // Add our fish items to stats and dolphin food
         addItemsToTag(ItemTags.FISHES, TropicraftItems.RAW_FISH, TropicraftItems.COOKED_FISH);
@@ -116,7 +114,10 @@ public class TropicraftItemTagsProvider extends ItemTagsProvider {
     
     @SafeVarargs
     private final void appendToTag(Named<Item> tag, Named<Item>... toAppend) {
-        tag(tag).addTags(toAppend);
+        TagsProvider.TagAppender<Item> builder = tag(tag);
+        for (Named<Item> value : toAppend) {
+            builder.addTag(value);
+        }
     }
 
     @Override

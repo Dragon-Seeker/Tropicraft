@@ -13,8 +13,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class SinkInGroundProcessor extends CheatyStructureProcessor {
     public static final Codec<SinkInGroundProcessor> CODEC = Codec.unit(new SinkInGroundProcessor());
@@ -36,7 +35,7 @@ public class SinkInGroundProcessor extends CheatyStructureProcessor {
         // Get height of the ground at this spot
         BlockPos groundCheck = world.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, worldPos);
         // y == 2, we're above the path, remove fence blocks that are above sea level or next to some other block
-        if (sourceInfo.pos.getY() == 2 && sourceInfo.state.getBlock() == TropicraftBlocks.BAMBOO_FENCE.get()) {
+        if (sourceInfo.pos.getY() == 2 && sourceInfo.state.getBlock() == TropicraftBlocks.BAMBOO_FENCE) {
             if (groundCheck.getY() > 127 || !isAirOrWater(world, worldPos.below(2))) {
                 return null;
             }
@@ -50,8 +49,8 @@ public class SinkInGroundProcessor extends CheatyStructureProcessor {
         // If above sea level, sink into the ground by one block
         if (groundCheck.getY() > 127) {
             // Convert slabs to bundles when they are over land
-            if (!isAirOrWater(world, worldPos.below()) && sourceInfo.state.getBlock() == TropicraftBlocks.THATCH_SLAB.get()) {
-                worldInfo = new StructureBlockInfo(worldPos, TropicraftBlocks.THATCH_BUNDLE.get().defaultBlockState(), null);
+            if (!isAirOrWater(world, worldPos.below()) && sourceInfo.state.getBlock() == TropicraftBlocks.THATCH_SLAB) {
+                worldInfo = new StructureBlockInfo(worldPos, TropicraftBlocks.THATCH_BUNDLE.defaultBlockState(), null);
             }
             
             // Only sink solid blocks, or blocks that are above air/water -- delete all others

@@ -1,6 +1,8 @@
 package net.tropicraft.core.common.block;
 
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
@@ -54,7 +56,7 @@ public class CoffeeBushBlock extends CropBlock {
 
     @Override
     protected ItemLike getBaseSeedId() {
-        return TropicraftItems.RAW_COFFEE_BEAN.get();
+        return TropicraftItems.RAW_COFFEE_BEAN;
     }
 
     @Override
@@ -71,7 +73,7 @@ public class CoffeeBushBlock extends CropBlock {
             for (height = 1; worldIn.getBlockState(ground = ground.below()).getBlock() == this; ++height);
 
             final BlockState blockState = worldIn.getBlockState(ground);
-            if (height < MAX_HEIGHT && worldIn.random.nextInt(blockState.getBlock().isFertile(blockState, worldIn, ground) ? GROWTH_RATE_FERTILE : GROWTH_RATE_INFERTILE) == 0) {
+            if (height < MAX_HEIGHT && worldIn.random.nextInt(this.isFertile(worldIn, blockState) ? GROWTH_RATE_FERTILE : GROWTH_RATE_INFERTILE) == 0) {
                 worldIn.setBlockAndUpdate(pos.above(), defaultBlockState());
             }
         }
@@ -84,7 +86,7 @@ public class CoffeeBushBlock extends CropBlock {
         if (state.getValue(AGE) == getMaxAge()) {
             world.setBlockAndUpdate(pos, state.setValue(AGE, 0));
             final int count = 1 + player.getRandom().nextInt(3);
-            ItemStack stack = new ItemStack(TropicraftItems.RAW_COFFEE_BEAN.get(), count);
+            ItemStack stack = new ItemStack(TropicraftItems.RAW_COFFEE_BEAN, count);
             popResource(world, pos, stack);
             return world.isClientSide ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
         }
@@ -98,6 +100,13 @@ public class CoffeeBushBlock extends CropBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
-        return state.getBlock() == Blocks.GRASS_BLOCK || net.minecraftforge.common.Tags.Blocks.DIRT.contains(this) || state.getBlock() == Blocks.FARMLAND || state.getBlock() == this;
+        return state.is(BlockTags.DIRT) || state.getBlock() == this;
+    }
+
+    public boolean isFertile(ServerLevel worldIn, BlockState blockState){
+        if (blockState.is(Blocks.FARMLAND)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package net.tropicraft.core.common.block;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -355,4 +356,17 @@ public class TropicraftBlocks {
     private static Supplier<BlockItem> item(final Supplier<? extends Block> block, final CreativeModeTab itemGroup) {
         return () -> new BlockItem(block.get(), new Item.Properties().tab(itemGroup));
     }
+
+    //------------------------------Fabrci--------------------//
+
+    static{
+        StrippableBlockRegistry.register(RED_MANGROVE_LOG, STRIPPED_MANGROVE_LOG);
+        StrippableBlockRegistry.register(LIGHT_MANGROVE_LOG, STRIPPED_MANGROVE_LOG);
+        StrippableBlockRegistry.register(BLACK_MANGROVE_LOG, STRIPPED_MANGROVE_LOG);
+
+        StrippableBlockRegistry.register(RED_MANGROVE_WOOD, STRIPPED_MANGROVE_WOOD);
+        StrippableBlockRegistry.register(LIGHT_MANGROVE_WOOD, STRIPPED_MANGROVE_WOOD);
+        StrippableBlockRegistry.register(BLACK_MANGROVE_WOOD, STRIPPED_MANGROVE_WOOD);
+    }
+
 }

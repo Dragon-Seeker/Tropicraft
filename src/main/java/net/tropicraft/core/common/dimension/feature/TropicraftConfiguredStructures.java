@@ -5,7 +5,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.data.WorldgenDataConsumer;
 import net.tropicraft.core.common.dimension.feature.pools.TropicraftTemplatePools;
@@ -30,11 +29,11 @@ public final class TropicraftConfiguredStructures {
             this.worldgen = worldgen;
         }
 
-        public <S extends StructureFeature<?>> ConfiguredStructureFeature<?, ?> register(String id, RegistryObject<S> structure, Function<S, ConfiguredStructureFeature<?, ?>> configure) {
-            return this.worldgen.register(new ResourceLocation(Constants.MODID, id), configure.apply(structure.get()));
+        public <S extends StructureFeature<?>> ConfiguredStructureFeature<?, ?> register(String id, S structure, Function<S, ConfiguredStructureFeature<?, ?>> configure) {
+            return this.worldgen.register(new ResourceLocation(Constants.MODID, id), configure.apply(structure));
         }
 
-        public <S extends StructureFeature<JigsawConfiguration>> ConfiguredStructureFeature<?, ?> register(String id, RegistryObject<S> structure, StructureTemplatePool templatePool, int maxDepth) {
+        public <S extends StructureFeature<JigsawConfiguration>> ConfiguredStructureFeature<?, ?> register(String id, S structure, StructureTemplatePool templatePool, int maxDepth) {
             return this.register(id, structure, s -> s.configured(new JigsawConfiguration(() -> templatePool, maxDepth)));
         }
     }

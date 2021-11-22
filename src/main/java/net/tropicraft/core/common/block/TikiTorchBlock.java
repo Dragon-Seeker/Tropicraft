@@ -1,32 +1,31 @@
 package net.tropicraft.core.common.block;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.util.Constants;
 
-import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Random;
 
@@ -105,7 +104,7 @@ public class TikiTorchBlock extends Block {
     @Override
     @Deprecated
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return facing.getAxis() == Axis.Y && !this.canSurvive(stateIn, worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return facing.getAxis() == Axis.Y && (!stateIn.canSurvive(worldIn, currentPos) || (facingState == Blocks.AIR.defaultBlockState())) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     @Override
@@ -115,7 +114,7 @@ public class TikiTorchBlock extends Block {
         if (section == TorchSection.UPPER) return;
 
         worldIn.setBlock(pos.above(), this.defaultBlockState().setValue(SECTION, TorchSection.MIDDLE), Constants.BlockFlags.DEFAULT);
-        worldIn.setBlock(pos.above(2), this.defaultBlockState().setValue(SECTION, TorchSection.UPPER), Constants.BlockFlags.DEFAULT);  
+        worldIn.setBlock(pos.above(2), this.defaultBlockState().setValue(SECTION, TorchSection.UPPER), Constants.BlockFlags.DEFAULT);
     }
     
     private boolean placeShortTorchOn(BlockState state) {
@@ -124,37 +123,22 @@ public class TikiTorchBlock extends Block {
     }
 
     @Override
-    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack) {
+    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack) {
         TorchSection section = state.getValue(SECTION);
         BlockPos base = pos.below(section.height);
         for (TorchSection otherSection : TorchSection.values()) {
             BlockPos pos2 = base.above(otherSection.height);
             BlockState state2 = world.getBlockState(pos2);
             if (state2.getBlock() == this && state2.getValue(SECTION) == otherSection) {
-                super.playerDestroy(world, player, pos2, state2, te, stack);
+                super.playerDestroy(world, player, pos2, state2, blockEntity, stack);
+                //world.setBlockState(pos2, Blocks.AIR.getDefaultState(), 35);
                 world.setBlock(pos2, world.getFluidState(pos2).createLegacyBlock(), world.isClientSide ? 11 : 3);
             }
         }
-    }
-
-    @Override
-    public boolean removedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        boolean ret = false;
-        TorchSection section = state.getValue(SECTION);
-        BlockPos base = pos.below(section.height);
-        for (TorchSection otherSection : TorchSection.values()) {
-            BlockPos pos2 = base.above(otherSection.height);
-            BlockState state2 = world.getBlockState(pos2);
-            if (state2.getBlock() == this && state2.getValue(SECTION) == otherSection) {
-                if (player.isCreative()) {
-                    ret |= super.removedByPlayer(state2, world, pos2, player, willHarvest, fluid);
-                } else {
-                    this.playerWillDestroy(world, pos2, state2, player);
-                    ret = true;
-                }
-            }
+        if(section == TorchSection.UPPER){
+            super.playerDestroy(world, player, pos, state, blockEntity, stack);
+            world.setBlock(pos, world.getFluidState(pos).createLegacyBlock(), world.isClientSide ? 11 : 3);
         }
-        return ret;
     }
 
     @Override

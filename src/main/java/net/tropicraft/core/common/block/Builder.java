@@ -1,5 +1,6 @@
 package net.tropicraft.core.common.block;
 
+import net.api.frogeExpansion.TropicBambooPot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -9,7 +10,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -103,7 +103,7 @@ public class Builder {
     }
 
     public static Supplier<StairBlock> stairs(final Supplier<? extends Block> source) {
-        return block(p -> new StairBlock(source.lazyMap(Block::defaultBlockState), p), lazyProp(source));
+        return block(p -> new StairBlock(source.get().defaultBlockState(), p), lazyProp(source));
     }
 
     public static Supplier<SlabBlock> slab(final Supplier<? extends Block> source) {
@@ -132,7 +132,7 @@ public class Builder {
     @SafeVarargs
     public static Supplier<SaplingBlock> sapling(final AbstractTreeGrower tree, final Supplier<? extends Block>... validPlantBlocks) {
         return block(p -> new SaplingBlock(tree, p) {
-            protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
+            public boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
                 final Block block = state.getBlock();
                 if (validPlantBlocks == null || validPlantBlocks.length == 0) {
                     return block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.FARMLAND;
@@ -168,7 +168,7 @@ public class Builder {
     }
     
     public static Supplier<FlowerPotBlock> pot(final Supplier<FlowerPotBlock> emptyPot, final Supplier<? extends Block> flower, final Supplier<Block.Properties> properties) {
-        return block(p -> new FlowerPotBlock(emptyPot, flower, p), properties);
+        return block(p -> new TropicBambooPot(emptyPot, flower, p), properties);
     }
 
     public static Supplier<FlowerPotBlock> tropicraftPot() {

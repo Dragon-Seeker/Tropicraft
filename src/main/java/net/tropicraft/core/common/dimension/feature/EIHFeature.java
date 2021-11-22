@@ -21,7 +21,7 @@ import static net.tropicraft.core.common.dimension.feature.TropicraftFeatureUtil
 
 public class EIHFeature extends Feature<NoneFeatureConfiguration> {
 
-    private static final Supplier<BlockState> EIH_STATE = () -> TropicraftBlocks.CHUNK.get().defaultBlockState();
+    private static final Supplier<BlockState> EIH_STATE = () -> TropicraftBlocks.CHUNK.defaultBlockState();
     private static final BlockState LAVA_STATE = Blocks.LAVA.defaultBlockState();
 
     public EIHFeature(Codec<NoneFeatureConfiguration> codec) {
@@ -268,13 +268,13 @@ public class EIHFeature extends Feature<NoneFeatureConfiguration> {
                 blockState = Blocks.GOLD_BLOCK.defaultBlockState();
                 break;
             case 6:
-                blockState = TropicraftBlocks.AZURITE_BLOCK.get().defaultBlockState();
+                blockState = TropicraftBlocks.AZURITE_BLOCK.defaultBlockState();
                 break;
             case 7:
-                blockState = TropicraftBlocks.EUDIALYTE_BLOCK.get().defaultBlockState();
+                blockState = TropicraftBlocks.EUDIALYTE_BLOCK.defaultBlockState();
                 break;
             case 8:
-                blockState = TropicraftBlocks.ZIRCON_BLOCK.get().defaultBlockState();
+                blockState = TropicraftBlocks.ZIRCON_BLOCK.defaultBlockState();
                 break;
             default:    // Should never get called, if so, redstone in tropics :o
                 blockState = Blocks.REDSTONE_BLOCK.defaultBlockState();

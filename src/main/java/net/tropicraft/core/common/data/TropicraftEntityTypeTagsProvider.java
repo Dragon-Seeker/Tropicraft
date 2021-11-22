@@ -16,7 +16,7 @@ import net.tropicraft.core.common.entity.TropicraftEntities;
 public class TropicraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
 
     public TropicraftEntityTypeTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, Constants.MODID, existingFileHelper);
+        super(generatorIn);
     }
 
     @Override

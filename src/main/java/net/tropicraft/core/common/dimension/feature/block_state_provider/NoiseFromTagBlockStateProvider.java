@@ -34,7 +34,7 @@ public final class NoiseFromTagBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected BlockStateProviderType<?> type() {
-        return TropicraftBlockStateProviders.NOISE_FROM_TAG.get();
+        return TropicraftBlockStateProviders.NOISE_FROM_TAG;
     }
 
     @Override

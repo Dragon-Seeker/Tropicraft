@@ -1,10 +1,9 @@
 package net.tropicraft.core.common.block.tileentity;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -16,14 +15,12 @@ import net.tropicraft.Constants;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.item.TropicraftItems;
 import net.tropicraft.core.common.network.TropicraftPackets;
-import net.tropicraft.core.common.network.message.MessageSifterInventory;
 import net.tropicraft.core.common.network.message.MessageSifterStart;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Random;
 
-public class SifterTileEntity extends BlockEntity {
+public class SifterTileEntity extends BlockEntity implements BlockEntityClientSerializable {
 
     /** Number of seconds to sift multiplied by the number of ticks per second */
     private static final int SIFT_TIME = 4 * 20;
@@ -39,16 +36,16 @@ public class SifterTileEntity extends BlockEntity {
     public double yaw;
     public double yaw2 = 0.0D;
 
-    @Nonnull
+    @NotNull
     private ItemStack siftItem = ItemStack.EMPTY;
 
     public SifterTileEntity(BlockPos pos, BlockState blockState) {
-        super(TropicraftTileEntityTypes.SIFTER.get(), pos, blockState);
+        super(TropicraftTileEntityTypes.SIFTER, pos, blockState);
         rand = new Random();
         currentSiftTime = SIFT_TIME;
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack getSiftItem() {
         return siftItem;
     }
@@ -75,7 +72,7 @@ public class SifterTileEntity extends BlockEntity {
     public void dumpResults(final BlockPos pos) {
         // NOTE: Removed check and drop for heated sifter in 1.12
         dumpBeachResults(pos);
-        syncInventory();
+        setChanged();
     }
 
     // TODO replace with loot table
@@ -97,7 +94,7 @@ public class SifterTileEntity extends BlockEntity {
                 }
                 final CompoundTag nameTag = new CompoundTag();
                 nameTag.putString("Name", name);
-                stack = new ItemStack(TropicraftItems.LOVE_TROPICS_SHELL.get());
+                stack = new ItemStack(TropicraftItems.LOVE_TROPICS_SHELL);
                 stack.setTag(nameTag);
             } else {
                 stack = getCommonItem();
@@ -138,20 +135,20 @@ public class SifterTileEntity extends BlockEntity {
             case 4:
                 return new ItemStack(Items.GLASS_BOTTLE, 1);
             case 5:
-                return new ItemStack(TropicraftItems.WHITE_PEARL.get(), 1);
+                return new ItemStack(TropicraftItems.WHITE_PEARL, 1);
             case 6:
-                return new ItemStack(TropicraftItems.BLACK_PEARL.get(), 1);
+                return new ItemStack(TropicraftItems.BLACK_PEARL, 1);
             case 7:
                 return new ItemStack(Items.STONE_SHOVEL, 1);
             case 0:
             default:
-                return new ItemStack(TropicraftItems.RUBE_NAUTILUS.get());
+                return new ItemStack(TropicraftItems.RUBE_NAUTILUS);
         }
     }
 
     public void addItemToSifter(ItemStack stack) {
         siftItem = stack.copy().split(1);
-        syncInventory();
+        setChanged();
     }
 
     public void startSifting() {
@@ -174,7 +171,7 @@ public class SifterTileEntity extends BlockEntity {
         currentSiftTime = SIFT_TIME;
         isSifting = false;
         siftItem = ItemStack.EMPTY;
-        syncInventory();
+        setChanged();
     }
 
     public void setSifting(boolean flag) {
@@ -215,19 +212,26 @@ public class SifterTileEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+    public void fromClientTag(CompoundTag tag) {
+        this.load(tag);
     }
 
-    protected void syncInventory() {
-        if (!level.isClientSide()) {
-            TropicraftPackets.sendToDimension(new MessageSifterInventory(this), level);
+    @Override
+    public CompoundTag toClientTag(CompoundTag tag) {
+        return writeItems(tag);
+    }
+
+    @Override
+    public void sync() {
+        BlockEntityClientSerializable.super.sync();
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if(!level.isClientSide()){
+            sync();
         }
-    }
-
-    @Nullable
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
     }
 
     public CompoundTag getUpdateTag() {
@@ -243,4 +247,6 @@ public class SifterTileEntity extends BlockEntity {
     public void setSiftItem(final ItemStack siftItem) {
         this.siftItem = siftItem.copy().split(1);
     }
+
+
 }

@@ -2,12 +2,11 @@ package net.tropicraft.core.common.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag.Named;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.tropicraft.Constants;
 import net.tropicraft.core.common.TropicraftTags;
 
 import java.util.Arrays;
@@ -21,7 +20,7 @@ import static net.tropicraft.core.common.block.TropicraftFlower.*;
 public class TropicraftBlockTagsProvider extends BlockTagsProvider {
 
     public TropicraftBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, Constants.MODID, existingFileHelper);
+        super(generatorIn);
     }
 
     @SuppressWarnings("unchecked")
@@ -95,7 +94,7 @@ public class TropicraftBlockTagsProvider extends BlockTagsProvider {
         // Flower pots
         createAndAppend(TropicraftTags.Blocks.FLOWER_POTS, BlockTags.FLOWER_POTS,
                 Stream.concat(BAMBOO_POTTED_TROPICS_PLANTS.stream(), Stream.concat(BAMBOO_POTTED_VANILLA_PLANTS.stream(), VANILLA_POTTED_TROPICS_PLANTS.stream()))
-                        .toArray(RegistryObject[]::new));
+                        .toArray(Supplier[]::new));
 
         createTag(TropicraftTags.Blocks.BONGOS, () -> SMALL_BONGO_DRUM, () -> MEDIUM_BONGO_DRUM, () -> LARGE_BONGO_DRUM);
 
@@ -131,7 +130,10 @@ public class TropicraftBlockTagsProvider extends BlockTagsProvider {
     
     @SafeVarargs
     private final void appendToTag(Named<Block> tag, Named<Block>... toAppend) {
-        tag(tag).addTags(toAppend);
+        TagsProvider.TagAppender<Block> builder = tag(tag);
+        for (Named<Block> value : toAppend) {
+            builder.addTag(value);
+        }
     }
     
     @SafeVarargs

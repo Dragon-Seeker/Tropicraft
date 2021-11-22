@@ -1,33 +1,32 @@
 package net.tropicraft.core.common.block;
 
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.tropicraft.core.common.Util;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Locale;
 import java.util.function.Supplier;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tropicraft.core.common.Util;
-
 public enum TropicraftFlower implements Supplier<Block> {
 
-    ACAI_VINE(MobEffects.REGENERATION.delegate, 0, 7, 16),
-    ANEMONE(MobEffects.REGENERATION.delegate, 0, 9),
-    BROMELIAD(MobEffects.REGENERATION.delegate, 0, 9),
-    CANNA(MobEffects.REGENERATION.delegate, 0),
-    COMMELINA_DIFFUSA(MobEffects.REGENERATION.delegate, 0),
-    CROCOSMIA(MobEffects.REGENERATION.delegate, 0),
-    CROTON(MobEffects.REGENERATION.delegate, 0, 13),
-    DRACAENA(MobEffects.REGENERATION.delegate, 0, 13),
-    TROPICAL_FERN(MobEffects.REGENERATION.delegate, 0, 13),
-    FOLIAGE(MobEffects.REGENERATION.delegate, 0, 13),
-    MAGIC_MUSHROOM(MobEffects.REGENERATION.delegate, 0, 11),
-    ORANGE_ANTHURIUM(MobEffects.REGENERATION.delegate, 0, 11),
-    ORCHID(MobEffects.REGENERATION.delegate, 0),
-    PATHOS(MobEffects.REGENERATION.delegate, 0, 15, 12),
-    RED_ANTHURIUM(MobEffects.REGENERATION.delegate, 0, 11);
+    ACAI_VINE(() -> MobEffects.REGENERATION, 0, 7, 16),
+    ANEMONE(() -> MobEffects.REGENERATION, 0, 9),
+    BROMELIAD(() -> MobEffects.REGENERATION, 0, 9),
+    CANNA(() -> MobEffects.REGENERATION, 0),
+    COMMELINA_DIFFUSA(() -> MobEffects.REGENERATION, 0),
+    CROCOSMIA(() -> MobEffects.REGENERATION, 0),
+    CROTON(() -> MobEffects.REGENERATION, 0, 13),
+    DRACAENA(() -> MobEffects.REGENERATION, 0, 13),
+    TROPICAL_FERN(() -> MobEffects.REGENERATION, 0, 13),
+    FOLIAGE(() -> MobEffects.REGENERATION, 0, 13),
+    MAGIC_MUSHROOM(() -> MobEffects.REGENERATION, 0, 11),
+    ORANGE_ANTHURIUM(() -> MobEffects.REGENERATION, 0, 11),
+    ORCHID(() -> MobEffects.REGENERATION, 0),
+    PATHOS(() -> MobEffects.REGENERATION, 0, 15, 12),
+    RED_ANTHURIUM(() -> MobEffects.REGENERATION, 0, 11);
 
     private final String name;
     private final Supplier<MobEffect> effect;
@@ -72,7 +71,7 @@ public enum TropicraftFlower implements Supplier<Block> {
 
     @Override
     public Block get() {
-        return TropicraftBlocks.FLOWERS.get(this).get();
+        return TropicraftBlocks.FLOWERS.get(this);
     }
 
     public String getEnglishName() {

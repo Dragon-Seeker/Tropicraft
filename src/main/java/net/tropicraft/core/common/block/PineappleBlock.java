@@ -20,10 +20,12 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.PlantType;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.Random;
 
-public class PineappleBlock extends TallFlowerBlock implements BonemealableBlock, IPlantable {
+public class PineappleBlock extends TallFlowerBlock implements BonemealableBlock {
 
     /** Number of total random ticks it takes for this pineapple to grow */
     public static final int TOTAL_GROW_TICKS = 7;
@@ -42,7 +44,7 @@ public class PineappleBlock extends TallFlowerBlock implements BonemealableBlock
 
     @Override
     public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState blockState, boolean b) {
-        return blockState.getBlock() == TropicraftBlocks.PINEAPPLE.get() && blockState.getValue(PineappleBlock.HALF) == DoubleBlockHalf.LOWER && world.getBlockState(pos.above()).isAir();
+        return blockState.getBlock() == TropicraftBlocks.PINEAPPLE && blockState.getValue(PineappleBlock.HALF) == DoubleBlockHalf.LOWER && world.getBlockState(pos.above()).isAir();
     }
 
     @Override
@@ -115,7 +117,7 @@ public class PineappleBlock extends TallFlowerBlock implements BonemealableBlock
     @Override
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            return worldIn.getBlockState(pos.below()).getBlock() == TropicraftBlocks.PINEAPPLE.get();
+            return worldIn.getBlockState(pos.below()).getBlock() == TropicraftBlocks.PINEAPPLE;
         } else {
             return canPlaceBlockAt(worldIn, pos);
         }
@@ -123,7 +125,7 @@ public class PineappleBlock extends TallFlowerBlock implements BonemealableBlock
 
     private boolean canPlaceBlockAt(LevelReader worldIn, BlockPos pos) {
         final BlockState belowState = worldIn.getBlockState(pos.below());
-        return belowState.getBlock().canSustainPlant(belowState, worldIn, pos.below(), Direction.UP, this);
+        return belowState.is(Blocks.DIRT) || belowState.is(Blocks.GRASS_BLOCK);
     }
 
     @Override

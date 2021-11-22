@@ -10,7 +10,6 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.carver.*;
 import net.minecraft.world.level.levelgen.heightproviders.BiasedToBottomHeight;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.data.WorldgenDataConsumer;
 
@@ -95,8 +94,12 @@ public final class TropicraftConfiguredCarvers {
             this.worldgen = (WorldgenDataConsumer<ConfiguredWorldCarver<?>>) worldgen;
         }
 
-        public <C extends CarverConfiguration, WC extends WorldCarver<C>> ConfiguredWorldCarver<?> register(String id, RegistryObject<WC> carver, C config) {
-            return this.worldgen.register(new ResourceLocation(Constants.MODID, id), carver.get().configured(config));
+        public <C extends CarverConfiguration, WC extends WorldCarver<C>> ConfiguredWorldCarver<?> register(String id, WC carver, C config) {
+            return this.worldgen.register(new ResourceLocation(Constants.MODID, id), carver.configured(config));
         }
+    }
+
+    public static void init(){
+
     }
 }

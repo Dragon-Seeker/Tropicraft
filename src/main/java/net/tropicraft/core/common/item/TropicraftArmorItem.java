@@ -18,8 +18,4 @@ public class TropicraftArmorItem extends ArmorItem {
         return Constants.ARMOR_LOCATION + name;
     }
 
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return getTexturePath(String.format("%s_layer_" + (slot == EquipmentSlot.LEGS ? 2 : 1) + ".png", getMaterial().getName()));
-    }
 }

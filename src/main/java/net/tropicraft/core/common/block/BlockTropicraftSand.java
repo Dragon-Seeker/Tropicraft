@@ -1,23 +1,25 @@
 package net.tropicraft.core.common.block;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.core.Direction;
+import net.api.frogeExpansion.BlockExtension;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.Constants;
 
-public class BlockTropicraftSand extends FallingBlock {
+public class BlockTropicraftSand extends FallingBlock implements BlockExtension {
     public static final BooleanProperty UNDERWATER = BooleanProperty.create("underwater");
 
     private final int dustColor;
@@ -33,10 +35,10 @@ public class BlockTropicraftSand extends FallingBlock {
         builder.add(UNDERWATER);
     }
     
-    @Override
-    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
-        return Blocks.SAND.canSustainPlant(state, world, pos, facing, plantable);
-    }
+//    @Override
+//    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
+//        return state.is(Blocks.CACTUS) || state.is(Blocks.SUGAR_CANE) || state.is(TropicraftBlocks.PALM_SAPLING);
+//    }
 
     @Override
     public BlockState getStateForPlacement(final BlockPlaceContext context) {
@@ -60,7 +62,7 @@ public class BlockTropicraftSand extends FallingBlock {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public int getDustColor(BlockState state, BlockGetter reader, BlockPos pos) {
         return this.dustColor;
     }

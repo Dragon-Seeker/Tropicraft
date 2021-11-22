@@ -1,6 +1,7 @@
 package net.tropicraft.core.common.dimension.feature.jigsaw;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
@@ -20,7 +21,7 @@ public final class TropicraftProcessorLists {
     public TropicraftProcessorLists(WorldgenDataConsumer<StructureProcessorList> worldgen) {
         Register processors = new Register(worldgen);
 
-        StructureSupportsProcessor fenceExtender = new StructureSupportsProcessor(false, ImmutableList.of(TropicraftBlocks.BAMBOO_FENCE.getId()));
+        StructureSupportsProcessor fenceExtender = new StructureSupportsProcessor(false, ImmutableList.of(Registry.BLOCK.getKey(TropicraftBlocks.BAMBOO_FENCE)));
 
         this.koaTownCenters = processors.register(
                 "koa_village/town_centers",
@@ -40,7 +41,7 @@ public final class TropicraftProcessorLists {
         this.homeTreeStart = processors.register(
                 "home_tree/start",
                 new AirToCaveAirProcessor(),
-                new StructureSupportsProcessor(true, ImmutableList.of(TropicraftBlocks.MAHOGANY_LOG.getId()))
+                new StructureSupportsProcessor(true, ImmutableList.of(Registry.BLOCK.getKey(TropicraftBlocks.MAHOGANY_LOG)))
         );
     }
 

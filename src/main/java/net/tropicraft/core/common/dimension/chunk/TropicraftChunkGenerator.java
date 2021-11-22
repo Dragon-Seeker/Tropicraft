@@ -2,6 +2,8 @@ package net.tropicraft.core.common.dimension.chunk;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
@@ -16,8 +18,6 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tropicraft.Constants;
 
 import java.util.concurrent.CompletableFuture;
@@ -65,7 +65,7 @@ public class TropicraftChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ChunkGenerator withSeed(long seed) {
         return new TropicraftChunkGenerator(this.biomeSource.withSeed(seed), seed, this.settings);
     }

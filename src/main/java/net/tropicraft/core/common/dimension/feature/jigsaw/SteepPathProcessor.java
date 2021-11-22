@@ -26,7 +26,7 @@ public class SteepPathProcessor extends PathStructureProcessor {
     public StructureBlockInfo process(LevelReader worldReaderIn, BlockPos seedPos, BlockPos pos2, StructureBlockInfo originalBlockInfo, StructureBlockInfo blockInfo, StructurePlaceSettings placementSettingsIn, StructureTemplate template) {
         BlockPos pos = blockInfo.pos;
 
-        if (originalBlockInfo.pos.getY() != 1 || originalBlockInfo.state.getBlock() == TropicraftBlocks.BAMBOO_STAIRS.get() || originalBlockInfo.state.isAir()) {
+        if (originalBlockInfo.pos.getY() != 1 || originalBlockInfo.state.getBlock() == TropicraftBlocks.BAMBOO_STAIRS || originalBlockInfo.state.isAir()) {
             return blockInfo;
         }
 
@@ -60,13 +60,13 @@ public class SteepPathProcessor extends PathStructureProcessor {
         if (bridgeTo == pos.getY() && canPlaceLadderAt(worldReaderIn, pos.above(), dir) == null) {
             if(pos.getY() > 127) {
                 // If the next spot up can't support a ladder, this is a one block step, so place a stair block
-                setBlockState(worldReaderIn, pos, TropicraftBlocks.THATCH_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING, dir));
+                setBlockState(worldReaderIn, pos, TropicraftBlocks.THATCH_STAIRS.defaultBlockState().setValue(StairBlock.FACING, dir));
             }
         } else {
             // Otherwise, place ladders upwards until we find air (bridging over an initial gap if required)
             while (bridgeTo >= pos.getY() || canPlaceLadderAt(worldReaderIn, pos, dir) != null) {
                 setBlockState(worldReaderIn, pos, ladder);
-                setBlockState(worldReaderIn, pos.relative(dir), TropicraftBlocks.THATCH_BUNDLE.get().defaultBlockState());
+                setBlockState(worldReaderIn, pos.relative(dir), TropicraftBlocks.THATCH_BUNDLE.defaultBlockState());
                 pos = pos.above();
             }
         }
@@ -88,7 +88,7 @@ public class SteepPathProcessor extends PathStructureProcessor {
     }
     
     private BlockState getLadderState(Direction dir) {
-        return TropicraftBlocks.BAMBOO_LADDER.get().defaultBlockState().setValue(LadderBlock.FACING, dir.getOpposite());
+        return TropicraftBlocks.BAMBOO_LADDER.defaultBlockState().setValue(LadderBlock.FACING, dir.getOpposite());
     }
     
     @Override

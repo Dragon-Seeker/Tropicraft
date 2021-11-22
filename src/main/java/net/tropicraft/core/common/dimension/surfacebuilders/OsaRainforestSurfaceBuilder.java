@@ -13,7 +13,7 @@ import net.tropicraft.core.common.block.TropicraftBlocks;
 import java.util.Random;
 
 public class OsaRainforestSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderBaseConfiguration> {
-    private static final SurfaceBuilderBaseConfiguration MUD = new SurfaceBuilderBaseConfiguration(TropicraftBlocks.MUD.get().defaultBlockState(), Blocks.DIRT.defaultBlockState(), TropicraftBlocks.MUD.get().defaultBlockState());
+    private static final SurfaceBuilderBaseConfiguration MUD = new SurfaceBuilderBaseConfiguration(TropicraftBlocks.MUD.defaultBlockState(), Blocks.DIRT.defaultBlockState(), TropicraftBlocks.MUD.defaultBlockState());
 
     public OsaRainforestSurfaceBuilder(Codec<SurfaceBuilderBaseConfiguration> codec) {
         super(codec);

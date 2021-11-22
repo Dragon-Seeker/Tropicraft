@@ -2,14 +2,11 @@ package net.tropicraft.core.common.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.Registry;
-import net.minecraft.core.WritableRegistry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.core.common.dimension.TropicraftDimension;
 import net.tropicraft.core.common.dimension.biome.TropicraftBiomes;
 
@@ -18,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 import static net.minecraft.commands.Commands.literal;
 
@@ -29,23 +25,23 @@ public class MapBiomesCommand {
     private static final Object2IntOpenHashMap<ResourceLocation> COLORS = new Object2IntOpenHashMap<>();
 
     static {
-        COLORS.put(TropicraftBiomes.TROPICS.getRegistryName(), 0x7cde73);
+        COLORS.put(TropicraftBiomes.TROPICS.location(), 0x7cde73);
 
-        COLORS.put(TropicraftBiomes.RAINFOREST_PLAINS.getRegistryName(), 0x3fb535);
-        COLORS.put(TropicraftBiomes.RAINFOREST_HILLS.getRegistryName(), 0x3fb535);
-        COLORS.put(TropicraftBiomes.RAINFOREST_MOUNTAINS.getRegistryName(), 0x3fb535);
-        COLORS.put(TropicraftBiomes.RAINFOREST_ISLAND_MOUNTAINS.getRegistryName(), 0x3cc230);
-        COLORS.put(TropicraftBiomes.OSA_RAINFOREST.getRegistryName(), 0x58d14d);
-        COLORS.put(TropicraftBiomes.BAMBOO_RAINFOREST.getRegistryName(), 0x57c23c);
+        COLORS.put(TropicraftBiomes.RAINFOREST_PLAINS.location(), 0x3fb535);
+        COLORS.put(TropicraftBiomes.RAINFOREST_HILLS.location(), 0x3fb535);
+        COLORS.put(TropicraftBiomes.RAINFOREST_MOUNTAINS.location(), 0x3fb535);
+        COLORS.put(TropicraftBiomes.RAINFOREST_ISLAND_MOUNTAINS.location(), 0x3cc230);
+        COLORS.put(TropicraftBiomes.OSA_RAINFOREST.location(), 0x58d14d);
+        COLORS.put(TropicraftBiomes.BAMBOO_RAINFOREST.location(), 0x57c23c);
 
-        COLORS.put(TropicraftBiomes.MANGROVES.getRegistryName(), 0x448733);
-        COLORS.put(TropicraftBiomes.OVERGROWN_MANGROVES.getRegistryName(), 0x5d8733);
+        COLORS.put(TropicraftBiomes.MANGROVES.location(), 0x448733);
+        COLORS.put(TropicraftBiomes.OVERGROWN_MANGROVES.location(), 0x5d8733);
 
-        COLORS.put(TropicraftBiomes.TROPICS_OCEAN.getRegistryName(), 0x4fc1c9);
-        COLORS.put(TropicraftBiomes.TROPICS_RIVER.getRegistryName(), 0x4fc1c9);
-        COLORS.put(TropicraftBiomes.KELP_FOREST.getRegistryName(), 0x4fc9af);
+        COLORS.put(TropicraftBiomes.TROPICS_OCEAN.location(), 0x4fc1c9);
+        COLORS.put(TropicraftBiomes.TROPICS_RIVER.location(), 0x4fc1c9);
+        COLORS.put(TropicraftBiomes.KELP_FOREST.location(), 0x4fc9af);
 
-        COLORS.put(TropicraftBiomes.TROPICS_BEACH.getRegistryName(), 0xe8e397);
+        COLORS.put(TropicraftBiomes.TROPICS_BEACH.location(), 0xe8e397);
     }
 
     public static void register(final CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -92,9 +88,5 @@ public class MapBiomesCommand {
         }
 
         return 0;
-    }
-
-    public String getRegistryName(){
-
     }
 }

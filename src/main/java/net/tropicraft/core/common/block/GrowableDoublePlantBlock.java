@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.block.huge_plant.HugePlantBlock;
 
 import java.util.Collections;

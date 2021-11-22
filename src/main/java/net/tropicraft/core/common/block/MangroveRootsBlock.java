@@ -271,7 +271,7 @@ public final class MangroveRootsBlock extends Block implements SimpleWaterlogged
 
     private void tryGrowPianguas(ServerLevel world, BlockPos pos, Random random) {
         BlockPos soilPos = pos.below();
-        if (!world.getBlockState(soilPos).is(TropicraftBlocks.MUD.get())) {
+        if (!world.getBlockState(soilPos).is(TropicraftBlocks.MUD)) {
             return;
         }
 
@@ -282,15 +282,15 @@ public final class MangroveRootsBlock extends Block implements SimpleWaterlogged
         );
 
         BlockState growIn = world.getBlockState(growPos);
-        if (growIn.is(TropicraftBlocks.MUD.get()) && !world.getBlockState(growPos.above()).canOcclude()) {
+        if (growIn.is(TropicraftBlocks.MUD) && !world.getBlockState(growPos.above()).canOcclude()) {
             if (!this.hasNearPianguas(world, growPos)) {
-                world.setBlockAndUpdate(growPos, TropicraftBlocks.MUD_WITH_PIANGUAS.get().defaultBlockState());
+                world.setBlockAndUpdate(growPos, TropicraftBlocks.MUD_WITH_PIANGUAS.defaultBlockState());
             }
         }
     }
 
     private boolean hasNearPianguas(ServerLevel world, BlockPos source) {
-        Block mudWithPianguas = TropicraftBlocks.MUD_WITH_PIANGUAS.get();
+        Block mudWithPianguas = TropicraftBlocks.MUD_WITH_PIANGUAS;
         BlockPos minSpacingPos = source.offset(-PIANGUA_RADIUS, -PIANGUA_RADIUS, -PIANGUA_RADIUS);
         BlockPos maxSpacingPos = source.offset(PIANGUA_RADIUS, 0, PIANGUA_RADIUS);
 

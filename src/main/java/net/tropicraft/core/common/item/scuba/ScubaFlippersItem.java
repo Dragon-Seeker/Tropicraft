@@ -2,6 +2,8 @@ package net.tropicraft.core.common.item.scuba;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -16,8 +18,9 @@ import net.tropicraft.Constants;
 import java.util.UUID;
 
 import net.minecraft.world.item.Item.Properties;
+import org.jetbrains.annotations.Nullable;
 
-public class ScubaFlippersItem extends ScubaArmorItem {
+public class ScubaFlippersItem extends ScubaArmorItem implements DynamicAttributeTool {
 
     private static final AttributeModifier SWIM_SPEED_BOOST = new AttributeModifier(UUID.fromString("d0b3c58b-ff33-41f2-beaa-3ffa15e8342b"), Constants.MODID + ".scuba", 0.25, Operation.MULTIPLY_TOTAL);
 
@@ -29,7 +32,7 @@ public class ScubaFlippersItem extends ScubaArmorItem {
         this.boostedModifiers = new LazyLoadedValue<>(() ->
                 ImmutableMultimap.<Attribute, AttributeModifier>builder()
                         .putAll(super.getAttributeModifiers(EquipmentSlot.FEET, new ItemStack(this)))
-                        .put(ForgeMod.SWIM_SPEED.get(), SWIM_SPEED_BOOST)
+                        .put(ForgeMod.SWIM_SPEED, SWIM_SPEED_BOOST)
                         .build()
         );
     }
@@ -40,6 +43,15 @@ public class ScubaFlippersItem extends ScubaArmorItem {
             return boostedModifiers.get();
         } else {
             return super.getAttributeModifiers(slot, stack);
+        }
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getDynamicModifiers(EquipmentSlot slot, ItemStack stack, @Nullable LivingEntity user) {
+        if (slot == EquipmentSlot.FEET && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.DEPTH_STRIDER, stack) == 0) {
+            return boostedModifiers.get();
+        } else {
+            return super.getDefaultAttributeModifiers(slot);
         }
     }
 }

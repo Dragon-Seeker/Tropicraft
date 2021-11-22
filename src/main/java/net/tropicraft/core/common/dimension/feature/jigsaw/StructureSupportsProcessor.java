@@ -44,7 +44,7 @@ public class StructureSupportsProcessor extends CheatyStructureProcessor {
     @Override
     public StructureBlockInfo process(LevelReader world, BlockPos seedPos, BlockPos pos2, StructureBlockInfo originalInfo, StructureBlockInfo blockInfo, StructurePlaceSettings placement, StructureTemplate template) {
         BlockPos pos = blockInfo.pos;
-        if (originalInfo.pos.getY() <= 1 && statesToExtend.contains(blockInfo.state.getBlock().getRegistryName())) {
+        if (originalInfo.pos.getY() <= 1 && statesToExtend.contains(Registry.BLOCK.getKey(blockInfo.state.getBlock()))) {
             if (!canReplaceLand && !canPassThrough(world, pos)) {
                 // Delete blocks that would generate inside land
                 return null;

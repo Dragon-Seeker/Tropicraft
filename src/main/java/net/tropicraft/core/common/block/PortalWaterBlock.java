@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 public class PortalWaterBlock extends LiquidBlock {
 
     public PortalWaterBlock(Properties builder) {
-        super(() -> Fluids.WATER, builder);
+        super(Fluids.WATER, builder);
     }
     
     @Override

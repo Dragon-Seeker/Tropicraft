@@ -1,5 +1,6 @@
 package net.tropicraft.core.common.block.tileentity;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -9,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
+public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile, BlockEntityClientSerializable {
     /** Number of ticks to mix */
     private static final int TICKS_TO_MIX = 4*20;
     private static final int MAX_NUM_INGREDIENTS = 3;
@@ -119,7 +121,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
         this.ticks = 0;
         this.mixing = true;
         if (!level.isClientSide) {
-            TropicraftPackets.sendToDimension(new MessageMixerStart(this), level);
+            this.sync();
         }
     }
     
@@ -142,7 +144,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
 
         ticks = TICKS_TO_MIX;
         mixing = false;
-        syncInventory();
+        setChanged();
     }
 
     public void retrieveResult(@Nullable Player at) {
@@ -158,7 +160,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
                 continue;
             }
 
-            final ItemStack container = ingredients.get(i).getItem().getContainerItem(ingredients.get(i));
+            final ItemStack container = getContainerItem(ingredients.get(i).getItem(), ingredients.get(i));
 
             if (!container.isEmpty()) {
                 dropItem(container, at);
@@ -167,14 +169,14 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
 
         ingredients.clear();
         result = ItemStack.EMPTY;
-        syncInventory();
+        setChanged();
     }
 
     public void finishMixing() {
         result = getResult(getIngredients());
         mixing = false;
         ticks = 0;
-        syncInventory();
+        setChanged();
     }
 
     public boolean addToMixer(@NotNull ItemStack ingredient) {
@@ -188,7 +190,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
                 }
             }
             ingredients.set(0, ingredient);
-            syncInventory();
+            setChanged();
             return true;
         } else if (ingredients.get(1).isEmpty()) {
             if (Drink.isDrink(ingredient.getItem())) {
@@ -206,7 +208,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
             }
 
             ingredients.set(1, ingredient);
-            syncInventory();
+            setChanged();
             return true;
         } else if (ingredients.get(2).isEmpty()) {
             if (Drink.isDrink(ingredient.getItem())) {
@@ -225,7 +227,7 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
             }
 
             ingredients.set(2, ingredient);
-            syncInventory();
+            setChanged();
             return true;
         } else {
             return false;
@@ -262,33 +264,27 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
         return state.getValue(DrinkMixerBlock.FACING);
     }
 
-    /**
-     * Called when you receive a TileEntityData packet for the location this
-     * TileEntity is currently in. On the client, the NetworkManager will always
-     * be the remote server. On the server, it will be whomever is responsible for
-     * sending the packet.
-     *
-     * @param net The NetworkManager the packet originated from
-     * @param pkt The data packet
-     */
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+    public void fromClientTag(CompoundTag tag) {
+        this.load(tag);
     }
 
-    protected void syncInventory() {
-        if (!level.isClientSide) {
-            TropicraftPackets.sendToDimension(new MessageMixerInventory(this), level);
+    @Override
+    public CompoundTag toClientTag(CompoundTag tag) {
+        return writeItems(tag);
+    }
+
+    @Override
+    public void sync() {
+        BlockEntityClientSerializable.super.sync();
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if(!level.isClientSide()){
+            sync();
         }
-    }
-
-    @Nullable
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
-    }
-
-    public CompoundTag getUpdateTag() {
-        return writeItems(new CompoundTag());
     }
 
     private CompoundTag writeItems(final CompoundTag nbt) {
@@ -301,4 +297,13 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile {
     public ItemStack getResult(NonNullList<ItemStack> ingredients2) {
         return Drinks.getResult(ingredients2);
     }
+
+    private ItemStack getContainerItem(Item item, ItemStack itemStack) {
+        if (item.hasCraftingRemainingItem()) {
+            return ItemStack.EMPTY;
+        }
+        return new ItemStack(item.getCraftingRemainingItem());
+    }
+
+
 }

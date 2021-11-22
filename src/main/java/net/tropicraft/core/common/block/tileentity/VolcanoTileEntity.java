@@ -1,10 +1,9 @@
 package net.tropicraft.core.common.block.tileentity;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -20,9 +19,7 @@ import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.projectile.LavaBallEntity;
 import net.tropicraft.core.common.volcano.VolcanoState;
 
-import javax.annotation.Nullable;
-
-public class VolcanoTileEntity extends BlockEntity
+public class VolcanoTileEntity extends BlockEntity implements BlockEntityClientSerializable
 {
 
 	private static final int RAND_DORMANT_DURATION = 4000;
@@ -170,7 +167,7 @@ public class VolcanoTileEntity extends BlockEntity
 
 	public void throwLava(double i, double j, double k, double xMot, double yMot, double zMot) {
 		if (!getLevel().isClientSide) {
-			getLevel().addFreshEntity(new LavaBallEntity(TropicraftEntities.LAVA_BALL.get(), getLevel(), i, j, k, xMot, yMot, zMot));
+			getLevel().addFreshEntity(new LavaBallEntity(TropicraftEntities.LAVA_BALL, getLevel(), i, j, k, xMot, yMot, zMot));
 		}
 	}
 
@@ -200,7 +197,7 @@ public class VolcanoTileEntity extends BlockEntity
 						BlockPos pos2 = new BlockPos(x, lavaLevel, z);
 
 						if (lavaLevel >= MAX_LAVA_LEVEL_DURING_RISE + this.heightOffset && lavaLevel < MAX_LAVA_LEVEL_DURING_ERUPTION + this.heightOffset) {
-							if (getLevel().getBlockState(pos2).getBlock() != TropicraftBlocks.CHUNK.get()) {
+							if (getLevel().getBlockState(pos2).getBlock() != TropicraftBlocks.CHUNK) {
 								getLevel().setBlock(pos2, state, updateFlag);
 							}
 						} else {
@@ -342,19 +339,44 @@ public class VolcanoTileEntity extends BlockEntity
 		return nbt;
 	}
 
-	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		load(pkt.getTag());
-	}
-
-	@Override
-	@Nullable
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
-	}
+//	@Override
+//	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+//		load(pkt.getTag());
+//	}
+//
+//	@Override
+//	@Nullable
+//	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+//		return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
+//	}
 
 	@Override
 	public CompoundTag getUpdateTag() {
 		return this.save(new CompoundTag());
 	}
+
+	@Override
+	public void fromClientTag(CompoundTag tag) {
+		this.load(tag);
+	}
+
+	@Override
+	public CompoundTag toClientTag(CompoundTag tag) {
+		return save(tag);
+	}
+
+	@Override
+	public void sync() {
+		BlockEntityClientSerializable.super.sync();
+	}
+
+	@Override
+	public void setChanged() {
+		super.setChanged();
+		if(!level.isClientSide()){
+			sync();
+		}
+	}
+
+
 }

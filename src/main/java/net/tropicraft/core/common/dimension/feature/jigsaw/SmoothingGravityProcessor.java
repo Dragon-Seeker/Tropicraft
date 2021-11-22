@@ -54,7 +54,7 @@ public class SmoothingGravityProcessor extends PathStructureProcessor {
         if (heightForward > height && heightBackward > height) {
             return new StructureBlockInfo(new BlockPos(pos.getX(), Math.min(heightForward, heightBackward), pos.getZ()), blockInfo.state, blockInfo.nbt);
         }
-        return baseline.process(world, seedPos, pos2, originalBlockInfo, blockInfo, placementSettingsIn, template);
+        return baseline.processBlock(world, seedPos, pos2, originalBlockInfo, blockInfo, placementSettingsIn);
     }
 
     @Override

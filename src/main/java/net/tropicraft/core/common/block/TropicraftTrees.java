@@ -29,28 +29,29 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.placement.WaterDepthThresholdConfiguration;
+import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.dimension.feature.TropicraftFeatures;
 import net.tropicraft.core.common.dimension.feature.tree.CitrusFoliagePlacer;
 import net.tropicraft.core.common.dimension.feature.tree.CitrusTrunkPlacer;
 import net.tropicraft.core.common.dimension.feature.tree.PapayaFoliagePlacer;
 import net.tropicraft.core.common.dimension.feature.tree.PapayaTreeDecorator;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class TropicraftTrees {
-    public static final AbstractTreeGrower GRAPEFRUIT = createFruit(TropicraftBlocks.GRAPEFRUIT_LEAVES);
-    public static final AbstractTreeGrower LEMON = createFruit(TropicraftBlocks.LEMON_LEAVES);
-    public static final AbstractTreeGrower LIME = createFruit(TropicraftBlocks.LIME_LEAVES);
-    public static final AbstractTreeGrower ORANGE = createFruit(TropicraftBlocks.ORANGE_LEAVES);
+    public static final AbstractTreeGrower GRAPEFRUIT = createFruit(() -> TropicraftBlocks.GRAPEFRUIT_LEAVES);
+    public static final AbstractTreeGrower LEMON = createFruit(() -> TropicraftBlocks.LEMON_LEAVES);
+    public static final AbstractTreeGrower LIME = createFruit(() -> TropicraftBlocks.LIME_LEAVES);
+    public static final AbstractTreeGrower ORANGE = createFruit(() -> TropicraftBlocks.ORANGE_LEAVES);
 
     public static final AbstractTreeGrower PAPAYA = create((server, random, beehive) -> {
         TreeConfiguration config = new TreeConfiguration.TreeConfigurationBuilder(
-                new SimpleStateProvider(TropicraftBlocks.PAPAYA_LOG.get().defaultBlockState()),
+                new SimpleStateProvider(TropicraftBlocks.PAPAYA_LOG.defaultBlockState()),
                 new StraightTrunkPlacer(5, 2, 3),
-                new SimpleStateProvider(TropicraftBlocks.PAPAYA_LEAVES.get().defaultBlockState()),
+                new SimpleStateProvider(TropicraftBlocks.PAPAYA_LEAVES.defaultBlockState()),
                 new SimpleStateProvider(Blocks.AIR.defaultBlockState()),
                 new PapayaFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
                 new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
@@ -62,24 +63,24 @@ public class TropicraftTrees {
     public static final AbstractTreeGrower RAINFOREST = create((server, random, beehive) -> {
         final int treeType = random.nextInt(4);
         if (treeType == 0) {
-            return TropicraftFeatures.TALL_TREE.get().configured(NoneFeatureConfiguration.INSTANCE);
+            return TropicraftFeatures.TALL_TREE.configured(NoneFeatureConfiguration.INSTANCE);
         } else if (treeType == 1) {
-            return TropicraftFeatures.SMALL_TUALUNG.get().configured(NoneFeatureConfiguration.INSTANCE);
+            return TropicraftFeatures.SMALL_TUALUNG.configured(NoneFeatureConfiguration.INSTANCE);
         } else if (treeType == 2) {
-            return TropicraftFeatures.UP_TREE.get().configured(NoneFeatureConfiguration.INSTANCE);
+            return TropicraftFeatures.UP_TREE.configured(NoneFeatureConfiguration.INSTANCE);
         } else {
-            return TropicraftFeatures.LARGE_TUALUNG.get().configured(NoneFeatureConfiguration.INSTANCE);
+            return TropicraftFeatures.LARGE_TUALUNG.configured(NoneFeatureConfiguration.INSTANCE);
         }
     });
 
     public static final AbstractTreeGrower PALM = create((server, random, beehive) -> {
         final int palmType = random.nextInt(3);
         if (palmType == 0) {
-            return TropicraftFeatures.NORMAL_PALM_TREE.get().configured(NoneFeatureConfiguration.INSTANCE);
+            return TropicraftFeatures.NORMAL_PALM_TREE.configured(NoneFeatureConfiguration.INSTANCE);
         } else if (palmType == 1) {
-            return TropicraftFeatures.CURVED_PALM_TREE.get().configured(NoneFeatureConfiguration.INSTANCE);
+            return TropicraftFeatures.CURVED_PALM_TREE.configured(NoneFeatureConfiguration.INSTANCE);
         } else {
-            return TropicraftFeatures.LARGE_PALM_TREE.get().configured(NoneFeatureConfiguration.INSTANCE);
+            return TropicraftFeatures.LARGE_PALM_TREE.configured(NoneFeatureConfiguration.INSTANCE);
         }
     });
 
@@ -92,7 +93,7 @@ public class TropicraftTrees {
         return create((server, random, beehive) -> {
             WeightedStateProvider leaves = new WeightedStateProvider(
                     weightedBlockStateBuilder()
-                            .add(TropicraftBlocks.FRUIT_LEAVES.get().defaultBlockState(), 1)
+                            .add(TropicraftBlocks.FRUIT_LEAVES.defaultBlockState(), 1)
                             .add(fruitLeaves.get().defaultBlockState(), 1));
 
             TreeConfiguration config = new TreeConfiguration.TreeConfigurationBuilder(

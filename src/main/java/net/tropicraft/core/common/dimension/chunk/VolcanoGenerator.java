@@ -4,25 +4,24 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.VolcanicSandBlock;
@@ -34,8 +33,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = Constants.MODID)
-public class VolcanoGenerator {
+//@Mod.EventBusSubscriber(modid = Constants.MODID)
+public class VolcanoGenerator implements ServerLifecycleEvents.ServerStarting {
 
     public static Set<ResourceLocation> volcanoSpawnBiomesLand = ImmutableSet.of(
             TropicraftBiomes.TROPICS.location(), TropicraftBiomes.RAINFOREST_PLAINS.location()
@@ -64,9 +63,9 @@ public class VolcanoGenerator {
 
     private static final int CHUNK_RANGE = MAX_RADIUS >> 4;
 
-    private final static Supplier<BlockState> VOLCANO_BLOCK = TropicraftBlocks.CHUNK.lazyMap(Block::defaultBlockState);
+    private final static Supplier<BlockState> VOLCANO_BLOCK = () -> TropicraftBlocks.CHUNK.defaultBlockState();
     private final static Supplier<BlockState> LAVA_BLOCK = () -> Blocks.LAVA.defaultBlockState();
-    private final static Supplier<BlockState> SAND_BLOCK = TropicraftBlocks.VOLCANIC_SAND.lazyMap(b -> b.defaultBlockState().setValue(VolcanicSandBlock.HOT, true));
+    private final static Supplier<BlockState> SAND_BLOCK = () -> TropicraftBlocks.VOLCANIC_SAND.defaultBlockState().setValue(VolcanicSandBlock.HOT, true);
 
     private final BiomeSource biomeSource;
 
@@ -75,10 +74,10 @@ public class VolcanoGenerator {
         this.biomeSource = biomeSource;
     }
 
-    @SubscribeEvent
-    public static void onServerStarting(FMLServerStartingEvent event) {
+    @Override
+    public void onServerStarting(MinecraftServer server) {
         // we don't really have a structure but we fake it
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getServer().getCommands().getDispatcher();
+        CommandDispatcher<CommandSourceStack> dispatcher = server.getCommands().getDispatcher();
 
         LiteralArgumentBuilder<CommandSourceStack> locate = Commands.literal("locate").requires(source -> source.hasPermission(2));
         dispatcher.register(
@@ -128,7 +127,7 @@ public class VolcanoGenerator {
         // if this chunk contains the volcano center
         if (volcanoCoords.getX() <= chunkX + 15 && volcanoCoords.getX() >= chunkX && volcanoCoords.getZ() <= chunkZ + 15 && volcanoCoords.getZ() >= chunkZ) {
             BlockPos volcanoBlockPos = new BlockPos(volcanoCoords.getX() & 15, 1, volcanoCoords.getZ() & 15);
-            chunk.setBlockState(volcanoBlockPos, TropicraftBlocks.VOLCANO.get().defaultBlockState(), false);
+            chunk.setBlockState(volcanoBlockPos, TropicraftBlocks.VOLCANO.defaultBlockState(), false);
         }
 
         for (int x = 0; x < CHUNK_SIZE_X; x++) {
@@ -351,6 +350,11 @@ public class VolcanoGenerator {
 
     private static boolean hasAllBiomes(BiomeSource biomeSource, int centerX, int centerY, int centerZ, Set<ResourceLocation> allowedBiomes) {
         Biome biome = biomeSource.getNoiseBiome(centerX >> 2, centerY >> 2, centerZ >> 2);
-        return allowedBiomes.contains(biome.getRegistryName());
+        if(BuiltinRegistries.BIOME.getResourceKey(biome).isPresent()){
+            return allowedBiomes.contains(BuiltinRegistries.BIOME.getResourceKey(biome).get().location());
+        }
+        return false;
     }
+
+
 }

@@ -17,7 +17,6 @@ public class KoaVillageStructure extends JigsawFeature {
         super(codec, 0, true, true);
     }
 
-
     @Override
     protected boolean isFeatureChunk(ChunkGenerator generator, BiomeSource biomes, long seed, WorldgenRandom random, ChunkPos pChunkPos, Biome biome, ChunkPos startChunkPos, JigsawConfiguration config, LevelHeightAccessor pLevel) {
         BlockPos pos = new BlockPos((pChunkPos.x << 4) + 8, 0, (pChunkPos.z  << 4) + 8);

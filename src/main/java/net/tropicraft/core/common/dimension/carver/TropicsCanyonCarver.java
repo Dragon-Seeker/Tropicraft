@@ -22,13 +22,13 @@ public class TropicsCanyonCarver extends CanyonWorldCarver {
     public TropicsCanyonCarver(Codec<CanyonCarverConfiguration> codec) {
         super(codec);
         this.replaceableBlocks = ImmutableSet.<Block> builder().addAll(this.replaceableBlocks)
-                .add(TropicraftBlocks.CORAL_SAND.get())
-                .add(TropicraftBlocks.FOAMY_SAND.get())
-                .add(TropicraftBlocks.MINERAL_SAND.get())
-                .add(TropicraftBlocks.PACKED_PURIFIED_SAND.get())
-                .add(TropicraftBlocks.PURIFIED_SAND.get())
-                .add(TropicraftBlocks.VOLCANIC_SAND.get())
-                .add(TropicraftBlocks.MUD.get(), TropicraftBlocks.MUD_WITH_PIANGUAS.get())
+                .add(TropicraftBlocks.CORAL_SAND)
+                .add(TropicraftBlocks.FOAMY_SAND)
+                .add(TropicraftBlocks.MINERAL_SAND)
+                .add(TropicraftBlocks.PACKED_PURIFIED_SAND)
+                .add(TropicraftBlocks.PURIFIED_SAND)
+                .add(TropicraftBlocks.VOLCANIC_SAND)
+                .add(TropicraftBlocks.MUD, TropicraftBlocks.MUD_WITH_PIANGUAS)
                 .build();
     }
 

@@ -3,31 +3,31 @@ package net.tropicraft.core.common.dimension.feature.jigsaw.piece;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.FrontAndTop;
+import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.JigsawBlockEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.core.Vec3i;
-import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.JigsawBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElementType;
-import net.minecraft.core.FrontAndTop;
-import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
-import net.minecraft.world.level.StructureFeatureManager;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElementType;
+import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
@@ -108,8 +108,8 @@ public final class HomeTreeBranchPiece extends StructurePoolElement implements P
         int branchZ2 = (int) ((branchLength * Math.cos(angle)) + branchZ1);
         int branchY2 = rand.nextInt(4) + 4;
 
-        BlockState wood = TropicraftBlocks.MAHOGANY_LOG.get().defaultBlockState();
-        final BlockState leaf = TropicraftBlocks.MAHOGANY_LEAVES.get().defaultBlockState();
+        BlockState wood = TropicraftBlocks.MAHOGANY_LOG.defaultBlockState();
+        final BlockState leaf = TropicraftBlocks.MAHOGANY_LEAVES.defaultBlockState();
         final int leafCircleSizeConstant = 3;
         final int y2 = origin.getY() + branchY2;
 
@@ -150,7 +150,7 @@ public final class HomeTreeBranchPiece extends StructurePoolElement implements P
             double distanceSquared = pos.distSqr(origin);
             if (distanceSquared <= outerRadiusSquared && distanceSquared >= innerRadiusSquared) {
                 if (world.isEmptyBlock(pos) || world.getBlockState(pos).getBlock() == state.getBlock()) {
-                    world.setBlock(pos, state, BlockFlags.DEFAULT);
+                    world.setBlock(pos, state, net.minecraftforge.common.util.Constants.BlockFlags.DEFAULT);
                 }
             }
         }
@@ -181,7 +181,7 @@ public final class HomeTreeBranchPiece extends StructurePoolElement implements P
                     from.getZ() + length * stepZ + 0.5
             );
             if (chunkBounds.isInside(pos)) {
-                world.setBlock(pos, state, BlockFlags.DEFAULT);
+                world.setBlock(pos, state, net.minecraftforge.common.util.Constants.BlockFlags.DEFAULT);
             }
         }
     }
