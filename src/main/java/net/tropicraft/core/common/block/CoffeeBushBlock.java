@@ -99,7 +99,7 @@ public class CoffeeBushBlock extends CropBlock {
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    public boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
         return state.is(BlockTags.DIRT) || state.getBlock() == this;
     }
 

@@ -46,6 +46,8 @@ sourceSets {
         resources {
             srcDir 'src/generated/resources'
         }
+        property "tropicraft.generateData.outputPath", file("src/generated/resources").absolutePath
+        property "tropicraft.generateData.existingData", file("src/main/resources").absolutePath
     }
 
     test {
@@ -130,9 +132,9 @@ loom {
 //    }
 }
 
-sourceSets.main.resources {
-	srcDir 'src/generated/resources'
-}
+//sourceSets.main.resources {
+//	srcDir 'src/generated/resources'
+//}
 
 repositories {
 	mavenLocal()

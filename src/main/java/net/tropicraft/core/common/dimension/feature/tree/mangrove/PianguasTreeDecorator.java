@@ -40,7 +40,7 @@ public class PianguasTreeDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> type() {
-        return TropicraftTreeDecorators.PIANGUAS.get();
+        return TropicraftTreeDecorators.PIANGUAS;
     }
 
     @Override
@@ -54,8 +54,8 @@ public class PianguasTreeDecorator extends TreeDecorator {
             int y = lowestLog.getY() - random.nextInt(this.spread);
 
             BlockPos local = new BlockPos(x, y, z);
-            if (pLevel.isStateAtPosition(local, (blockState) -> blockState.is(TropicraftBlocks.MUD.get()))) {
-                placed.accept(local, TropicraftBlocks.MUD_WITH_PIANGUAS.get().defaultBlockState());
+            if (pLevel.isStateAtPosition(local, (blockState) -> blockState.is(TropicraftBlocks.MUD))) {
+                placed.accept(local, TropicraftBlocks.MUD_WITH_PIANGUAS.defaultBlockState());
                 //setBlock(pLevel, local, TropicraftBlocks.MUD_WITH_PIANGUAS.get().defaultBlockState(), placed, box);
             }
         }

@@ -28,7 +28,7 @@ public class PleodendronFoliagePlacer extends FoliagePlacer {
    }
 
    protected FoliagePlacerType<?> type() {
-      return TropicraftFoliagePlacers.PLEODENDRON.get();
+      return TropicraftFoliagePlacers.PLEODENDRON;
    }
 
    @Override

@@ -10,6 +10,7 @@ import net.minecraft.world.level.LevelWriter;
 import net.minecraft.world.level.LevelSimulatedRW;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 
 import java.util.ArrayList;
@@ -33,15 +34,15 @@ public abstract class RainforestTreeFeature extends Feature<NoneFeatureConfigura
     }
 
     protected SaplingBlock getSapling() {
-        return TropicraftBlocks.MAHOGANY_SAPLING.get();
+        return TropicraftBlocks.MAHOGANY_SAPLING;
     }
 
     protected final BlockState getLeaf() {
-        return TropicraftBlocks.KAPOK_LEAVES.get().defaultBlockState();
+        return TropicraftBlocks.KAPOK_LEAVES.defaultBlockState();
     }
     
     protected final BlockState getLog() {
-        return TropicraftBlocks.MAHOGANY_LOG.get().defaultBlockState();
+        return TropicraftBlocks.MAHOGANY_LOG.defaultBlockState();
     }
 
     protected void placeLeaf(final LevelSimulatedRW world, int x, int y, int z) {

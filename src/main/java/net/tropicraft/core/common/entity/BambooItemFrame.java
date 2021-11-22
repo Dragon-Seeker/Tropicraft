@@ -1,20 +1,17 @@
 package net.tropicraft.core.common.entity;
 
+import net.api.network.ExtraSpawnDataEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.tropicraft.core.common.item.TropicraftItems;
 
-public class BambooItemFrame extends ItemFrame implements IEntityAdditionalSpawnData {
+public class BambooItemFrame extends ItemFrame implements ExtraSpawnDataEntity {
 
     public BambooItemFrame(final EntityType<? extends ItemFrame> type, final Level world) {
         super(type, world);
@@ -37,11 +34,6 @@ public class BambooItemFrame extends ItemFrame implements IEntityAdditionalSpawn
         if (dropSelf) {
             this.spawnAtLocation(TropicraftItems.BAMBOO_ITEM_FRAME);
         }
-    }
-
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override

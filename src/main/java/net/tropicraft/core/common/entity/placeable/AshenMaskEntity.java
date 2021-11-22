@@ -2,6 +2,7 @@ package net.tropicraft.core.common.entity.placeable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,9 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.tropicraft.core.common.entity.hostile.AshenEntity;
 import net.tropicraft.core.common.item.AshenMasks;
 import net.tropicraft.core.common.item.TropicraftItems;
@@ -28,7 +27,7 @@ public class AshenMaskEntity extends Entity {
     }
 
     public void dropItemStack() {
-        spawnAtLocation(new ItemStack(TropicraftItems.ASHEN_MASKS.get(AshenMasks.VALUES[getMaskType()]).get()), 1.0F);
+        spawnAtLocation(new ItemStack(TropicraftItems.ASHEN_MASKS.get(AshenMasks.VALUES[getMaskType()])), 1.0F);
     }
 
     @Override
@@ -105,7 +104,7 @@ public class AshenMaskEntity extends Entity {
 
     @Override
     public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return new ClientboundAddEntityPacket(this);
     }
 
     @Override

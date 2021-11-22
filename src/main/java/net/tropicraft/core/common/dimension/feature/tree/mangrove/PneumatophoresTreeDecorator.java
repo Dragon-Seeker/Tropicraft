@@ -44,7 +44,7 @@ public class PneumatophoresTreeDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> type() {
-        return TropicraftTreeDecorators.PNEUMATOPHORES.get();
+        return TropicraftTreeDecorators.PNEUMATOPHORES;
     }
 
     @Override

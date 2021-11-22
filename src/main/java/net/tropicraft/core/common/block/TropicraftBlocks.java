@@ -369,4 +369,8 @@ public class TropicraftBlocks {
         StrippableBlockRegistry.register(BLACK_MANGROVE_WOOD, STRIPPED_MANGROVE_WOOD);
     }
 
+    public static void init(){
+
+    }
+
 }

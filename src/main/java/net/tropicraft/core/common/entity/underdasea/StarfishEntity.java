@@ -1,5 +1,6 @@
 package net.tropicraft.core.common.entity.underdasea;
 
+import net.api.network.ExtraSpawnDataEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,17 +17,13 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.egg.EggEntity;
 import net.tropicraft.core.common.entity.egg.StarfishEggEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
-
-public class StarfishEntity extends EchinodermEntity implements IEntityAdditionalSpawnData {
+public class StarfishEntity extends EchinodermEntity implements ExtraSpawnDataEntity {
 	public static final float BABY_WIDTH = 0.25f;
 	public static final float ADULT_WIDTH = 1f;
 	public static final float BABY_HEIGHT = 0.1f;

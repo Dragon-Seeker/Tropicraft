@@ -9,6 +9,7 @@ import net.minecraft.world.level.LevelSimulatedRW;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
+import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.block.CoconutBlock;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import org.apache.commons.lang3.ArrayUtils;
@@ -22,15 +23,15 @@ public abstract class PalmTreeFeature extends Feature<NoneFeatureConfiguration> 
     }
 
     protected SaplingBlock getSapling() {
-        return TropicraftBlocks.PALM_SAPLING.get();
+        return TropicraftBlocks.PALM_SAPLING;
     }
     
     protected final BlockState getLeaf() {
-        return TropicraftBlocks.PALM_LEAVES.get().defaultBlockState();
+        return TropicraftBlocks.PALM_LEAVES.defaultBlockState();
     }
     
     protected final BlockState getLog() {
-        return TropicraftBlocks.PALM_LOG.get().defaultBlockState();
+        return TropicraftBlocks.PALM_LOG.defaultBlockState();
     }
 
     protected void placeLeaf(final LevelSimulatedRW world, int x, int y, int z) {
@@ -56,7 +57,7 @@ public abstract class PalmTreeFeature extends Feature<NoneFeatureConfiguration> 
 
     private static final Direction[] DIRECTIONS = ArrayUtils.removeElement(Direction.values(), Direction.UP);
     public static void spawnCoconuts(LevelSimulatedRW world, BlockPos pos, Random random, int chance, BlockState leaf) {
-        final BlockState coconut = TropicraftBlocks.COCONUT.get().defaultBlockState();
+        final BlockState coconut = TropicraftBlocks.COCONUT.defaultBlockState();
         for (Direction d : DIRECTIONS) {
             BlockPos pos2 = pos.relative(d);
             if (random.nextInt(chance) == 0 && TreeFeature.isAirOrLeaves(world, pos2)) {

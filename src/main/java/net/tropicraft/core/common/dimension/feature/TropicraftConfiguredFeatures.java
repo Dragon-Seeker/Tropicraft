@@ -2,6 +2,7 @@ package net.tropicraft.core.common.dimension.feature;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -554,10 +555,12 @@ public final class TropicraftConfiguredFeatures {
 
         public <F extends Feature<?>> ConfiguredFeature<?, ?> register(String id, ConfiguredFeature<?, ?> feature) {
             return this.worldgen.register(new ResourceLocation(Constants.MODID, id), feature);
+            //return TropicraftConfiguredFeatures.register(id, feature);
         }
 
         public <F extends Feature<?>> ConfiguredFeature<?, ?> register(String id, F feature, Function<F, ConfiguredFeature<?, ?>> configure) {
             return this.register(id, configure.apply(feature));
+
         }
 
         public <F extends Feature<NoneFeatureConfiguration>> ConfiguredFeature<?, ?> noConfig(String id, F feature, UnaryOperator<ConfiguredFeature<?, ?>> configure) {
@@ -619,5 +622,16 @@ public final class TropicraftConfiguredFeatures {
         ResourceLocation tropicID = new ResourceLocation(Constants.MODID, id);
         return ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, tropicID);
     }
+
+    public static <F extends Feature<?>> ConfiguredFeature<?, ?> register(String id,  ConfiguredFeature<?, ?> feature) {
+        //return this.worldgen.register(new Identifier(Constants.MODID, id), configure.apply(feature));
+        ResourceLocation tropicID = new ResourceLocation(Constants.MODID, id);
+        if (BuiltinRegistries.CONFIGURED_FEATURE.keySet().contains(tropicID))
+            throw new IllegalStateException("Configured Feature ID: \"" + tropicID.toString() + "\" already exists in the Configured Features registry!");
+
+        return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(Constants.MODID, id), feature);
+    }
+
+    public static void init(){}
     //--------------------------------------- FABRIC END ---------------------------------------//
 }

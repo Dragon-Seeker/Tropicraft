@@ -29,7 +29,7 @@ public final class PapayaFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return TropicraftFoliagePlacers.PAPAYA.get();
+        return TropicraftFoliagePlacers.PAPAYA;
     }
 
     //TODO [PORT]: Double check that this is correctly ported for the changes with trees

@@ -1,17 +1,14 @@
 package net.tropicraft.core.common.entity.placeable;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
 import net.tropicraft.core.common.entity.BambooItemFrame;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.Nullable;
 
 public class WallItemEntity extends BambooItemFrame {
 

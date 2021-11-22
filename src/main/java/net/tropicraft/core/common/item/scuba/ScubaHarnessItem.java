@@ -1,29 +1,23 @@
 package net.tropicraft.core.common.item.scuba;
 
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.tropicraft.Constants;
 import net.tropicraft.core.client.data.TropicraftLangKeys;
 import net.tropicraft.core.client.scuba.ScubaHUD;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
-
-@EventBusSubscriber(modid = Constants.MODID, bus = Bus.FORGE)
+//@EventBusSubscriber(modid = Constants.MODID, bus = Bus.FORGE)
 public class ScubaHarnessItem extends ScubaArmorItem {
 
     public ScubaHarnessItem(ScubaType type, Properties properties) {
@@ -31,7 +25,7 @@ public class ScubaHarnessItem extends ScubaArmorItem {
     }
     
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         int airRemaining = getRemainingAir(stack);
@@ -79,7 +73,7 @@ public class ScubaHarnessItem extends ScubaArmorItem {
         return 20 * 60 * 10; // 10 Minutes
     }
     
-    public static void handleUnderwaterBreathing(PlayerTickEvent event) {
-        
-    }
+//    public static void handleUnderwaterBreathing(PlayerTickEvent event) {
+//
+//    }
 }

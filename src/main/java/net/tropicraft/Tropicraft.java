@@ -1,41 +1,17 @@
 package net.tropicraft;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.reflect.Reflection;
-import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.commands.CommandSource;
-import net.minecraft.commands.CommandSourceStack;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.IExtensionPoint;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
-import net.tropicraft.core.client.BasicColorHandler;
-import net.tropicraft.core.client.ClientSetup;
 import net.tropicraft.core.client.data.TropicraftBlockstateProvider;
 import net.tropicraft.core.client.data.TropicraftItemModelProvider;
 import net.tropicraft.core.client.data.TropicraftLangProvider;
@@ -68,106 +44,119 @@ import net.tropicraft.core.common.dimension.surfacebuilders.TropicraftConfigured
 import net.tropicraft.core.common.dimension.surfacebuilders.TropicraftSurfaceBuilders;
 import net.tropicraft.core.common.drinks.MixerRecipes;
 import net.tropicraft.core.common.entity.TropicraftEntities;
-import net.tropicraft.core.common.item.IColoredItem;
 import net.tropicraft.core.common.item.TropicraftItems;
 import net.tropicraft.core.common.item.scuba.ScubaGogglesItem;
 import net.tropicraft.core.common.network.TropicraftPackets;
+import net.tropicraft.core.common.sound.Sounds;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
-@Mod(Constants.MODID)
-public class Tropicraft {
-    public static final CreativeModeTab TROPICRAFT_ITEM_GROUP = (new CreativeModeTab("tropicraft") {
-        @OnlyIn(Dist.CLIENT)
-        public ItemStack makeIcon() {
-            return new ItemStack(TropicraftFlower.RED_ANTHURIUM.get());
-        }
-    });
+//@Mod(Constants.MODID)
+public class Tropicraft implements ModInitializer {
+    public static final CreativeModeTab TROPICRAFT_ITEM_GROUP =
+            FabricItemGroupBuilder.build(new ResourceLocation(Constants.MODID, "tropicraft"),
+                    () -> new ItemStack(TropicraftFlower.RED_ANTHURIUM.get()));
 
-    public Tropicraft() {
+    @Override
+    public void onInitialize() {
+        Tropicraft();
+    }
+
+    public void Tropicraft() {
         // Compatible with all versions that match the semver (excluding the qualifier e.g. "-beta+42")
-        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(Tropicraft::getCompatVersion, (s, v) -> Tropicraft.isCompatibleVersion(s)));
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+//        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(Tropicraft::getCompatVersion, (s, v) -> Tropicraft.isCompatibleVersion(s)));
+//        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // General mod setup
-        modBus.addListener(this::setup);
-        modBus.addListener(this::gatherData);
+        setup();//modBus.addListener(this::setup);
+//        modBus.addListener(this::gatherData);
 
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-            // Client setup
-            modBus.addListener(this::setupClient);
-            modBus.addListener(this::registerItemColors);
-        });
-
-        MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
+//        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+//            // Client setup
+//            modBus.addListener(this::setupClient);
+//            modBus.addListener(this::registerItemColors);
+//        });
+        Sounds.init();
+        onServerStarting();
 
         TropicraftDimension.addDefaultDimensionKey();
 
         // Registry objects
-        TropicraftBlocks.BLOCKS.register(modBus);
-        TropicraftBlocks.BLOCKITEMS.register(modBus);
-        TropicraftItems.ITEMS.register(modBus);
-        ScubaGogglesItem.ATTRIBUTES.register(modBus);
+        TropicraftBlocks.init();
+        //TropicraftBlocks.BLOCKITEMS.register(modBus);
+        TropicraftItems.init();
+        ScubaGogglesItem.init();
         MixerRecipes.addMixerRecipes();
-        TropicraftTileEntityTypes.BLOCK_ENTITIES.register(modBus);
-        TropicraftEntities.ENTITIES.register(modBus);
-        TropicraftCarvers.CARVERS.register(modBus);
-        TropicraftFeatures.FEATURES.register(modBus);
-        TropicraftFoliagePlacers.FOLIAGE_PLACERS.register(modBus);
-        TropicraftTreeDecorators.TREE_DECORATORS.register(modBus);
-        TropicraftFeatures.STRUCTURES.register(modBus);
-        TropicraftSurfaceBuilders.SURFACE_BUILDERS.register(modBus);
-        TropicraftBlockStateProviders.BLOCK_STATE_PROVIDERS.register(modBus);
-        TropicraftBlockPlacerTypes.BLOCK_PLACER_TYPES.register(modBus);
+        TropicraftTileEntityTypes.init();
+        TropicraftEntities.init();
+        TropicraftCarvers.init();
+        TropicraftFeatures.inti();
+        TropicraftFoliagePlacers.init();
+        TropicraftTreeDecorators.init();
+        TropicraftFeatures.inti();
+        TropicraftConfiguredFeatures.init();
+        TropicraftConfiguredStructures.init();
+        TropicraftSurfaceBuilders.init();
+        TropicraftBiomes.onBiomeLoad();
+        TropicraftBlockStateProviders.init();
+        TropicraftBlockPlacerTypes.init();
+
 
         // Hack in our item frame models the way vanilla does
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-            StateDefinition<Block, BlockState> frameState = new StateDefinition.Builder<Block, BlockState>(Blocks.AIR).add(BooleanProperty.create("map")).create(Block::defaultBlockState, BlockState::new);
-
-            ModelBakery.STATIC_DEFINITIONS = ImmutableMap.<ResourceLocation, StateDefinition<Block, BlockState>>builder()
-                    .putAll(ModelBakery.STATIC_DEFINITIONS)
-                    .put(TropicraftItems.BAMBOO_ITEM_FRAME.getId(), frameState)
-                    .build();
-        });
+//        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+//            StateDefinition<Block, BlockState> frameState = new StateDefinition.Builder<Block, BlockState>(Blocks.AIR).add(BooleanProperty.create("map")).create(Block::defaultBlockState, BlockState::new);
+//
+//            ModelBakery.STATIC_DEFINITIONS = ImmutableMap.<ResourceLocation, StateDefinition<Block, BlockState>>builder()
+//                    .putAll(ModelBakery.STATIC_DEFINITIONS)
+//                    .put(TropicraftItems.BAMBOO_ITEM_FRAME.getId(), frameState)
+//                    .build();
+//        });
     }
 
     private static final Pattern QUALIFIER = Pattern.compile("-\\w+\\+\\d+");
 
-    public static String getCompatVersion() {
-        return getCompatVersion(ModList.get().getModContainerById(Constants.MODID).orElseThrow(IllegalStateException::new).getModInfo().getVersion().toString());
-    }
+//    public static String getCompatVersion() {
+//        return getCompatVersion(ModList.get().getModContainerById(Constants.MODID).orElseThrow(IllegalStateException::new).getModInfo().getVersion().toString());
+//    }
 
     private static String getCompatVersion(String fullVersion) {
         return QUALIFIER.matcher(fullVersion).replaceAll("");
     }
 
-    public static boolean isCompatibleVersion(String version) {
-        return getCompatVersion().equals(getCompatVersion(version));
-    }
+//    public static boolean isCompatibleVersion(String version) {
+//        return getCompatVersion().equals(getCompatVersion(version));
+//    }
 
-    @OnlyIn(Dist.CLIENT)
-    private void setupClient(final FMLClientSetupEvent event) {
-        ClientSetup.setupBlockRenderLayers();
+//    @OnlyIn(Dist.CLIENT)
+//    private void setupClient(final FMLClientSetupEvent event) {
+//        ClientSetup.setupBlockRenderLayers();
+//
+//        //ClientSetup.setupEntityRenderers(event);
+//
+//        //ClientSetup.setupTileEntityRenderers();
+//
+//        ClientSetup.setupDimensionRenderInfo();
+//    }
 
-        //ClientSetup.setupEntityRenderers(event);
+//    @OnlyIn(Dist.CLIENT)
+//    private void registerItemColors(ColorHandlerEvent.Item evt) {
+//        BasicColorHandler basic = new BasicColorHandler();
+//        for (RegistryObject<Item> ro : TropicraftItems.ITEMS.getEntries()) {
+//            Item item = ro.get();
+//            if (item instanceof IColoredItem) {
+//                evt.getItemColors().register(basic, item);
+//            }
+//        }
+//    }
 
-        //ClientSetup.setupTileEntityRenderers();
-
-        ClientSetup.setupDimensionRenderInfo();
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void registerItemColors(ColorHandlerEvent.Item evt) {
-        BasicColorHandler basic = new BasicColorHandler();
-        for (RegistryObject<Item> ro : TropicraftItems.ITEMS.getEntries()) {
-            Item item = ro.get();
-            if (item instanceof IColoredItem) {
-                evt.getItemColors().register(basic, item);
-            }
-        }
-    }
-
-    private void setup(final FMLCommonSetupEvent event) {
+    private void setup() {
         TropicraftPackets.init();
         //ScubaData.registerCapability();
         TropicraftEntities.registerSpawns();
@@ -184,27 +173,30 @@ public class Tropicraft {
         );
     }
 
-    private void onServerStarting(final FMLServerStartingEvent event) {
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getServer().getCommands().getDispatcher();
-        CommandTropicsTeleport.register(dispatcher);
+    private void onServerStarting() {
+        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+            CommandTropicsTeleport.register(dispatcher);
 
-        // Dev only debug!
-        if (!FMLEnvironment.production) {
-            MapBiomesCommand.register(dispatcher);
-        }
+            // Dev only debug!
+            if (!FabricLoader.getInstance().isDevelopmentEnvironment()) {
+                MapBiomesCommand.register(dispatcher);
+            }
+        });
     }
 
-    private void gatherData(GatherDataEvent event) {
-        DataGenerator gen = event.getGenerator();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        if (event.includeClient()) {
+
+    private void gatherData(DataGenerator gen, ExistingFileHelper existingFileHelper) {
+
+
+
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             TropicraftBlockstateProvider blockstates = new TropicraftBlockstateProvider(gen, existingFileHelper);
             gen.addProvider(blockstates);
             gen.addProvider(new TropicraftItemModelProvider(gen, blockstates.getExistingHelper()));
             gen.addProvider(new TropicraftLangProvider(gen));
         }
-        if (event.includeServer()) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT || FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER ) {
             TropicraftBlockTagsProvider blockTags = new TropicraftBlockTagsProvider(gen, existingFileHelper);
             gen.addProvider(blockTags);
             gen.addProvider(new TropicraftItemTagsProvider(gen, blockTags, existingFileHelper));
@@ -229,5 +221,35 @@ public class Tropicraft {
                 return new TropicraftBiomes(consumer, features, structures, carvers, surfaceBuilders);
             });
         }));
+    }
+
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    public void dump(Path outputPath, List<Path> existingDataPaths) throws Exception {
+        LOGGER.info("Writing generated resources to {}", outputPath.toAbsolutePath());
+
+        DataGenerator generator = new DataGenerator(outputPath, Collections.emptyList());
+        var existingFileHelper = new ExistingFileHelper(existingDataPaths, Collections.emptySet(),
+                true, null, null);
+        gatherData(generator, existingFileHelper);
+        generator.run();
+    }
+
+    public void runIfEnabled() {
+//        if (!"true".equals(System.getProperty("tropicraft.generateData"))) {
+//            return;
+//        }
+
+        var outputPath = Paths.get(System.getProperty("tropicraft.generateData.outputPath"));
+        var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");
+        var existingDataPaths = Arrays.stream(existingData).map(Paths::get).toList();
+
+        try {
+            dump(outputPath, existingDataPaths);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        System.exit(0);
     }
 }

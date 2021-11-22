@@ -1,6 +1,7 @@
 package net.tropicraft.core.common.entity.placeable;
 
 import com.google.common.collect.ImmutableList;
+import net.api.network.ExtraSpawnDataEntity;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
 import net.tropicraft.core.common.item.TropicraftItems;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class BeachFloatEntity extends FurnitureEntity implements IEntityAdditionalSpawnData {
+public class BeachFloatEntity extends FurnitureEntity implements ExtraSpawnDataEntity {
 
     @NotNull
     private static final Random rand = new Random(298457L);
@@ -342,10 +342,10 @@ public class BeachFloatEntity extends FurnitureEntity implements IEntityAddition
         return this.getDirection().getClockWise();
     }
 
-    @Override
-    public boolean shouldRiderSit() {
-        return false;
-    }
+//    @Override
+//    public boolean shouldRiderSit() {
+//        return false;
+//    }
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {

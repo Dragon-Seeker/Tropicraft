@@ -1,5 +1,7 @@
 package net.tropicraft.core.common.dimension.feature;
 
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -31,10 +33,15 @@ public final class TropicraftConfiguredStructures {
 
         public <S extends StructureFeature<?>> ConfiguredStructureFeature<?, ?> register(String id, S structure, Function<S, ConfiguredStructureFeature<?, ?>> configure) {
             return this.worldgen.register(new ResourceLocation(Constants.MODID, id), configure.apply(structure));
+            //return Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(Constants.MODID, id), configure.apply(structure));
         }
 
         public <S extends StructureFeature<JigsawConfiguration>> ConfiguredStructureFeature<?, ?> register(String id, S structure, StructureTemplatePool templatePool, int maxDepth) {
             return this.register(id, structure, s -> s.configured(new JigsawConfiguration(() -> templatePool, maxDepth)));
         }
+    }
+
+    public static void init(){
+
     }
 }

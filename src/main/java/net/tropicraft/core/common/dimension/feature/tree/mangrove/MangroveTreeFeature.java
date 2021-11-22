@@ -1,20 +1,20 @@
 package net.tropicraft.core.common.dimension.feature.tree.mangrove;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.TropicraftTags;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class MangroveTreeFeature extends Feature<TreeConfiguration> {
@@ -42,7 +42,7 @@ public class MangroveTreeFeature extends Feature<TreeConfiguration> {
         // Force placement: put dirt under the current position so that the tree always places
         boolean replaceSoil = soilState.is(TropicraftTags.Blocks.MUD) ||
                 soilState.getFluidState().is(FluidTags.WATER) ||
-                soilState.is(Tags.Blocks.SAND) ||
+                soilState.is(BlockTags.SAND) ||
                 (world.getBlockState(soilPos.below()).getFluidState().is(FluidTags.WATER));
 
         try {

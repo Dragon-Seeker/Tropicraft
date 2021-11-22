@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-//@Mod.EventBusSubscriber(modid = Constants.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class ClientSetup {
 
     public static ModelLayerLocation KOA_HUNTER_LAYER;

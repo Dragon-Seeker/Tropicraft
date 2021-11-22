@@ -122,9 +122,10 @@ public final class FiddlerCrabEntity extends Animal {
             return false;
         }
 
-        if (!groundBlock.canCreatureSpawn(world, groundPos, SpawnPlacements.Type.NO_RESTRICTIONS, type)) {
-            return false;
-        }
+        //TODO [FABRIC]: MUST PORT IN THE FUTURE
+//        if (!groundBlock.canCreatureSpawn(world, groundPos, SpawnPlacements.Type.NO_RESTRICTIONS, type)) {
+//            return false;
+//        }
 
         BlockState block = world.getBlockState(pos);
         FluidState fluid = world.getFluidState(pos);

@@ -4,19 +4,21 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.tropicraft.core.events.ItemUseTickEvent;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+//import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
+//@ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class PonyBottleItem extends Item {
-    
+public class PonyBottleItem extends Item implements ItemUseTickEvent.CanContinueUsing, ItemUseTickEvent.DuringItemUseTick {
+
     private static final int FILL_RATE = 6;
     
     public PonyBottleItem(Item.Properties properties) {
@@ -43,15 +45,21 @@ public class PonyBottleItem extends Item {
             return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }
     }
-    
+
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        super.onUsingTick(stack, player, count);
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
+        super.inventoryTick(itemStack, level, entity, i, bl);
+    }
+
+    @Override
+    public void onUsingTick(LivingEntity entity, ItemStack stack, int useItemRemaining) {
         int fillAmt = FILL_RATE + 1; // +1 to counteract the -1 per tick while underwater
         // Wait for drink sound to start, and don't add air that won't fit
-        if (player.getUseItemRemainingTicks() <= 25 && player.getAirSupply() < player.getMaxAirSupply() - fillAmt) {
-            player.setAirSupply(player.getAirSupply() + fillAmt);
-            stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
+        if(entity instanceof Player player){
+            if (player.getUseItemRemainingTicks() <= 25 && player.getAirSupply() < player.getMaxAirSupply() - fillAmt) {
+                player.setAirSupply(player.getAirSupply() + fillAmt);
+                stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
+            }
         }
     }
     
@@ -60,8 +68,10 @@ public class PonyBottleItem extends Item {
         return !shouldCauseReequipAnimation(oldStack, newStack, false);
     }
     
-    @Override
+
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return oldStack.getItem() != newStack.getItem();
     }
+
+
 }

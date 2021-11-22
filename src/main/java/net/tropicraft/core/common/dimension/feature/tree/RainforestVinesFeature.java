@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraftforge.common.util.Constants;
 import net.tropicraft.core.common.dimension.feature.config.RainforestVinesConfig;
 
 import java.util.Random;

@@ -467,7 +467,7 @@ public class TropicraftLangProvider extends LanguageProvider {
         // MISC
         
         add(Tropicraft.TROPICRAFT_ITEM_GROUP, "Tropicraft");
-        add("attribute.name." + ForgeMod.SWIM_SPEED.get().getRegistryName().getPath(), "Swim Speed");
+        add("attribute.name." + Registry.ATTRIBUTE.getKey(ForgeMod.SWIM_SPEED).getPath(), "Swim Speed");
 
         // Koa
         add("entity.tropicraft.koa.female.hunter.name", "Koa Hunter");

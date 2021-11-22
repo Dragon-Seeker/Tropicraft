@@ -25,7 +25,7 @@
       "net.tropicraft.Tropicraft"
     ],
     "client": [
-      "net.tropicraft.core.client.ClientSetup"
+      "net.tropicraft.core.client.TropicraftClient"
     ]
   },
   "mixins": [

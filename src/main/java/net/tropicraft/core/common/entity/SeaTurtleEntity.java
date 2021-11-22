@@ -33,13 +33,11 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.tropicraft.core.common.dimension.TropicraftDimension;
 import net.tropicraft.core.common.entity.egg.SeaTurtleEggEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -374,10 +372,10 @@ public class SeaTurtleEntity extends Turtle {
 
                 if (!isInWater()) {
                     if (getCanFly()) {
-                        this.setDeltaMovement(this.getDeltaMovement().add(0, -this.getAttribute(ForgeMod.ENTITY_GRAVITY.get()).getValue() * 0.05, 0));
+                        this.setDeltaMovement(this.getDeltaMovement().add(0, -this.getAttribute(ForgeMod.ENTITY_GRAVITY).getValue() * 0.05, 0));
                     } else {
                         // Lower max speed when breaching, as a penalty to uncareful driving
-                        this.setDeltaMovement(this.getDeltaMovement().multiply(0.9, 0.99, 0.9).add(0, -this.getAttribute(ForgeMod.ENTITY_GRAVITY.get()).getValue(), 0));
+                        this.setDeltaMovement(this.getDeltaMovement().multiply(0.9, 0.99, 0.9).add(0, -this.getAttribute(ForgeMod.ENTITY_GRAVITY).getValue(), 0));
                     }
                 }
 
@@ -418,10 +416,10 @@ public class SeaTurtleEntity extends Turtle {
         return new ItemStack(TropicraftItems.SEA_TURTLE_SPAWN_EGG);
     }
 
-    @Override
-    public boolean canBeRiddenInWater(Entity rider) {
-        return true;
-    }
+//    @Override
+//    public boolean canBeRiddenInWater(Entity rider) {
+//        return true;
+//    }
 
     static class BetterLayEggGoal extends MoveToBlockGoal {
         private final SeaTurtleEntity turtle;

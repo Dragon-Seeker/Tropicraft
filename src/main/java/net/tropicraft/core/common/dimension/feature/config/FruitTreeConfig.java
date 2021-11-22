@@ -33,7 +33,7 @@ public final class FruitTreeConfig implements FeatureConfiguration {
     }
 
     public FruitTreeConfig(BlockState sapling, BlockState fruitLeaves) {
-        this(Blocks.OAK_LOG.defaultBlockState(), sapling, TropicraftBlocks.FRUIT_LEAVES.get().defaultBlockState(), fruitLeaves);
+        this(Blocks.OAK_LOG.defaultBlockState(), sapling, TropicraftBlocks.FRUIT_LEAVES.defaultBlockState(), fruitLeaves);
     }
 
     public FruitTreeConfig(Supplier<? extends Block> sapling, Supplier<? extends Block> fruitLeaves) {

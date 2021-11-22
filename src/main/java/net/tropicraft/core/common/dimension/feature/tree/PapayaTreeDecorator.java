@@ -31,7 +31,7 @@ public final class PapayaTreeDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> type() {
-        return TropicraftTreeDecorators.PAPAYA.get();
+        return TropicraftTreeDecorators.PAPAYA;
     }
 
     @Override
@@ -54,7 +54,7 @@ public final class PapayaTreeDecorator extends TreeDecorator {
                     BlockPos pos = log.relative(direction);
 
                     if (pLevel.isStateAtPosition(pos, (blockState) -> blockState.is(Blocks.AIR))) {
-                        BlockState blockstate = TropicraftBlocks.PAPAYA.get().defaultBlockState()
+                        BlockState blockstate = TropicraftBlocks.PAPAYA.defaultBlockState()
                                 .setValue(PapayaBlock.AGE, random.nextInt(2))
                                 .setValue(CocoaBlock.FACING, direction.getOpposite());
 
