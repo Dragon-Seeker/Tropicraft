@@ -36,9 +36,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class TropicraftWorldgenProvider implements DataProvider {
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Logger LOGGER = LogManager.getLogger(TropicraftWorldgenProvider.class);
+public class TempRegistryWorldGen extends TropicraftWorldgenProvider{
+    private final Consumer<RegistryTest> generatorFunction;
 
     private static final LazyLoadedValue<RegistryAccess.RegistryHolder> DYNAMIC_REGISTRIES = new LazyLoadedValue<>(() -> {
         RegistryAccess.RegistryHolder dynamicRegistries = new RegistryAccess.RegistryHolder();
@@ -60,44 +59,25 @@ public class TropicraftWorldgenProvider implements DataProvider {
         }
     }
 
-    private final Path root;
-    private final Consumer<Generator> generatorFunction;
-
-    public TropicraftWorldgenProvider(DataGenerator dataGenerator, Consumer<Generator> generatorFunction) {
-        this.root = dataGenerator.getOutputFolder().resolve("data");
+    public TempRegistryWorldGen(Consumer<RegistryTest> generatorFunction) {
+        super();
         this.generatorFunction = generatorFunction;
     }
 
-    public TropicraftWorldgenProvider() {
-        this.root = null;
-        this.generatorFunction = null;
-    }
 
-    @Override
-    public void run(HashCache cache) {
+    public void run() {
         RegistryAccess.RegistryHolder dynamicRegistries = DYNAMIC_REGISTRIES.get();
         DynamicOps<JsonElement> ops = RegistryWriteOps.create(JsonOps.INSTANCE, dynamicRegistries);
 
-        Generator generator = new Generator(root, cache, dynamicRegistries, ops);
+        RegistryTest generator = new RegistryTest(dynamicRegistries);
         this.generatorFunction.accept(generator);
     }
 
-    @Override
-    public String getName() {
-        return "Tropicraft Worldgen";
-    }
-
-    public static final class Generator {
-        private final Path root;
-        private final HashCache cache;
+    public static final class RegistryTest {
         private final RegistryAccess.RegistryHolder dynamicRegistries;
-        private final DynamicOps<JsonElement> ops;
 
-        Generator(Path root, HashCache cache, RegistryAccess.RegistryHolder dynamicRegistries, DynamicOps<JsonElement> ops) {
-            this.root = root;
-            this.cache = cache;
+        RegistryTest(RegistryAccess.RegistryHolder dynamicRegistries) {
             this.dynamicRegistries = dynamicRegistries;
-            this.ops = ops;
         }
 
         public <R> R addConfiguredFeatures(EntryGenerator<ConfiguredFeature<?, ?>, R> entryGenerator) {
@@ -154,20 +134,20 @@ public class TropicraftWorldgenProvider implements DataProvider {
                 EntryGenerator<? extends T, R> entryGenerator
         ) {
             return entryGenerator.generate((id, entry) -> {
-                Path entryPath = root.resolve(id.getNamespace()).resolve(path).resolve(id.getPath() + ".json");
-
-                Function<Supplier<T>, DataResult<JsonElement>> function = ops.withEncoder(codec);
-
-                try {
-                    Optional<JsonElement> serialized = function.apply(() -> entry).result();
-                    if (serialized.isPresent()) {
-                        DataProvider.save(GSON, cache, serialized.get(), entryPath);
-                    } else {
-                        LOGGER.error("Couldn't serialize worldgen entry at {}", entryPath);
-                    }
-                } catch (IOException e) {
-                    LOGGER.error("Couldn't save worldgen entry at {}", entryPath, e);
-                }
+//                Path entryPath = root.resolve(id.getNamespace()).resolve(path).resolve(id.getPath() + ".json");
+//
+//                Function<Supplier<T>, DataResult<JsonElement>> function = ops.withEncoder(codec);
+//
+//                try {
+//                    Optional<JsonElement> serialized = function.apply(() -> entry).result();
+//                    if (serialized.isPresent()) {
+//                        DataProvider.save(GSON, cache, serialized.get(), entryPath);
+//                    } else {
+//                        LOGGER.error("Couldn't serialize worldgen entry at {}", entryPath);
+//                    }
+//                } catch (IOException e) {
+//                    LOGGER.error("Couldn't save worldgen entry at {}", entryPath, e);
+//                }
 
                 if (registry != null) {
                     Registry.register(registry, id, entry);

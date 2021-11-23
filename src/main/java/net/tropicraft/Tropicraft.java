@@ -1,5 +1,6 @@
 package net.tropicraft;
 
+import com.google.common.base.Supplier;
 import com.google.common.reflect.Reflection;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -83,6 +84,9 @@ public class Tropicraft implements ModInitializer {
 //            modBus.addListener(this::setupClient);
 //            modBus.addListener(this::registerItemColors);
 //        });
+
+        runIfEnabled();
+
         Sounds.init();
         onServerStarting();
 
@@ -93,6 +97,12 @@ public class Tropicraft implements ModInitializer {
         //TropicraftBlocks.BLOCKITEMS.register(modBus);
         TropicraftItems.init();
         ScubaGogglesItem.init();
+
+        //
+
+//        new TropicraftBlockTagsProvider();
+//        new TropicraftItemTagsProvider();
+
         MixerRecipes.addMixerRecipes();
         TropicraftTileEntityTypes.init();
         TropicraftEntities.init();
@@ -107,7 +117,7 @@ public class Tropicraft implements ModInitializer {
         TropicraftBiomes.onBiomeLoad();
         TropicraftBlockStateProviders.init();
         TropicraftBlockPlacerTypes.init();
-
+//        temporaryWorldGenRegistry();
 
         // Hack in our item frame models the way vanilla does
 //        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
@@ -187,9 +197,6 @@ public class Tropicraft implements ModInitializer {
 
 
     private void gatherData(DataGenerator gen, ExistingFileHelper existingFileHelper) {
-
-
-
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             TropicraftBlockstateProvider blockstates = new TropicraftBlockstateProvider(gen, existingFileHelper);
             gen.addProvider(blockstates);
@@ -240,9 +247,9 @@ public class Tropicraft implements ModInitializer {
 //            return;
 //        }
 
-        var outputPath = Paths.get(System.getProperty("tropicraft.generateData.outputPath"));
-        var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");
-        var existingDataPaths = Arrays.stream(existingData).map(Paths::get).toList();
+        var outputPath = Paths.get("../src/generated/resources");
+        //var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");
+        var existingDataPaths = Arrays.stream("src/main/resources".split(";")).map(Paths::get).toList();
 
         try {
             dump(outputPath, existingDataPaths);
@@ -250,6 +257,22 @@ public class Tropicraft implements ModInitializer {
             e.printStackTrace();
             System.exit(-1);
         }
-        System.exit(0);
+//        System.exit(0);
+    }
+
+
+    private void temporaryWorldGenRegistry() {
+        new TempRegistryWorldGen(generator -> {
+            TropicraftConfiguredFeatures features = generator.addConfiguredFeatures(TropicraftConfiguredFeatures::new);
+            TropicraftConfiguredSurfaceBuilders surfaceBuilders = generator.addConfiguredSurfaceBuilders(TropicraftConfiguredSurfaceBuilders::new);
+            TropicraftConfiguredCarvers carvers = generator.addConfiguredCarvers(TropicraftConfiguredCarvers::new);
+            TropicraftProcessorLists processors = generator.addProcessorLists(TropicraftProcessorLists::new);
+            TropicraftTemplatePools templates = generator.addTemplatePools(consumer -> new TropicraftTemplatePools(consumer, features, processors));
+            TropicraftConfiguredStructures structures = generator.addConfiguredStructures(consumer -> new TropicraftConfiguredStructures(consumer, templates));
+
+            generator.addBiomes(consumer -> {
+                return new TropicraftBiomes(consumer, features, structures, carvers, surfaceBuilders);
+            });
+        }).run();
     }
 }

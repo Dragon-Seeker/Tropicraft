@@ -6,9 +6,12 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag.Named;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.tropicraft.core.common.TropicraftTags;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
@@ -22,6 +25,13 @@ public class TropicraftBlockTagsProvider extends BlockTagsProvider {
     public TropicraftBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
         super(generatorIn);
     }
+
+    public TropicraftBlockTagsProvider() {
+        super(null);
+        addTags();
+    }
+
+    ArrayList<Supplier<FlowerPotBlock>> TEMPARRAY = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
     @Override
@@ -91,10 +101,12 @@ public class TropicraftBlockTagsProvider extends BlockTagsProvider {
 
         createAndAppend(TropicraftTags.Blocks.CLIMBABLE, BlockTags.CLIMBABLE, () -> BAMBOO_LADDER);
 
+        Stream.concat(BAMBOO_POTTED_TROPICS_PLANTS.stream(), Stream.concat(BAMBOO_POTTED_VANILLA_PLANTS.stream(), VANILLA_POTTED_TROPICS_PLANTS.stream()))
+                .forEach((b) -> TEMPARRAY.add(()-> b));
+
         // Flower pots
-        createAndAppend(TropicraftTags.Blocks.FLOWER_POTS, BlockTags.FLOWER_POTS,
-                Stream.concat(BAMBOO_POTTED_TROPICS_PLANTS.stream(), Stream.concat(BAMBOO_POTTED_VANILLA_PLANTS.stream(), VANILLA_POTTED_TROPICS_PLANTS.stream()))
-                        .toArray(Supplier[]::new));
+        createAndAppend(TropicraftTags.Blocks.FLOWER_POTS, BlockTags.FLOWER_POTS, TEMPARRAY.toArray(Supplier[]::new)
+                );
 
         createTag(TropicraftTags.Blocks.BONGOS, () -> SMALL_BONGO_DRUM, () -> MEDIUM_BONGO_DRUM, () -> LARGE_BONGO_DRUM);
 

@@ -27,6 +27,11 @@ public class TropicraftItemTagsProvider extends ItemTagsProvider {
         super(generatorIn, blockTags);
     }
 
+    public TropicraftItemTagsProvider() {
+        super(null, null);
+        addTags();
+    }
+
     @Override
     protected void addTags() {
         // Add forge tags for our ores
@@ -123,5 +128,9 @@ public class TropicraftItemTagsProvider extends ItemTagsProvider {
     @Override
     public String getName() {
         return "Tropicraft Item Tags";
+    }
+
+    public static void init(){
+
     }
 }
