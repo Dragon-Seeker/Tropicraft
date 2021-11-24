@@ -14,9 +14,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.Vec3;
-import net.tropicraft.core.common.dimension.feature.jigsaw.AdjustBuildingHeightProcessor;
-import net.tropicraft.core.common.dimension.feature.jigsaw.SmoothingGravityProcessor;
-import net.tropicraft.core.common.dimension.feature.jigsaw.SteepPathProcessor;
+import net.tropicraft.core.common.dimension.feature.jigsaw.*;
 import net.tropicraft.core.mixin.StructureAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -94,6 +92,11 @@ public interface StructureExtensions {
 
             for(Iterator iterator = placementData.getProcessors().iterator(); structureBlockInfo2 != null && iterator.hasNext();) {
                 StructureProcessor processor = ((StructureProcessor)iterator.next());
+
+                if(processor instanceof StructurePassProcessor){
+                    structureBlockInfo2 = ((StructurePassProcessor)processor).process(world, pos, blockPos, structureBlockInfo, structureBlockInfo2, placementData, (StructureTemplate) this);
+                }
+
                 if(processor instanceof AdjustBuildingHeightProcessor) {
                     structureBlockInfo2 = ((AdjustBuildingHeightProcessor)processor).process(world, pos, blockPos, structureBlockInfo, structureBlockInfo2, placementData, (StructureTemplate) this);
                 }
@@ -104,6 +107,10 @@ public interface StructureExtensions {
 
                 else if(processor instanceof SteepPathProcessor) {
                     structureBlockInfo2 = ((SteepPathProcessor)processor).process(world, pos, blockPos, structureBlockInfo, structureBlockInfo2, placementData, (StructureTemplate)this );
+                }
+
+                else if(processor instanceof StructureVoidProcessor) {
+                    structureBlockInfo2 = ((StructureVoidProcessor)processor).process(world, pos, blockPos, structureBlockInfo, structureBlockInfo2, placementData, (StructureTemplate)this );
                 }
 
                 else {

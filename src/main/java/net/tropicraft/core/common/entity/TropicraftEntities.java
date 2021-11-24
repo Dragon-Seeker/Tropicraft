@@ -107,7 +107,7 @@ public class TropicraftEntities {
     }
 
     private static FabricEntityTypeBuilder<ManOWarEntity> manOWar() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, ManOWarEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, ManOWarEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.6F, 0.8F)
                 )
@@ -139,8 +139,7 @@ public class TropicraftEntities {
     private static FabricEntityTypeBuilder<SharkEntity> hammerhead() {
         return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, SharkEntity::new)
                 .dimensions(EntityDimensions
-                        .fixed(2.4F, 1.4F)
-                )
+                        .fixed(2.4F, 1.4F))
                 .trackRangeBlocks(5)
                 .trackedUpdateRate(2)
                 .forceTrackedVelocityUpdates(true);
@@ -159,8 +158,7 @@ public class TropicraftEntities {
     private static FabricEntityTypeBuilder<AshenMaskEntity> ashenMask() {
         return FabricEntityTypeBuilder.<AshenMaskEntity>create( MobCategory.MISC, AshenMaskEntity::new)
                 .dimensions(EntityDimensions
-                        .fixed(0.8F, 0.2F)
-                )
+                        .fixed(0.8F, 0.2F))
                 .trackRangeBlocks(6)
                 .trackedUpdateRate(100)
                 .forceTrackedVelocityUpdates(true);
@@ -169,8 +167,7 @@ public class TropicraftEntities {
     private static FabricEntityTypeBuilder<AshenEntity> ashen() {
         return FabricEntityTypeBuilder.create(MobCategory.MONSTER, AshenEntity::new )
                 .dimensions(EntityDimensions
-                        .fixed(0.5F, 1.3F)
-                )
+                        .fixed(0.5F, 1.3F))
                 .trackRangeBlocks(8)
                 .trackedUpdateRate(3)
                 .forceTrackedVelocityUpdates(true);
@@ -179,8 +176,7 @@ public class TropicraftEntities {
     private static FabricEntityTypeBuilder<TropiSpiderEntity> tropiSpider() {
         return FabricEntityTypeBuilder.create(MobCategory.MONSTER, TropiSpiderEntity::new)
                 .dimensions(EntityDimensions
-                        .fixed(1.4F, 0.9F)
-                )
+                        .fixed(1.4F, 0.9F))
                 .trackRangeBlocks(8)
                 .trackedUpdateRate(3)
                 .forceTrackedVelocityUpdates(true);
@@ -189,8 +185,7 @@ public class TropicraftEntities {
     private static FabricEntityTypeBuilder<TropiSpiderEggEntity> tropiSpiderEgg() {
         return FabricEntityTypeBuilder.create(MobCategory.MONSTER, TropiSpiderEggEntity::new)
                 .dimensions(EntityDimensions
-                        .fixed(EGG_WIDTH, EGG_HEIGHT)
-                )
+                        .fixed(EGG_WIDTH, EGG_HEIGHT))
                 .trackRangeBlocks(6)
                 .trackedUpdateRate(10)
                 .forceTrackedVelocityUpdates(false);
@@ -199,15 +194,14 @@ public class TropicraftEntities {
     private static FabricEntityTypeBuilder<EagleRayEntity> eagleRay() {
         return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, EagleRayEntity::new )
                 .dimensions(EntityDimensions
-                        .fixed(2F, 0.4F)
-                )
+                        .fixed(2F, 0.4F))
                 .trackRangeBlocks(8)
                 .trackedUpdateRate(3)
                 .forceTrackedVelocityUpdates(true);
     }
 
     private static FabricEntityTypeBuilder<TropicraftTropicalFishEntity> tropicalFish() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, TropicraftTropicalFishEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, TropicraftTropicalFishEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.3F, 0.4F)
                 )
@@ -217,7 +211,7 @@ public class TropicraftEntities {
     }
 
     private static FabricEntityTypeBuilder<SardineEntity> riverSardine() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, SardineEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, SardineEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.3F, 0.4F)
                 )
@@ -247,7 +241,7 @@ public class TropicraftEntities {
     }
 
     private static FabricEntityTypeBuilder<StarfishEggEntity> starfishEgg() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, StarfishEggEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, StarfishEggEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.4F, 0.5F)
                 )
@@ -257,7 +251,7 @@ public class TropicraftEntities {
     }
 
     private static FabricEntityTypeBuilder<StarfishEntity> starfish() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, StarfishEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, StarfishEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.5F, 0.5F)
                 )
@@ -267,7 +261,7 @@ public class TropicraftEntities {
     }
 
     private static FabricEntityTypeBuilder<SeaUrchinEggEntity> seaUrchinEgg() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, SeaUrchinEggEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, SeaUrchinEggEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.4F, 0.5F)
                 )
@@ -277,7 +271,7 @@ public class TropicraftEntities {
     }
 
     private static FabricEntityTypeBuilder<SeaUrchinEntity> seaUrchin() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, SeaUrchinEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, SeaUrchinEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.5F, 0.5F)
                 )
@@ -307,7 +301,7 @@ public class TropicraftEntities {
     }
 
     private static FabricEntityTypeBuilder<SeahorseEntity> seahorse() {
-        return FabricEntityTypeBuilder.create(MobCategory.WATER_CREATURE, SeahorseEntity::new)
+        return FabricEntityTypeBuilder.create(MobCategory.WATER_AMBIENT, SeahorseEntity::new)
                 .dimensions(EntityDimensions
                         .fixed(0.5F, 0.6F)
                 )
