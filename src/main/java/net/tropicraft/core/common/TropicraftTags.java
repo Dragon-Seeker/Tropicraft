@@ -1,7 +1,9 @@
 package net.tropicraft.core.common;
 
 import net.fabricmc.fabric.api.tag.TagFactory;
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.fabric.impl.tag.extension.TagFactoryImpl;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
@@ -192,6 +194,7 @@ public class TropicraftTags {
     }
 
     static Named<Block> tagBlock(String modid, String name) {
+        //return BlockTags.bind(new ResourceLocation(modid, name).toString());
         return TagFactory.BLOCK.create(new ResourceLocation(modid, name));
     }
     //--------------------------------- Fabric End ---------------------------------//

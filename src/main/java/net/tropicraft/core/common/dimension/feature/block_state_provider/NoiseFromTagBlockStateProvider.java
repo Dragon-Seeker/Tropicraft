@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.commands.arguments.blocks.BlockPredicateArgument;
 import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -20,11 +22,17 @@ import java.util.List;
 import java.util.Random;
 
 public final class NoiseFromTagBlockStateProvider extends BlockStateProvider {
-    public static final Codec<NoiseFromTagBlockStateProvider> CODEC = RecordCodecBuilder.create(instance -> {
-        return instance.group(
-                Tag.codec(() -> SerializationTags.getInstance().getOrEmpty(Registry.BLOCK_REGISTRY)).fieldOf("tag").forGetter(c -> c.tag)
-        ).apply(instance, NoiseFromTagBlockStateProvider::new);
-    });
+//    public static final Codec<NoiseFromTagBlockStateProvider> CODEC = RecordCodecBuilder.create(instance -> {
+//        return instance.group(
+//                Tag.codec(() -> SerializationTags.getInstance().getOrEmpty(Registry.BLOCK_REGISTRY)).fieldOf("tag").forGetter(c -> c.tag)
+//        ).apply(instance, NoiseFromTagBlockStateProvider::new);
+//    });
+
+    public static final Codec<NoiseFromTagBlockStateProvider> CODEC = Tag.codec(() -> {
+        return SerializationTags.getInstance().getOrEmpty(Registry.BLOCK_REGISTRY);
+    }).fieldOf("tag").xmap(NoiseFromTagBlockStateProvider::new, (NoiseFromTagBlockStateProvider) -> {
+        return NoiseFromTagBlockStateProvider.tag;
+    }).codec();
 
     public final Tag<Block> tag;
 

@@ -66,6 +66,8 @@ public class Tropicraft implements ModInitializer {
             FabricItemGroupBuilder.build(new ResourceLocation(Constants.MODID, "tropicraft"),
                     () -> new ItemStack(TropicraftFlower.RED_ANTHURIUM.get()));
 
+    public static boolean DatagenSwitch = true;
+
     @Override
     public void onInitialize() {
         Tropicraft();
@@ -248,9 +250,9 @@ public class Tropicraft implements ModInitializer {
     }
 
     public void runIfEnabled() {
-//        if (!"true".equals(System.getProperty("tropicraft.generateData"))) {
-//            return;
-//        }
+        if (DatagenSwitch){//!"true".equals(System.getProperty("tropicraft.generateData"))) {
+            return;
+        }
 
         var outputPath = Paths.get("../src/generated/resources");
         //var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");

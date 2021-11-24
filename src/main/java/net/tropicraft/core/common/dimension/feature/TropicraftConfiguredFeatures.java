@@ -1,11 +1,13 @@
 package net.tropicraft.core.common.dimension.feature;
 
 import com.google.common.collect.ImmutableList;
+import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
@@ -338,7 +340,7 @@ public final class TropicraftConfiguredFeatures {
                     .noProjection()
                     .build()
             ).decorated(Features.Decorators.ADD_32).decorated(Features.Decorators.HEIGHTMAP_SQUARE);
-        }); TropicraftTags.Blocks.init();
+        });
         this.tropicsFlowers = features.register("tropics_flowers", Feature.FLOWER, feature -> {
             BlockStateProvider stateProvider = new NoiseFromTagBlockStateProvider(TropicraftTags.Blocks.TROPICS_FLOWERS); //new SimpleStateProvider(TropicraftBlocks.FLOWERS.get(TropicraftFlower.ACAI_VINE).defaultBlockState());
             RandomPatchConfiguration config = new RandomPatchConfiguration.GrassConfigurationBuilder(stateProvider, SimpleBlockPlacer.INSTANCE).tries(64).build();

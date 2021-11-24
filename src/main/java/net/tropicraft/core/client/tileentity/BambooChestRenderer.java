@@ -243,9 +243,9 @@ public class BambooChestRenderer<T extends BlockEntity & LidBlockEntity> impleme
         };
 
         bambooChestLayer = new RenderType[] {
-                RenderType.entityCutout(new ResourceLocation(Constants.MODID, "textures/entity/chest/" + Registry.BLOCK.getKey(TropicraftBlocks.BAMBOO_CHEST).getPath() + "_normal.png")),
-                RenderType.entityCutout(new ResourceLocation(Constants.MODID, "textures/entity/chest/" + Registry.BLOCK.getKey(TropicraftBlocks.BAMBOO_CHEST).getPath() + "_left.png")),
-                RenderType.entityCutout(new ResourceLocation(Constants.MODID, "textures/entity/chest/" + Registry.BLOCK.getKey(TropicraftBlocks.BAMBOO_CHEST).getPath() + "_right.png"))
+                RenderType.entityCutout(new ResourceLocation(Constants.MODID, "textures/te/" + Registry.BLOCK.getKey(TropicraftBlocks.BAMBOO_CHEST).getPath() + "/normal.png")),
+                RenderType.entityCutout(new ResourceLocation(Constants.MODID, "textures/te/" + Registry.BLOCK.getKey(TropicraftBlocks.BAMBOO_CHEST).getPath() + "/normal_left.png")),
+                RenderType.entityCutout(new ResourceLocation(Constants.MODID, "textures/te/" + Registry.BLOCK.getKey(TropicraftBlocks.BAMBOO_CHEST).getPath() + "/normal_right.png"))
         };
     }
 }
