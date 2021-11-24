@@ -27,7 +27,7 @@ public class AirCompressorRenderer extends MachineRenderer<AirCompressorTileEnti
 
     @Override
     protected Material getMaterial() {
-        return TropicraftRenderUtils.getTEMaterial("drink_mixer");
+        return TropicraftRenderUtils.getBEMaterial("drink_mixer");
     }
 
     @Override

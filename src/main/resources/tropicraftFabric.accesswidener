@@ -152,3 +152,25 @@ accessible field net/minecraft/data/loot/BlockLoot HAS_SHEARS Lnet/minecraft/wor
 accessible field net/minecraft/data/loot/BlockLoot HAS_SHEARS_OR_SILK_TOUCH Lnet/minecraft/world/level/storage/loot/predicates/LootItemCondition$Builder;
 accessible field net/minecraft/data/loot/BlockLoot HAS_NO_SHEARS_OR_SILK_TOUCH Lnet/minecraft/world/level/storage/loot/predicates/LootItemCondition$Builder;
 accessible field net/minecraft/data/loot/BlockLoot map Ljava/util/Map;
+
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer lid Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer bottom Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer lock Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer doubleLeftLid Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer doubleLeftBottom Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer doubleLeftLock Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer doubleRightLid Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer doubleRightBottom Lnet/minecraft/client/model/geom/ModelPart;
+accessible field net/minecraft/client/renderer/blockentity/ChestRenderer doubleRightLock Lnet/minecraft/client/model/geom/ModelPart;
+
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer lid Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer bottom Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer lock Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer doubleLeftLid Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer doubleLeftBottom Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer doubleLeftLock Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer doubleRightLid Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer doubleRightBottom Lnet/minecraft/client/model/geom/ModelPart;
+mutable field net/minecraft/client/renderer/blockentity/ChestRenderer doubleRightLock Lnet/minecraft/client/model/geom/ModelPart;
+
+accessible method net/minecraft/client/renderer/blockentity/ChestRenderer render (Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;FII)V

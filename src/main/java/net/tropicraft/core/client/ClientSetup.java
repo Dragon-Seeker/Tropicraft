@@ -12,6 +12,7 @@ import net.minecraft.client.model.CowModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.ChestRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -26,10 +27,7 @@ import net.tropicraft.core.client.armor.StacheArmorProvider;
 import net.tropicraft.core.client.entity.model.*;
 import net.tropicraft.core.client.entity.render.*;
 import net.tropicraft.core.client.scuba.ModelScubaGear;
-import net.tropicraft.core.client.tileentity.AirCompressorRenderer;
-import net.tropicraft.core.client.tileentity.BambooChestRenderer;
-import net.tropicraft.core.client.tileentity.DrinkMixerRenderer;
-import net.tropicraft.core.client.tileentity.SifterRenderer;
+import net.tropicraft.core.client.tileentity.*;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.tileentity.AirCompressorTileEntity;
 import net.tropicraft.core.common.block.tileentity.BambooChestTileEntity;
@@ -200,9 +198,14 @@ public class ClientSetup {
         BAMBOO_MUG = registerLayer("bamboo_mug", () -> BambooMugModel.create());
 
         //Block Entity's Layers
-        BAMBOO_CHEST = registerLayer("bamboo_chest", () -> BambooChestRenderer.getSingleTexturedModelData());
-        BAMBOO_DOUBLE_CHEST_LEFT = registerLayer("bamboo_double_chest_left", () -> BambooChestRenderer.getLeftDoubleTexturedModelData());
-        BAMBOO_DOUBLE_CHEST_RIGHT = registerLayer("bamboo_double_chest_right", () -> BambooChestRenderer.getRightDoubleTexturedModelData());
+//        BAMBOO_CHEST = registerLayer("bamboo_chest", () -> BambooChestRenderer.getSingleTexturedModelData());
+//        BAMBOO_DOUBLE_CHEST_LEFT = registerLayer("bamboo_double_chest_left", () -> BambooChestRenderer.getLeftDoubleTexturedModelData());
+//        BAMBOO_DOUBLE_CHEST_RIGHT = registerLayer("bamboo_double_chest_right", () -> BambooChestRenderer.getRightDoubleTexturedModelData());
+
+        BAMBOO_CHEST = registerLayer("bamboo_chest", () -> ChestRenderer.createSingleBodyLayer());
+        BAMBOO_DOUBLE_CHEST_LEFT = registerLayer("bamboo_double_chest_left", () -> ChestRenderer.createDoubleBodyLeftLayer());
+        BAMBOO_DOUBLE_CHEST_RIGHT = registerLayer("bamboo_double_chest_right", () -> ChestRenderer.createDoubleBodyRightLayer());
+
         EIHMACHINE_LAYER = registerLayer("drink_mixer", () -> EIHMachineModel.create());
         AIRCOMPRESSOR_LAYER = registerLayer("air_compressor", () -> EIHMachineModel.create());
 

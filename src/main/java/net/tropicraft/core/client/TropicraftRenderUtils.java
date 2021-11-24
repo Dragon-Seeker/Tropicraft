@@ -49,12 +49,12 @@ public class TropicraftRenderUtils {
         return new Material(TextureAtlas.LOCATION_BLOCKS, getTextureBlock(path));
     }
 
-    public static Material getTEMaterial(final String path) {
-        return materialMap.computeIfAbsent(path, m -> createTEMaterial(path));
+    public static Material getBEMaterial(final String path) {
+        return materialMap.computeIfAbsent(path, m -> createBEMaterial(path));
     }
 
-    private static Material createTEMaterial(final String path) {
-        return new Material(TextureAtlas.LOCATION_BLOCKS, getTextureTE(path));
+    private static Material createBEMaterial(final String path) {
+        return new Material(TextureAtlas.LOCATION_BLOCKS, getTextureBE(path));
     }
 
     public static ResourceLocation getTexture(String path) {
@@ -81,8 +81,8 @@ public class TropicraftRenderUtils {
         return getTexture(String.format("textures/gui/%s.png", path));
     }
 
-    public static ResourceLocation getTextureTE(String path) {
-        return getTexture(String.format("textures/block/te/%s.png", path));
+    public static ResourceLocation getTextureBE(String path) {
+        return getTexture(String.format("textures/entity/be/%s.png", path));
     }
 
     public static ResourceLocation bindTextureArmor(String path) {
@@ -98,7 +98,7 @@ public class TropicraftRenderUtils {
     }
 
     public static ResourceLocation bindTextureTE(String path) {
-        return bindTexture(getTextureTE(path));
+        return bindTexture(getTextureBE(path));
     }
 
     public static ResourceLocation bindTextureBlock(String path) {

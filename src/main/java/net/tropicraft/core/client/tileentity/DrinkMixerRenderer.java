@@ -48,7 +48,7 @@ public class DrinkMixerRenderer extends MachineRenderer<DrinkMixerTileEntity> {
 
     @Override
     protected Material getMaterial() {
-        return TropicraftRenderUtils.getTEMaterial("drink_mixer");
+        return TropicraftRenderUtils.getBEMaterial("drink_mixer");
     }
 
     @Override
@@ -76,7 +76,7 @@ public class DrinkMixerRenderer extends MachineRenderer<DrinkMixerTileEntity> {
             } else {
                 modelBambooMug.renderLiquid = false;
             }
-            VertexConsumer ivertexbuilder = buffer.getBuffer(modelBambooMug.renderType(TropicraftRenderUtils.getTextureTE("bamboo_mug")));
+            VertexConsumer ivertexbuilder = buffer.getBuffer(modelBambooMug.renderType(TropicraftRenderUtils.getTextureBE("bamboo_mug")));
             modelBambooMug.renderToBuffer(stack, ivertexbuilder, combinedLightIn, combinedOverlayIn, 1, 1, 1, 1);
             stack.popPose();
         }
