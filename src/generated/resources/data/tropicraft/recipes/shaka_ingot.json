@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "tag": "forge:ores/shaka"
+    "tag": "c:shaka_ores"
   },
   "result": "tropicraft:shaka_ingot",
   "experience": 0.7,

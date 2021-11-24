@@ -10,7 +10,7 @@
       "item": "tropicraft:mangrove_slab"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:wooden_rods"
     }
   },
   "result": {

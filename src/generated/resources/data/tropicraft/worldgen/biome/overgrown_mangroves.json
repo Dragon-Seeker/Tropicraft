@@ -1,4 +1,5 @@
 {
+  "scale": -0.045,
   "effects": {
     "sky_color": 7907327,
     "grass_color": 7320092,
@@ -50,8 +51,6 @@
       "tropicraft:tall_golden_leather_fern",
       "tropicraft:huge_golden_leather_fern",
       "tropicraft:sparse_mangrove_vegetation",
-      "tropicraft:tropics_flowers",
-      "tropicraft:iris_flowers",
       "minecraft:seagrass_deep_warm",
       "tropicraft:mangrove_reeds",
       "minecraft:patch_grass_plain",
@@ -244,6 +243,5 @@
   "temperature": 2.0,
   "downfall": 1.5,
   "category": "swamp",
-  "depth": -0.25,
-  "scale": -0.045
+  "depth": -0.25
 }

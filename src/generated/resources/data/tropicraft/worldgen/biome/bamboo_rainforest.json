@@ -1,4 +1,5 @@
 {
+  "scale": 0.25,
   "effects": {
     "sky_color": 7907327,
     "fog_color": 12248771,
@@ -179,6 +180,5 @@
   "temperature": 1.5,
   "downfall": 2.0,
   "category": "jungle",
-  "depth": 0.25,
-  "scale": 0.25
+  "depth": 0.25
 }

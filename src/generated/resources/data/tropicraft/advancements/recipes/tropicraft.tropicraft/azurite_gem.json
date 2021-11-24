@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "tropicraft:azurite_gem"
+    ]
+  },
+  "criteria": {
+    "has_azurite_ores": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "c:azurite_ores"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "tropicraft:azurite_gem"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_azurite_ores",
+      "has_the_recipe"
+    ]
+  ]
+}

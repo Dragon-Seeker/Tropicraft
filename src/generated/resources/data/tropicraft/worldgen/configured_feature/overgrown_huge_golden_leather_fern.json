@@ -25,7 +25,7 @@
                   "type": "minecraft:simple_state_provider"
                 },
                 "block_placer": {
-                  "type": "tropicraft:huge_plant"
+                  "type": "minecraft:huge_plant"
                 }
               },
               "type": "minecraft:random_patch"

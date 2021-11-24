@@ -131,7 +131,7 @@ public final class TropicraftBiomes {
         features.addPalmTrees(generation);
         features.addEih(generation);
         features.addPapaya(generation);
-        features.addTropicsFlowers(generation);
+        //features.addTropicsFlowers(generation);
         features.addPineapples(generation);
         features.addRegularSeagrass(generation);
 
@@ -164,7 +164,7 @@ public final class TropicraftBiomes {
         carvers.addUnderwater(generation);
 
         features.addPalmTrees(generation);
-        features.addTropicsFlowers(generation);
+        //features.addTropicsFlowers(generation);
 
         generation.addStructureStart(structures.koaVillage);
 
@@ -196,7 +196,7 @@ public final class TropicraftBiomes {
         features.addRegularSeagrass(generation);
         features.addPapaya(generation);
 
-        features.addTropicsFlowers(generation);
+        //features.addTropicsFlowers(generation);
         features.addPineapples(generation);
 
         features.addTropicsGrass(generation);
@@ -348,7 +348,7 @@ public final class TropicraftBiomes {
 
         carvers.addLand(generation);
 
-        features.addTropicsFlowers(generation);
+        //features.addTropicsFlowers(generation);
 
         MobSpawnSettings.Builder spawns = defaultSpawns();
         addRiverWaterCreatures(spawns);
@@ -377,7 +377,7 @@ public final class TropicraftBiomes {
         }
         features.addGoldenLeatherFern(generation);
         features.addMangroveVegetation(generation, overgrown);
-        features.addTropicsFlowers(generation);
+        //features.addTropicsFlowers(generation);
 
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Features.SEAGRASS_DEEP_WARM);
         features.addMangroveReeds(generation);

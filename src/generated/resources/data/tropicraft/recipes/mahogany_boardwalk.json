@@ -10,7 +10,7 @@
       "item": "tropicraft:mahogany_slab"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:wooden_rods"
     }
   },
   "result": {

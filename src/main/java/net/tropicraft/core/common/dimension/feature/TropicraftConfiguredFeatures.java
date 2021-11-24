@@ -28,6 +28,7 @@ import net.minecraft.world.level.levelgen.placement.*;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.block.TropicraftBlocks;
+import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.block.TropicraftTrees;
 import net.tropicraft.core.common.data.WorldgenDataConsumer;
 import net.tropicraft.core.common.dimension.feature.block_placer.HugePlantBlockPlacer;
@@ -337,14 +338,14 @@ public final class TropicraftConfiguredFeatures {
                     .noProjection()
                     .build()
             ).decorated(Features.Decorators.ADD_32).decorated(Features.Decorators.HEIGHTMAP_SQUARE);
-        });
+        }); TropicraftTags.Blocks.init();
         this.tropicsFlowers = features.register("tropics_flowers", Feature.FLOWER, feature -> {
-            BlockStateProvider stateProvider = new NoiseFromTagBlockStateProvider(TropicraftTags.Blocks.TROPICS_FLOWERS);
+            BlockStateProvider stateProvider = new NoiseFromTagBlockStateProvider(TropicraftTags.Blocks.TROPICS_FLOWERS); //new SimpleStateProvider(TropicraftBlocks.FLOWERS.get(TropicraftFlower.ACAI_VINE).defaultBlockState());
             RandomPatchConfiguration config = new RandomPatchConfiguration.GrassConfigurationBuilder(stateProvider, SimpleBlockPlacer.INSTANCE).tries(64).build();
             return feature.configured(config).decorated(Features.Decorators.ADD_32.decorated(Features.Decorators.HEIGHTMAP_SQUARE).count(12));
         });
         this.rainforestFlowers = features.register("rainforest_flowers", Feature.FLOWER, feature -> {
-            BlockStateProvider stateProvider = new NoiseFromTagBlockStateProvider(TropicraftTags.Blocks.RAINFOREST_FLOWERS);
+            BlockStateProvider stateProvider = new NoiseFromTagBlockStateProvider(TropicraftTags.Blocks.RAINFOREST_FLOWERS); //new SimpleStateProvider(TropicraftBlocks.FLOWERS.get(TropicraftFlower.ACAI_VINE).defaultBlockState());
             RandomPatchConfiguration config = new RandomPatchConfiguration.GrassConfigurationBuilder(stateProvider, SimpleBlockPlacer.INSTANCE).tries(64).noProjection().build();
             return feature.configured(config).decorated(Features.Decorators.ADD_32.decorated(Features.Decorators.HEIGHTMAP_SQUARE).count(4));
         });

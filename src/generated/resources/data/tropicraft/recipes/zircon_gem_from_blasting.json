@@ -1,7 +1,7 @@
 {
   "type": "minecraft:blasting",
   "ingredient": {
-    "tag": "forge:ores/zircon"
+    "tag": "c:zircon_ores"
   },
   "result": "tropicraft:zircon_gem",
   "experience": 0.5,

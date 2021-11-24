@@ -229,7 +229,7 @@ public class SifterTileEntity extends BlockEntity implements BlockEntityClientSe
     @Override
     public void setChanged() {
         super.setChanged();
-        if(!level.isClientSide()){
+        if(this.hasLevel() && !level.isClientSide()){
             sync();
         }
     }

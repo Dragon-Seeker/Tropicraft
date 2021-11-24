@@ -1,4 +1,5 @@
 {
+  "scale": 0.05,
   "effects": {
     "sky_color": 7907327,
     "fog_color": 12638463,
@@ -40,9 +41,7 @@
       "minecraft:rare_small_dripstone"
     ],
     [
-      "minecraft:glow_lichen",
-      "tropicraft:tropics_flowers",
-      "tropicraft:iris_flowers"
+      "minecraft:glow_lichen"
     ]
   ],
   "starts": [
@@ -145,6 +144,5 @@
   "temperature": 1.5,
   "downfall": 1.25,
   "category": "river",
-  "depth": -0.7,
-  "scale": 0.05
+  "depth": -0.7
 }

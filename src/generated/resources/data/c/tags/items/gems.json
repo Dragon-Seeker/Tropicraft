@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#c:azurite_gems",
+    "#c:eudialyte_gems",
+    "#c:zircon_gems",
+    "#c:zirconium_gems"
+  ]
+}

@@ -1,4 +1,5 @@
 {
+  "scale": 0.1,
   "effects": {
     "sky_color": 7907327,
     "fog_color": 12248771,
@@ -54,8 +55,6 @@
       "tropicraft:rainforest_tall_tree",
       "tropicraft:seagrass",
       "tropicraft:papaya",
-      "tropicraft:tropics_flowers",
-      "tropicraft:iris_flowers",
       "tropicraft:pineapple_patch",
       "tropicraft:tropics_grass",
       "minecraft:patch_large_fern",
@@ -183,6 +182,5 @@
   "temperature": 1.5,
   "downfall": 2.0,
   "category": "jungle",
-  "depth": 0.25,
-  "scale": 0.1
+  "depth": 0.25
 }

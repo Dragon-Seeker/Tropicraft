@@ -1,7 +1,7 @@
 {
   "type": "minecraft:blasting",
   "ingredient": {
-    "tag": "forge:ores/manganese"
+    "tag": "c:manganese_ores"
   },
   "result": "tropicraft:manganese_ingot",
   "experience": 0.5,

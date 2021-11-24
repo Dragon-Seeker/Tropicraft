@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:azurite_ores",
+    "#c:eudialyte_ores",
+    "#c:zircon_ores",
+    "#c:manganese_ores",
+    "#c:shaka_ores"
+  ]
+}

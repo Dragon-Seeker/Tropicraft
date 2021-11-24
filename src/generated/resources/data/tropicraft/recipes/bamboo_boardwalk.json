@@ -10,7 +10,7 @@
       "item": "tropicraft:bamboo_slab"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:wooden_rods"
     }
   },
   "result": {

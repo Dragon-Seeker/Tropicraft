@@ -14,7 +14,7 @@
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "tag": "forge:swords"
+                    "tag": "c:swords"
                   }
                 }
               ],

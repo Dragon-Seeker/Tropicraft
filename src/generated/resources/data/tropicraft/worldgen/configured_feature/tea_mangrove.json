@@ -8,14 +8,14 @@
       {
         "count": 8,
         "spread": 4,
-        "type": "tropicraft:pianguas"
+        "type": "minecraft:pianguas"
       },
       {
         "roots_block": "tropicraft:light_mangrove_roots",
         "min_count": 2,
         "max_count": 6,
         "spread": 4,
-        "type": "tropicraft:pneumatophores"
+        "type": "minecraft:pneumatophores"
       }
     ],
     "ignore_vines": false,
@@ -57,7 +57,7 @@
     "foliage_placer": {
       "radius": 0,
       "offset": 0,
-      "type": "tropicraft:mangrove"
+      "type": "minecraft:mangrove"
     },
     "trunk_provider": {
       "state": {

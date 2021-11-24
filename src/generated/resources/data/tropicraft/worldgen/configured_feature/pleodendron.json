@@ -40,7 +40,7 @@
               "radius": 2,
               "offset": 0,
               "height": 1,
-              "type": "tropicraft:pleodendron"
+              "type": "minecraft:pleodendron"
             },
             "trunk_provider": {
               "state": {

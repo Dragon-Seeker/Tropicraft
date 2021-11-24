@@ -25,12 +25,6 @@ public class TropicraftBlockTagsProvider extends BlockTagsProvider {
     public TropicraftBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
         super(generatorIn);
     }
-
-    public TropicraftBlockTagsProvider() {
-        super(null);
-        addTags();
-    }
-
     ArrayList<Supplier<FlowerPotBlock>> TEMPARRAY = new ArrayList<>();
 
     @SuppressWarnings("unchecked")

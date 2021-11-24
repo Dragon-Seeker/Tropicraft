@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "tag": "forge:ores/eudialyte"
+    "tag": "c:eudialyte_ores"
   },
   "result": "tropicraft:eudialyte_gem",
   "experience": 0.5,

@@ -16,6 +16,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.tropicraft.core.client.data.TropicraftBlockstateProvider;
 import net.tropicraft.core.client.data.TropicraftItemModelProvider;
 import net.tropicraft.core.client.data.TropicraftLangProvider;
+import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.block.tileentity.TropicraftTileEntityTypes;
@@ -75,6 +76,11 @@ public class Tropicraft implements ModInitializer {
 //        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(Tropicraft::getCompatVersion, (s, v) -> Tropicraft.isCompatibleVersion(s)));
 //        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        TropicraftTags.Blocks.init();
+        TropicraftTags.BlocksExtended.init();
+        TropicraftTags.Items.init();
+        TropicraftTags.ItemsExtended.init();
+
         // General mod setup
         setup();//modBus.addListener(this::setup);
 //        modBus.addListener(this::gatherData);
@@ -84,9 +90,6 @@ public class Tropicraft implements ModInitializer {
 //            modBus.addListener(this::setupClient);
 //            modBus.addListener(this::registerItemColors);
 //        });
-
-        runIfEnabled();
-
         Sounds.init();
         onServerStarting();
 
@@ -106,6 +109,7 @@ public class Tropicraft implements ModInitializer {
         MixerRecipes.addMixerRecipes();
         TropicraftTileEntityTypes.init();
         TropicraftEntities.init();
+        TropicraftEntities.onCreateEntityAttributes();
         TropicraftCarvers.init();
         TropicraftFeatures.inti();
         TropicraftFoliagePlacers.init();
@@ -117,6 +121,7 @@ public class Tropicraft implements ModInitializer {
         TropicraftBiomes.onBiomeLoad();
         TropicraftBlockStateProviders.init();
         TropicraftBlockPlacerTypes.init();
+        runIfEnabled();
 //        temporaryWorldGenRegistry();
 
         // Hack in our item frame models the way vanilla does
@@ -249,7 +254,7 @@ public class Tropicraft implements ModInitializer {
 
         var outputPath = Paths.get("../src/generated/resources");
         //var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");
-        var existingDataPaths = Arrays.stream("src/main/resources".split(";")).map(Paths::get).toList();
+        var existingDataPaths = Arrays.asList(Paths.get("../src/main/resources"));//Arrays.stream("src/main/resources".split(";")).map(Paths::get).toList();
 
         try {
             dump(outputPath, existingDataPaths);

@@ -11,7 +11,7 @@
       "tag": "minecraft:planks"
     },
     "I": {
-      "tag": "forge:glass"
+      "tag": "c:glass"
     }
   },
   "result": {

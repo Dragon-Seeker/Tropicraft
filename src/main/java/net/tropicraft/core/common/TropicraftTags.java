@@ -71,6 +71,8 @@ public class TropicraftTags {
         static Named<Block> compatTag(String name) {
             return tagBlock("c", name);
         }
+
+        public static void init(){}
     }
     
     public static class Items extends TropicraftTags {
@@ -134,6 +136,8 @@ public class TropicraftTags {
         static Named<Item> compatTag(String name) {
             return tagItem("c", name);
         }
+
+        public static void init(){}
     }
 
     public static class BlocksExtended extends TropicraftTags{
@@ -150,6 +154,8 @@ public class TropicraftTags {
         static Named<Block> compatTag(String name) {
             return tagBlock("c", name);
         }
+
+        public static void init(){}
     }
 
     public static class ItemsExtended extends TropicraftTags{
@@ -164,9 +170,9 @@ public class TropicraftTags {
         static Named<Item> compatTag(String name) {
             return tagItem("c", name);
         }
+
+        public static void init(){}
     }
-
-
     
     static <T extends Named<?>> T tag(Function<String, T> creator, String modid, String name) {
         return creator.apply(new ResourceLocation(modid, name).toString());
