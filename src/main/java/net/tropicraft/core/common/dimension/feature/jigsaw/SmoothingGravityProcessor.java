@@ -16,8 +16,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.tropicraft.Constants;
+import org.jetbrains.annotations.Nullable;
 
-public class SmoothingGravityProcessor extends PathStructureProcessor {
+public class SmoothingGravityProcessor extends PathStructureProcessor implements StructurePassProcessor{
 
     public static final Codec<SmoothingGravityProcessor> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(
@@ -60,5 +61,11 @@ public class SmoothingGravityProcessor extends PathStructureProcessor {
     @Override
     protected StructureProcessorType<?> getType() {
         return TYPE;
+    }
+
+    @Nullable
+    @Override
+    public StructureBlockInfo processBlock(LevelReader levelReader, BlockPos blockPos, BlockPos blockPos2, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlaceSettings structurePlaceSettings) {
+        return structureBlockInfo2;
     }
 }

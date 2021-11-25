@@ -11,8 +11,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureEntityInfo;
 import net.tropicraft.Constants;
+import org.jetbrains.annotations.Nullable;
 
-public class AdjustBuildingHeightProcessor extends CheatyStructureProcessor {
+public class AdjustBuildingHeightProcessor extends CheatyStructureProcessor implements StructurePassProcessor {
     public static final Codec<AdjustBuildingHeightProcessor> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(
                 Codec.INT.optionalFieldOf("base", 126).forGetter(c -> c.base)
@@ -35,12 +36,18 @@ public class AdjustBuildingHeightProcessor extends CheatyStructureProcessor {
         return blockInfo;
     }
     
+//    @Override
+//    public StructureEntityInfo processEntity(LevelReader world, BlockPos seedPos, StructureEntityInfo rawEntityInfo, StructureEntityInfo entityInfo, StructurePlaceSettings placementSettings, StructureTemplate template) {
+//        if (seedPos.getY() < base) {
+//            return new StructureEntityInfo(entityInfo.pos.add(0, 1, 0), entityInfo.blockPos.above(), entityInfo.nbt);
+//        }
+//        return entityInfo;
+//    }
+
+    @Nullable
     @Override
-    public StructureEntityInfo processEntity(LevelReader world, BlockPos seedPos, StructureEntityInfo rawEntityInfo, StructureEntityInfo entityInfo, StructurePlaceSettings placementSettings, StructureTemplate template) {
-        if (seedPos.getY() < base) {
-            return new StructureEntityInfo(entityInfo.pos.add(0, 1, 0), entityInfo.blockPos.above(), entityInfo.nbt);
-        }
-        return entityInfo;
+    public StructureBlockInfo processBlock(LevelReader levelReader, BlockPos blockPos, BlockPos blockPos2, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlaceSettings structurePlaceSettings) {
+        return structureBlockInfo2;
     }
 
     @Override

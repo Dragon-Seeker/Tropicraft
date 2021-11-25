@@ -15,14 +15,14 @@ import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import org.jetbrains.annotations.Nullable;
 
-public class SinkInGroundProcessor extends CheatyStructureProcessor {
+public class SinkInGroundProcessor extends CheatyStructureProcessor implements StructurePassProcessor{
     public static final Codec<SinkInGroundProcessor> CODEC = Codec.unit(new SinkInGroundProcessor());
 
     static final StructureProcessorType<SinkInGroundProcessor> TYPE = Registry.register(Registry.STRUCTURE_PROCESSOR, Constants.MODID + ":sink_in_ground", () -> CODEC);
 
     @SuppressWarnings("deprecation")
     @Override
-    public StructureBlockInfo process(LevelReader world, BlockPos worldPos, BlockPos sourcePos, StructureBlockInfo sourceInfo, StructureBlockInfo worldInfo, StructurePlaceSettings placement, @Nullable StructureTemplate template) {
+    public StructureBlockInfo process(LevelReader world, BlockPos worldPos, BlockPos sourcePos, StructureBlockInfo sourceInfo, StructureBlockInfo worldInfo, StructurePlaceSettings placement, StructureTemplate template) {
         worldPos = worldInfo.pos;
 
         if (sourceInfo.pos.getY() == 0) {
@@ -60,6 +60,12 @@ public class SinkInGroundProcessor extends CheatyStructureProcessor {
         }
 
         return worldInfo;
+    }
+
+    @Nullable
+    @Override
+    public StructureBlockInfo processBlock(LevelReader levelReader, BlockPos blockPos, BlockPos blockPos2, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlaceSettings structurePlaceSettings) {
+        return structureBlockInfo2;
     }
 
     @Override

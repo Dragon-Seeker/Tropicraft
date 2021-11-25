@@ -1,8 +1,8 @@
 {
   "required": true,
+  "minVersion": "0.8",
   "package": "net.tropicraft.core.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "refmap": "tropicraft.refmap.json",
+  "compatibilityLevel": "JAVA_16",
   "mixins": [
     "worldgen.WorldSettingsImportMixin",
     "ClientboundAddEntityPacketMixin",
@@ -14,8 +14,9 @@
     "StructureProcessorMixin",
     "DimensionsOptionsAccessor"
   ],
+  "client": [
+  ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "minVersion": "0.8"
+  }
 }

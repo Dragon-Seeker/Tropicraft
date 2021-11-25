@@ -17,12 +17,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.tropicraft.Constants;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class StructureSupportsProcessor extends CheatyStructureProcessor {
+public class StructureSupportsProcessor extends CheatyStructureProcessor implements StructurePassProcessor{
 
     public static final Codec<StructureSupportsProcessor> CODEC = RecordCodecBuilder.create(instance -> {
         return instance.group(
@@ -71,6 +72,12 @@ public class StructureSupportsProcessor extends CheatyStructureProcessor {
     
     protected boolean canPassThrough(LevelReader world, BlockPos pos) {
         return isAirOrWater(world, pos) || world.getHeightmapPos(Types.WORLD_SURFACE, pos).getY() < pos.getY();
+    }
+
+    @Nullable
+    @Override
+    public StructureBlockInfo processBlock(LevelReader levelReader, BlockPos blockPos, BlockPos blockPos2, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlaceSettings structurePlaceSettings) {
+        return structureBlockInfo2;
     }
 
     @Override

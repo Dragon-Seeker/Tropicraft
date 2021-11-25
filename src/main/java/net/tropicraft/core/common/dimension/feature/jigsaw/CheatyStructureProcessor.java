@@ -8,7 +8,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraftforge.common.util.Constants;
 
-public abstract class CheatyStructureProcessor extends StructurePassProcessor {
+public abstract class CheatyStructureProcessor extends StructureProcessor {
     protected boolean isAirOrWater(LevelReader worldReaderIn, BlockPos pos) {
         return worldReaderIn.isEmptyBlock(pos) || worldReaderIn.getBlockState(pos).getBlock() == Blocks.WATER;
     }

@@ -121,16 +121,13 @@ loom {
 //    }
 }
 
-//sourceSets.main.resources {
-//	srcDir 'src/generated/resources'
-//}
 
 repositories {
 	mavenLocal()
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}" //minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
     mappings loom.layered() {
         officialMojangMappings()
@@ -144,7 +141,6 @@ dependencies {
     modImplementation "io.github.onyxstudios:Cardinal-Components-API:3.1.1"
     include "io.github.onyxstudios:Cardinal-Components-API:3.1.1"
 
-    //annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 }
 
 jar {

@@ -16,8 +16,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
+import org.jetbrains.annotations.Nullable;
 
-public class SteepPathProcessor extends PathStructureProcessor {
+public class SteepPathProcessor extends PathStructureProcessor implements StructurePassProcessor{
     public static final Codec<SteepPathProcessor> CODEC = Codec.unit(new SteepPathProcessor());
 
     static final StructureProcessorType<SteepPathProcessor> TYPE = Registry.register(Registry.STRUCTURE_PROCESSOR, Constants.MODID + ":steep_path", () -> CODEC);
@@ -96,4 +97,9 @@ public class SteepPathProcessor extends PathStructureProcessor {
         return TYPE;
     }
 
+    @Nullable
+    @Override
+    public StructureBlockInfo processBlock(LevelReader levelReader, BlockPos blockPos, BlockPos blockPos2, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlaceSettings structurePlaceSettings) {
+        return structureBlockInfo2;
+    }
 }
