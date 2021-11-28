@@ -21,18 +21,18 @@ public final class HugePlantBlockHighlight implements WorldRenderEvents.BlockOut
         ClientLevel world = CLIENT.level;
         if (world == null) return false;
 
-        BlockPos pos = worldRenderContext.camera().getBlockPosition();;
-        BlockState state = world.getBlockState(pos);
+        BlockPos pos = blockOutlineContext.blockPos();
+        BlockState state = blockOutlineContext.blockState();
         if (state.getBlock() instanceof HugePlantBlock) {
             return renderHugePlantHighlight(worldRenderContext, blockOutlineContext, world, pos, state);
         }
 
-        return false;
+        return true;
     }
 
     private boolean renderHugePlantHighlight(WorldRenderContext worldRenderContext, WorldRenderContext.BlockOutlineContext blockOutlineContext, ClientLevel world, BlockPos pos, BlockState state) {
         HugePlantBlock.Shape shape = HugePlantBlock.Shape.matchIncomplete(state.getBlock(), world, pos);
-        if (shape == null) return false;
+        if (shape == null) return true;
 
         VertexConsumer builder = worldRenderContext.consumers().getBuffer(RenderType.lines());
 
@@ -40,7 +40,7 @@ public final class HugePlantBlockHighlight implements WorldRenderEvents.BlockOut
         AABB aabb = shape.asAabb().move(-view.x, -view.y, -view.z);
         LevelRenderer.renderLineBox(worldRenderContext.matrixStack(), builder, aabb, 0.0F, 0.0F, 0.0F, 0.4F);
 
-        return true;
+        return false;
     }
 
 

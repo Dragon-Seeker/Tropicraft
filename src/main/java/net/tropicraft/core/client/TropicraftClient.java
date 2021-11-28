@@ -1,6 +1,7 @@
 package net.tropicraft.core.client;
 
 import com.google.common.collect.ImmutableMap;
+import net.api.frogeExpansion.TropicraftClientEventRegister;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,6 +21,8 @@ import net.tropicraft.core.common.item.TropicraftItems;
 public class TropicraftClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        TropicraftClientEventRegister.registerClientEvents();
+
         ClientSetup.setupBlockRenderLayers();
         ClientSetup.registerLayerDefinitions();
         ClientSetup.registerRenderers();

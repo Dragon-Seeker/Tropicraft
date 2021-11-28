@@ -2,6 +2,7 @@ package net.tropicraft;
 
 import com.google.common.base.Supplier;
 import com.google.common.reflect.Reflection;
+import net.api.frogeExpansion.TropicraftEventRegister;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
@@ -87,6 +88,8 @@ public class Tropicraft implements ModInitializer {
 
         TropicraftBlocks.init();
         TropicraftItems.init();
+
+        TropicraftEventRegister.registerEvents();
 
         ScubaGogglesItem.init();
         MixerRecipes.addMixerRecipes();

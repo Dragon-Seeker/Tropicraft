@@ -1,14 +1,19 @@
 package net.tropicraft.core.common.block.jigarbov;
 
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RedstoneWallTorchBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
@@ -22,22 +27,25 @@ public final class JigarbovTorchPlacement implements UseBlockCallback {
     @Override
     public InteractionResult interact(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
         if(player.getMainHandItem().getItem() == Items.REDSTONE_TORCH) {
-//            BlockState placedState = event.getPlacedBlock();
-//            Block placedBlock = placedState.getBlock();
-//            if (placedBlock == Blocks.REDSTONE_WALL_TORCH) {
-                RedstoneWallTorchBlock jigarbovTorchBlock = getJigarbovTorchFor(world.getBlockState(hitResult.getBlockPos()).getBlock());
-                if (jigarbovTorchBlock != null) {
-                    BlockState jigarbovTorch = jigarbovTorchBlock.defaultBlockState();
-                    jigarbovTorch = copyPropertiesTo(jigarbovTorch, Blocks.REDSTONE_WALL_TORCH.defaultBlockState());
 
-                    player.getInventory().removeItem(Items.REDSTONE_TORCH.getDefaultInstance());
+            BlockPos blockPos = hitResult.getBlockPos().relative(hitResult.getDirection());
 
-                    world.setBlock(hitResult.getBlockPos(), jigarbovTorch, Constants.BlockFlags.DEFAULT);
-                    return InteractionResult.SUCCESS;
-                }
-            //}
+            RedstoneWallTorchBlock jigarbovTorchBlock = getJigarbovTorchFor(world.getBlockState(hitResult.getBlockPos()).getBlock());
+            if (jigarbovTorchBlock != null) {
+                BlockState jigarbovTorch = jigarbovTorchBlock.defaultBlockState();
+                jigarbovTorch = copyPropertiesTo(jigarbovTorch, Blocks.REDSTONE_WALL_TORCH.getStateForPlacement(new BlockPlaceContext(player, hand, player.getMainHandItem(), hitResult)));
+
+                player.getInventory().removeItem(Items.REDSTONE_TORCH.getDefaultInstance());
+
+                SoundType soundType = jigarbovTorch.getSoundType();
+                world.playSound(player, blockPos, soundType.getPlaceSound(), SoundSource.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
+                world.setBlock(blockPos, jigarbovTorch, Constants.BlockFlags.DEFAULT);
+
+                return InteractionResult.SUCCESS;
+            }
+
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 
     @Nullable
