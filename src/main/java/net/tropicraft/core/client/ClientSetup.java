@@ -3,9 +3,10 @@ package net.tropicraft.core.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
@@ -273,10 +274,11 @@ public class ClientSetup {
     }
 
     public static void setupTileEntityRenderers() {
-        BlockEntityRendererRegistry.INSTANCE.register(TropicraftTileEntityTypes.BAMBOO_CHEST, BambooChestRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(TropicraftTileEntityTypes.DRINK_MIXER, DrinkMixerRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(TropicraftTileEntityTypes.SIFTER, SifterRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(TropicraftTileEntityTypes.AIR_COMPRESSOR, AirCompressorRenderer::new);
+        BlockEntityRendererRegistry.register(TropicraftTileEntityTypes.BAMBOO_CHEST, BambooChestRenderer::new);
+        BlockEntityRendererRegistry.register(TropicraftTileEntityTypes.BAMBOO_CHEST, BambooChestRenderer::new);
+        BlockEntityRendererRegistry.register(TropicraftTileEntityTypes.DRINK_MIXER, DrinkMixerRenderer::new);
+        BlockEntityRendererRegistry.register(TropicraftTileEntityTypes.SIFTER, SifterRenderer::new);
+        BlockEntityRendererRegistry.register(TropicraftTileEntityTypes.AIR_COMPRESSOR, AirCompressorRenderer::new);
 
         BuiltinItemRendererRegistry.INSTANCE.register(TropicraftBlocks.BAMBOO_CHEST,
                 (itemStack, transform, stack, source, light, overlay) ->

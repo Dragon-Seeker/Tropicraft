@@ -34,14 +34,20 @@ public class DrinkMixerRenderer extends MachineRenderer<DrinkMixerTileEntity> {
         {0.0f, 0.3f, -0.1f}
     };
 
+//    private static final float[][] INGREDIENT_SCALES = new float[][] {
+//            {1, 1, 1},
+//            {1, 1, 1},
+//            {0.8f, 0.8f, 0.8f}
+//    };
+
     private static final float[][] INGREDIENT_SCALES = new float[][] {
-        {1, 1, 1},
-        {1, 1, 1},
-        {0.8f, 0.8f, 0.8f}
+        {0.5f, 0.5f, 0.5f},
+        {0.5f, 0.5f, 0.5f},
+        {0.4f, 0.4f, 0.4f}
     };
 
     public DrinkMixerRenderer(final BlockEntityRendererProvider.Context ctx) {
-        super(ctx, TropicraftBlocks.DRINK_MIXER, new EIHMachineModel<>(ctx.bakeLayer(ClientSetup.EIHMACHINE_LAYER),RenderType::entitySolid));
+        super(ctx, TropicraftBlocks.DRINK_MIXER, new EIHMachineModel<>(ctx.bakeLayer(ClientSetup.EIHMACHINE_LAYER), RenderType::entitySolid));
         modelBambooMug = new BambooMugModel(ctx.bakeLayer(ClientSetup.BAMBOO_MUG), RenderType::entityCutout);
         this.renderItem = Minecraft.getInstance().getItemRenderer();
     }

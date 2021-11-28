@@ -165,46 +165,28 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
         return state.getValue(AirCompressorBlock.FACING);
     }
 
-    /**
-     * Called when you receive a TileEntityData packet for the location this
-     * TileEntity is currently in. On the client, the NetworkManager will always
-     * be the remote server. On the server, it will be whomever is responsible for
-     * sending the packet.
-     *
-     * @param net The NetworkManager the packet originated from
-     * @param pkt The data packet
-     */
-//    @Override
-//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-//        this.load(pkt.getTag());
-//    }
-//
-//    protected void syncInventory() {
-//        if (!level.isClientSide) {
-//            PlayerLookup.world((ServerLevel) level).forEach((player) -> TropicraftPackets.CHANNEL.send(player, new MessageAirCompressorInventory(this)));
-//        }
-//    }
-
-//    @Override
-//    @Nullable
-//    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-//        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
-//    }
-//
-//    @Override
-//    public @NotNull CompoundTag getUpdateTag() {
-//        CompoundTag nbttagcompound = this.save(new CompoundTag());
-//        return nbttagcompound;
-//    }
+    //------------------------------------------------------------------//
 
     @Override
     public void fromClientTag(CompoundTag tag) {
-        this.load(tag);
+        this.compressing = tag.getBoolean("Compressing");
+
+        if (tag.contains("Tank")) {
+            setTank(ItemStack.of(tag.getCompound("Tank")));
+        } else {
+            setTank(ItemStack.EMPTY);
+        }
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
-        return save(tag);
+        tag.putBoolean("Compressing", compressing);
+
+        CompoundTag var4 = new CompoundTag();
+        this.stack.save(var4);
+        tag.put("Tank", var4);
+
+        return tag;
     }
 
     @Override
@@ -215,8 +197,10 @@ public class AirCompressorTileEntity extends BlockEntity implements IMachineTile
     @Override
     public void setChanged() {
         super.setChanged();
-        if(!level.isClientSide()){
+        if(this.hasLevel() && !level.isClientSide()){
             sync();
         }
     }
+
+    //------------------------------------------------------------------//
 }

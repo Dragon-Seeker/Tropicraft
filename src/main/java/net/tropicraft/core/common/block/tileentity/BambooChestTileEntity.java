@@ -30,7 +30,7 @@ public class BambooChestTileEntity extends ChestBlockEntity {
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        unbreakable = compound.getBoolean("unbreakable");
+        setIsUnbreakable(compound.getBoolean("unbreakable"));
     }
 
     @Override

@@ -1,6 +1,10 @@
 package net.tropicraft.core.common.block.tileentity;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -264,28 +268,51 @@ public class DrinkMixerTileEntity extends BlockEntity implements IMachineTile, B
         return state.getValue(DrinkMixerBlock.FACING);
     }
 
+    //------------------------------------------------------------------//
+
     @Override
     public void fromClientTag(CompoundTag tag) {
-        this.load(tag);
+        ticks = tag.getInt("MixTicks");
+        mixing = tag.getBoolean("Mixing");
+
+        for (int i = 0; i < MAX_NUM_INGREDIENTS; i++) {
+            if (tag.contains("Ingredient" + i)) {
+                ingredients.set(i, ItemStack.of(tag.getCompound("Ingredient" + i)));
+            }
+        }
+
+        if (tag.contains("Result")) {
+            result = ItemStack.of(tag.getCompound("Result"));
+        }
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
-        return writeItems(tag);
-    }
+        tag.putInt("MixTicks", ticks);
+        tag.putBoolean("Mixing", mixing);
 
-    @Override
-    public void sync() {
-        BlockEntityClientSerializable.super.sync();
+        for (int i = 0; i < MAX_NUM_INGREDIENTS; i++) {
+            CompoundTag ingredientNbt = new CompoundTag();
+            ingredients.get(i).save(ingredientNbt);
+            tag.put("Ingredient" + i, ingredientNbt);
+        }
+
+        CompoundTag resultNbt = new CompoundTag();
+        result.save(resultNbt);
+        tag.put("Result", resultNbt);
+
+        return tag;
     }
 
     @Override
     public void setChanged() {
         super.setChanged();
-        if(!level.isClientSide()){
-            sync();
+        if(this.hasLevel() && !level.isClientSide()){
+            this.sync();
         }
     }
+
+    //------------------------------------------------------------------//
 
     private CompoundTag writeItems(final CompoundTag nbt) {
         super.save(nbt);

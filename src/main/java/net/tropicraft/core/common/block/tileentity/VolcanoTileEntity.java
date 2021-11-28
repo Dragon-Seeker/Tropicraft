@@ -355,14 +355,32 @@ public class VolcanoTileEntity extends BlockEntity implements BlockEntityClientS
 		return this.save(new CompoundTag());
 	}
 
+	//------------------------------------------------------------------//
+
 	@Override
 	public void fromClientTag(CompoundTag tag) {
-		this.load(tag);
+		state = VolcanoState.valueOf(tag.getString("state"));
+		ticksUntilDormant = tag.getInt("ticksUntilDormant");
+		ticksUntilSmoking = tag.getInt("ticksUntilSmoking");
+		ticksUntilRising = tag.getInt("ticksUntilRising");
+		ticksUntilEruption = tag.getInt("ticksUntilEruption");
+		ticksUntilRetreating = tag.getInt("ticksUntilRetreating");
+		lavaLevel = tag.getInt("lavaLevel");
+		radius = tag.getInt("radius");
 	}
 
 	@Override
 	public CompoundTag toClientTag(CompoundTag tag) {
-		return save(tag);
+		tag.putString("state", state.name());
+		tag.putInt("ticksUntilDormant", ticksUntilDormant);
+		tag.putInt("ticksUntilSmoking", ticksUntilSmoking);
+		tag.putInt("ticksUntilRising", ticksUntilRising);
+		tag.putInt("ticksUntilEruption", ticksUntilEruption);
+		tag.putInt("ticksUntilRetreating", ticksUntilRetreating);
+		tag.putInt("lavaLevel", lavaLevel);
+		tag.putInt("radius", radius);
+
+		return tag;
 	}
 
 	@Override
@@ -378,5 +396,6 @@ public class VolcanoTileEntity extends BlockEntity implements BlockEntityClientS
 		}
 	}
 
+	//------------------------------------------------------------------//
 
 }

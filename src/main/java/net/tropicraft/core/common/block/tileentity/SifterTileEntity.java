@@ -211,14 +211,26 @@ public class SifterTileEntity extends BlockEntity implements BlockEntityClientSe
         return stack.getTag();
     }
 
+    //------------------------------------------------------------------//
+
     @Override
     public void fromClientTag(CompoundTag tag) {
-        this.load(tag);
+        isSifting = tag.getBoolean("isSifting");
+        currentSiftTime = tag.getInt("currentSiftTime");
+
+        if (tag.contains("Item", 10)) {
+            siftItem = ItemStack.of(tag.getCompound("Item"));
+        }
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
-        return writeItems(tag);
+        tag.putBoolean("isSifting", isSifting);
+        tag.putInt("currentSiftTime", currentSiftTime);
+        if (!siftItem.isEmpty()) {
+            tag.put("Item", siftItem.save(new CompoundTag()));
+        }
+        return tag;
     }
 
     @Override
@@ -233,6 +245,8 @@ public class SifterTileEntity extends BlockEntity implements BlockEntityClientSe
             sync();
         }
     }
+
+    //------------------------------------------------------------------//
 
     public CompoundTag getUpdateTag() {
         return writeItems(new CompoundTag());
