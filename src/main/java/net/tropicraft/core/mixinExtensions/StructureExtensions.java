@@ -23,32 +23,6 @@ import java.util.List;
 
 public interface StructureExtensions {
 
-    default List<StructureTemplate.StructureBlockInfo> tropic$process(LevelAccessor world, BlockPos pos, BlockPos blockPos, StructurePlaceSettings placementData, List<StructureTemplate.StructureBlockInfo> list){//, @Nullable Structure structure) {
-        List<StructureTemplate.StructureBlockInfo> list2 = Lists.newArrayList();
-        Iterator var6 = list.iterator();
+    StructureTemplate testGrab();
 
-        while(var6.hasNext()) {
-            StructureTemplate.StructureBlockInfo structureBlockInfo = (StructureTemplate.StructureBlockInfo)var6.next();
-            BlockPos blockPos2 = StructureTemplate.calculateRelativePosition(placementData, structureBlockInfo.pos).offset(pos);
-            StructureTemplate.StructureBlockInfo structureBlockInfo2 = new StructureTemplate.StructureBlockInfo(blockPos2, structureBlockInfo.state, structureBlockInfo.nbt != null ? structureBlockInfo.nbt.copy() : null);
-
-            for(Iterator iterator = placementData.getProcessors().iterator(); structureBlockInfo2 != null && iterator.hasNext();) {
-                StructureProcessor processor = ((StructureProcessor)iterator.next());
-
-                if(processor instanceof StructurePassProcessor) {
-                    structureBlockInfo2 = ((StructurePassProcessor)processor).process(world, pos, blockPos, structureBlockInfo, structureBlockInfo2, placementData, (StructureTemplate) this);
-                }
-
-                else {
-                    structureBlockInfo2 = processor.processBlock(world, pos, blockPos, structureBlockInfo, structureBlockInfo2, placementData);
-                }
-            }
-
-            if (structureBlockInfo2 != null) {
-                list2.add(structureBlockInfo2);
-            }
-        }
-
-        return list2;
-    }
 }

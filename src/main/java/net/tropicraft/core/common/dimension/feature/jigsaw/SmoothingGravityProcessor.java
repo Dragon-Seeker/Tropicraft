@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.tropicraft.Constants;
+import net.tropicraft.core.mixinExtensions.StructureExtensions;
 import org.jetbrains.annotations.Nullable;
 
 public class SmoothingGravityProcessor extends PathStructureProcessor implements StructurePassProcessor{
@@ -66,6 +67,6 @@ public class SmoothingGravityProcessor extends PathStructureProcessor implements
     @Nullable
     @Override
     public StructureBlockInfo processBlock(LevelReader levelReader, BlockPos blockPos, BlockPos blockPos2, StructureBlockInfo structureBlockInfo, StructureBlockInfo structureBlockInfo2, StructurePlaceSettings structurePlaceSettings) {
-        return structureBlockInfo2;
+        return process(levelReader, blockPos, blockPos2, structureBlockInfo, structureBlockInfo2, structurePlaceSettings, ((StructureExtensions)new StructureTemplate()).testGrab());
     }
 }
