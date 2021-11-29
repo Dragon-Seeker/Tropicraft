@@ -12,7 +12,9 @@
     "StructureAccessor",
     "StructureMixin",
     "StructureProcessorMixin",
-    "DimensionsOptionsAccessor"
+    "DimensionsOptionsAccessor",
+    "SugarCaneMixin",
+    "CactusMixin"
   ],
   "client": [
   ],

@@ -39,15 +39,14 @@ repositories {
 }
 
 sourceSets {
-    portaforgy
+    portaforgy{}
+
     main {
         compileClasspath += sourceSets.portaforgy.output
         runtimeClasspath += sourceSets.portaforgy.output
         resources {
             srcDir 'src/generated/resources'
         }
-//        property "tropicraft.generateData.outputPath", file("src/generated/resources").absolutePath
-//        property "tropicraft.generateData.existingData", file("src/main/resources").absolutePath
     }
 
     test {
@@ -63,62 +62,6 @@ configurations {
 loom {
     //silentMojangMappingsLicense()
     accessWidener = file("src/main/resources/tropicraftFabric.accesswidener")
-
-//    runs {
-//        client {
-//        	taskName 'tropicraft_client'
-//
-//            workingDirectory project.file('run')
-//
-//            //property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
-//            //property 'forge.logging.console.level', 'debug'
-//            //arg "-mixin.config=tropicraft.mixins.json"
-//
-//            mods {
-//                tropicraft {
-//                    source sourceSets.main
-//                }
-//            }
-//        }
-//
-//        server {
-//        	taskName 'tropicraft_server'
-//
-//            workingDirectory project.file('run')
-//
-//            //property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
-//            //property 'forge.logging.console.level', 'debug'
-//            //arg "-mixin.config=tropicraft.mixins.json"
-//
-//            mods {
-//                tropicraft {
-//                    source sourceSets.main
-//                }
-//            }
-//        }
-//
-//        data {
-//        	taskName 'tropicraft_data'
-//
-//            workingDirectory project.file('run')
-//
-//            //environment 'target', 'fmluserdevdata'
-//
-//            //property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
-//            //property 'forge.logging.console.level', 'debug'
-//            //arg "-mixin.config=tropicraft.mixins.json"
-//
-//            mods {
-//                tropicraft {
-//                    source sourceSets.main
-//                }
-//            }
-//
-//            property '--mod', 'tropicraft', '--all', '--output', '"' + rootProject.file('src/generated/resources/') + '"',
-//				 '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
-//
-//        }
-//    }
 }
 
 

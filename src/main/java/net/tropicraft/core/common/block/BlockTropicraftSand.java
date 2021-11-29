@@ -34,11 +34,10 @@ public class BlockTropicraftSand extends FallingBlock implements BlockExtension 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(UNDERWATER);
     }
-    
-//    @Override
-//    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
-//        return state.is(Blocks.CACTUS) || state.is(Blocks.SUGAR_CANE) || state.is(TropicraftBlocks.PALM_SAPLING);
-//    }
+
+    public boolean canSustainPlant(BlockState state) {
+        return state.is(Blocks.CACTUS) || state.is(Blocks.SUGAR_CANE) || state.is(TropicraftBlocks.PALM_SAPLING);
+    }
 
     @Override
     public BlockState getStateForPlacement(final BlockPlaceContext context) {
