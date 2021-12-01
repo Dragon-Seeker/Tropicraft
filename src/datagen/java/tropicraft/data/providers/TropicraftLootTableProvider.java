@@ -1,11 +1,11 @@
-package net.tropicraft.core.common.data;
+package tropicraft.data.providers;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
-import net.api.frogeExpansion.TropicBambooPot;
+import net.tropicraft.core.common.block.TropicBambooPot;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Registry;

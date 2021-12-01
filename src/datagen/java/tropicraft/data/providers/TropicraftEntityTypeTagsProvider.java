@@ -1,4 +1,4 @@
-package net.tropicraft.core.common.data;
+package tropicraft.data.providers;
 
 import java.util.Arrays;
 import java.util.function.IntFunction;
@@ -9,13 +9,11 @@ import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.Tag.Named;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.tropicraft.Constants;
 import net.tropicraft.core.common.entity.TropicraftEntities;
 
 public class TropicraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
 
-    public TropicraftEntityTypeTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
+    public TropicraftEntityTypeTagsProvider(DataGenerator generatorIn) {
         super(generatorIn);
     }
 

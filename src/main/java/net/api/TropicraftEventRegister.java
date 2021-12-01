@@ -1,4 +1,4 @@
-package net.api.frogeExpansion;
+package net.api;
 
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.tropicraft.core.common.block.jigarbov.JigarbovTorchPlacement;

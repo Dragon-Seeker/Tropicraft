@@ -10,7 +10,7 @@ import net.minecraft.world.level.LevelWriter;
 import net.minecraft.world.level.LevelSimulatedRW;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 
 import java.util.ArrayList;
@@ -157,7 +157,7 @@ public abstract class RainforestTreeFeature extends Feature<NoneFeatureConfigura
                 if (d <= outerRadius * outerRadius && d >= innerRadius * innerRadius) {
                     BlockPos pos2 = new BlockPos(i, y, k);
                     if (isAir(world, pos2) || solid) {
-                        if (world.setBlock(pos2, state, Constants.BlockFlags.DEFAULT)) {
+                        if (world.setBlock(pos2, state, ForgeConstants.BlockFlags.DEFAULT)) {
                             hasGenned = true;
                         }
                     }

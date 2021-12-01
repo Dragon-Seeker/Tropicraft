@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 
 public abstract class CheatyStructureProcessor extends StructureProcessor {
     protected boolean isAirOrWater(LevelReader worldReaderIn, BlockPos pos) {
@@ -15,7 +15,7 @@ public abstract class CheatyStructureProcessor extends StructureProcessor {
 
     protected boolean setBlockState(LevelReader world, BlockPos pos, BlockState state) {
         if (world instanceof LevelAccessor) {
-            return ((LevelAccessor) world).setBlock(pos, state, Constants.BlockFlags.NO_RERENDER | Constants.BlockFlags.UPDATE_NEIGHBORS);
+            return ((LevelAccessor) world).setBlock(pos, state, ForgeConstants.BlockFlags.NO_RERENDER | ForgeConstants.BlockFlags.UPDATE_NEIGHBORS);
         }
         return false;
     }

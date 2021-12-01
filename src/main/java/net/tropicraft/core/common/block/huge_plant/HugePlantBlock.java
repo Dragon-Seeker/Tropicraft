@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 import net.tropicraft.core.client.ParticleEffects;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,7 +65,7 @@ public final class HugePlantBlock extends BushBlock {
         for (BlockPos plantPos : shape) {
             if (!plantPos.equals(pos)) {
                 BlockState plantState = shape.blockAt(plantPos);
-                world.setBlock(plantPos, plantState, Constants.BlockFlags.DEFAULT);
+                world.setBlock(plantPos, plantState, ForgeConstants.BlockFlags.DEFAULT);
             }
         }
     }
@@ -131,7 +131,7 @@ public final class HugePlantBlock extends BushBlock {
                 dropResources(state, world, shape.seed(), null, player, player.getMainHandItem());
             }
 
-            int flags = Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.UPDATE_NEIGHBORS | Constants.BlockFlags.NO_NEIGHBOR_DROPS;
+            int flags = ForgeConstants.BlockFlags.BLOCK_UPDATE | ForgeConstants.BlockFlags.UPDATE_NEIGHBORS | ForgeConstants.BlockFlags.NO_NEIGHBOR_DROPS;
 
             // Play break sound
             SoundType soundtype = state.getSoundType();

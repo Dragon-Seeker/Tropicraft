@@ -1,6 +1,5 @@
 package net.tropicraft.core.common.block;
 
-import net.api.frogeExpansion.TropicBambooPot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;

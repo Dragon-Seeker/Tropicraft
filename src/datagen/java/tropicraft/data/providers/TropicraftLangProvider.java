@@ -1,4 +1,4 @@
-package net.tropicraft.core.client.data;
+package tropicraft.data.providers;
 
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
@@ -11,12 +11,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.ForgeMod;
+import net.api.forge.ForgeAttributes;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.tropicraft.Constants;
 import net.tropicraft.Tropicraft;
 import net.tropicraft.core.common.Util;
 import net.tropicraft.core.common.block.TropicraftBlocks;
+import net.tropicraft.core.client.data.TropicraftLangKeys;
 import net.tropicraft.core.common.dimension.biome.TropicraftBiomes;
 import net.tropicraft.core.common.drinks.Drink;
 import net.tropicraft.core.common.entity.TropicraftEntities;
@@ -467,7 +468,7 @@ public class TropicraftLangProvider extends LanguageProvider {
         // MISC
         
         add(Tropicraft.TROPICRAFT_ITEM_GROUP, "Tropicraft");
-        add("attribute.name." + Registry.ATTRIBUTE.getKey(ForgeMod.SWIM_SPEED).getPath(), "Swim Speed");
+        add("attribute.name." + Registry.ATTRIBUTE.getKey(ForgeAttributes.SWIM_SPEED).getPath(), "Swim Speed");
 
         // Koa
         add("entity.tropicraft.koa.female.hunter.name", "Koa Hunter");
@@ -475,7 +476,7 @@ public class TropicraftLangProvider extends LanguageProvider {
         add("entity.tropicraft.koa.male.hunter.name", "Koa Hunter");
         add("entity.tropicraft.koa.male.fisherman.name", "Koa Fisher");
         
-        TropicraftLangKeys.generate(this);
+        TropicraftLangKeyGenerationTemp.generate(this);
     }
 
     private String getAutomaticNameBlock(Supplier<? extends Block> sup) {

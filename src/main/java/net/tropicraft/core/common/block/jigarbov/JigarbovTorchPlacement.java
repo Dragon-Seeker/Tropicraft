@@ -6,7 +6,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -17,7 +16,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +38,7 @@ public final class JigarbovTorchPlacement implements UseBlockCallback {
 
                 SoundType soundType = jigarbovTorch.getSoundType();
                 world.playSound(player, blockPos, soundType.getPlaceSound(), SoundSource.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
-                world.setBlock(blockPos, jigarbovTorch, Constants.BlockFlags.DEFAULT);
+                world.setBlock(blockPos, jigarbovTorch, ForgeConstants.BlockFlags.DEFAULT);
 
                 return InteractionResult.SUCCESS;
             }

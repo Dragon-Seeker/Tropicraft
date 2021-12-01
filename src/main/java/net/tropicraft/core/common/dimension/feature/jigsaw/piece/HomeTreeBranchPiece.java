@@ -3,6 +3,7 @@ package net.tropicraft.core.common.dimension.feature.jigsaw.piece;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.api.forge.ForgeConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
@@ -150,7 +151,7 @@ public final class HomeTreeBranchPiece extends StructurePoolElement implements P
             double distanceSquared = pos.distSqr(origin);
             if (distanceSquared <= outerRadiusSquared && distanceSquared >= innerRadiusSquared) {
                 if (world.isEmptyBlock(pos) || world.getBlockState(pos).getBlock() == state.getBlock()) {
-                    world.setBlock(pos, state, net.minecraftforge.common.util.Constants.BlockFlags.DEFAULT);
+                    world.setBlock(pos, state, ForgeConstants.BlockFlags.DEFAULT);
                 }
             }
         }
@@ -181,7 +182,7 @@ public final class HomeTreeBranchPiece extends StructurePoolElement implements P
                     from.getZ() + length * stepZ + 0.5
             );
             if (chunkBounds.isInside(pos)) {
-                world.setBlock(pos, state, net.minecraftforge.common.util.Constants.BlockFlags.DEFAULT);
+                world.setBlock(pos, state, ForgeConstants.BlockFlags.DEFAULT);
             }
         }
     }

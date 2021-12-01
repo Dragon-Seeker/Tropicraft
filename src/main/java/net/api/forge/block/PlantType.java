@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.minecraftforge.common;
+package net.api.forge.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,7 +48,7 @@ public final class PlantType
      *
      * <p>If your new plant grows on blocks like any one of them above, never create a new {@link PlantType}.
      * This Type is only functioning in
-     * {@link net.api.frogeExpansion.BlockExtension#canSustainPlant(BlockState, BlockGetter, BlockPos, Direction, IPlantable)},
+     * {@link BlockExtension#canSustainPlant(BlockState, BlockGetter, BlockPos, Direction, IPlantable)},
      * which you are supposed to override this function in your new block and create a new plant type to grow on that block.
      *
      * This method can be called during parallel loading

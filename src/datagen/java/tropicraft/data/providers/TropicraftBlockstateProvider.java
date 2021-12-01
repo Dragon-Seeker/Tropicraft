@@ -1,4 +1,4 @@
-package net.tropicraft.core.client.data;
+package tropicraft.data.providers;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;

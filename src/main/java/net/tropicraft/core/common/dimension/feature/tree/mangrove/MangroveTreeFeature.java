@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 import net.tropicraft.core.common.TropicraftTags;
 
 import java.util.Random;
@@ -46,10 +46,10 @@ public class MangroveTreeFeature extends Feature<TreeConfiguration> {
                 (world.getBlockState(soilPos.below()).getFluidState().is(FluidTags.WATER));
 
         try {
-            if (replaceSoil) world.setBlock(soilPos, Blocks.DIRT.defaultBlockState(), Constants.BlockFlags.DEFAULT);
+            if (replaceSoil) world.setBlock(soilPos, Blocks.DIRT.defaultBlockState(), ForgeConstants.BlockFlags.DEFAULT);
             return this.backing.place(context);
         } finally {
-            if (replaceSoil) world.setBlock(soilPos, soilState, Constants.BlockFlags.DEFAULT);
+            if (replaceSoil) world.setBlock(soilPos, soilState, ForgeConstants.BlockFlags.DEFAULT);
         }
     }
 

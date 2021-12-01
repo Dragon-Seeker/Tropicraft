@@ -45,13 +45,17 @@ public enum TropicraftLangKeys {
         return getComponent().getString();
     }
     
-    protected void register(TropicraftLangProvider prov) {
-        prov.add(key, value);
-    }
+//    protected void register(TropicraftLangProvider prov) {
+//        prov.add(key, value);
+//    }
+//
+//    public static void generate(TropicraftLangProvider prov) {
+//        for (TropicraftLangKeys lang : values()) {
+//            lang.register(prov);
+//        }
+//    }
 
-    public static void generate(TropicraftLangProvider prov) {
-        for (TropicraftLangKeys lang : values()) {
-            lang.register(prov);
-        }
+    public String getValue() {
+        return value;
     }
 }

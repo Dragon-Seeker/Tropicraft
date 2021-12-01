@@ -1,4 +1,4 @@
-package net.api.frogeExpansion;
+package net.api;
 
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.tropicraft.core.common.block.huge_plant.HugePlantBlockHighlight;

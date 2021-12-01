@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -47,7 +47,7 @@ public final class GrowableSinglePlantBlock extends BushBlock implements Bonemea
         DoublePlantBlock growBlock = this.growInto.get();
         BlockState growState = growBlock.defaultBlockState();
         if (growState.canSurvive(world, pos) && world.isEmptyBlock(pos.above())) {
-            growBlock.placeAt(world, state, pos, Constants.BlockFlags.BLOCK_UPDATE);
+            growBlock.placeAt(world, state, pos, ForgeConstants.BlockFlags.BLOCK_UPDATE);
         }
     }
 

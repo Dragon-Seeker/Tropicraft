@@ -24,7 +24,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 
 import java.util.Locale;
 import java.util.Random;
@@ -113,8 +113,8 @@ public class TikiTorchBlock extends Block {
 
         if (section == TorchSection.UPPER) return;
 
-        worldIn.setBlock(pos.above(), this.defaultBlockState().setValue(SECTION, TorchSection.MIDDLE), Constants.BlockFlags.DEFAULT);
-        worldIn.setBlock(pos.above(2), this.defaultBlockState().setValue(SECTION, TorchSection.UPPER), Constants.BlockFlags.DEFAULT);
+        worldIn.setBlock(pos.above(), this.defaultBlockState().setValue(SECTION, TorchSection.MIDDLE), ForgeConstants.BlockFlags.DEFAULT);
+        worldIn.setBlock(pos.above(2), this.defaultBlockState().setValue(SECTION, TorchSection.UPPER), ForgeConstants.BlockFlags.DEFAULT);
     }
     
     private boolean placeShortTorchOn(BlockState state) {

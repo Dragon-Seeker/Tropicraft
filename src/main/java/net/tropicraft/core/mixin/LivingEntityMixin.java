@@ -14,25 +14,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin {
+public abstract class LivingEntityMixin {
     @Shadow
     protected int useItemRemaining;
 
-    @Shadow
-    protected ItemStack useItem;
-
-//    @ModifyVariable(method = "updatingUsingItem()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isSameIgnoreDurability(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
-//    public boolean canContinueUse(boolean canContinue){
-//        if(ItemUseTickEvent.CAN_CONTINUE_USING_EVENT.invoker().canContinueUsing(useItem, getMainHandItem())){
-//            return canContinue;
-//        }
-//        return false;
-//    }
-
-//    @Inject(method = "updatingUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isSameIgnoreDurability(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
-//    public void test(CallbackInfo ci){
-//
-//    }
+    @Shadow public abstract ItemStack getMainHandItem();
 
     @Inject(method = "updatingUsingItem", at = @At("HEAD"))
     public void preItemUseTick(CallbackInfo ci){
@@ -55,8 +41,4 @@ public class LivingEntityMixin {
         ItemUseTickEvent.AFTER_ITEM_USE_TICK.invoker().postItemUsingTick((LivingEntity) (Object) this, itemStack, this.useItemRemaining);
     }
 
-    @Unique
-    public ItemStack getMainHandItem(){
-        return ((LivingEntity) (Object) this).getItemInHand(((LivingEntity) (Object) this).getUsedItemHand());
-    }
 }

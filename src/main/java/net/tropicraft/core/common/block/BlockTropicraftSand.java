@@ -1,10 +1,9 @@
 package net.tropicraft.core.common.block;
 
-import net.api.frogeExpansion.BlockExtension;
+import net.api.forge.block.BlockExtension;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -16,8 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 
 public class BlockTropicraftSand extends FallingBlock implements BlockExtension {
     public static final BooleanProperty UNDERWATER = BooleanProperty.create("underwater");
@@ -55,7 +53,7 @@ public class BlockTropicraftSand extends FallingBlock implements BlockExtension 
         final FluidState upState = world.getFluidState(pos.above());
         boolean underwater = upState.getType().isSame(Fluids.WATER);
         if (underwater != state.getValue(UNDERWATER)) {
-            world.setBlock(pos, state.setValue(UNDERWATER, underwater), Constants.BlockFlags.BLOCK_UPDATE);
+            world.setBlock(pos, state.setValue(UNDERWATER, underwater), ForgeConstants.BlockFlags.BLOCK_UPDATE);
         }
         super.neighborChanged(state, world, pos, block, pos2, isMoving);
     }

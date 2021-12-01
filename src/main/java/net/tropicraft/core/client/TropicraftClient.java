@@ -1,7 +1,7 @@
 package net.tropicraft.core.client;
 
 import com.google.common.collect.ImmutableMap;
-import net.api.frogeExpansion.TropicraftClientEventRegister;
+import net.api.TropicraftClientEventRegister;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

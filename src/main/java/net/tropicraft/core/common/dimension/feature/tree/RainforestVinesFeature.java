@@ -10,7 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 import net.tropicraft.core.common.dimension.feature.config.RainforestVinesConfig;
 
 import java.util.Random;
@@ -49,7 +49,7 @@ public class RainforestVinesFeature extends Feature<RainforestVinesConfig> {
                                     mutablePos.move(direction.getOpposite());
                                     int len = rand.nextInt(3) + 2;
                                     for (int j = 0; j < len && world.isEmptyBlock(mutablePos); j++) {
-                                        world.setBlock(mutablePos, Blocks.VINE.defaultBlockState().setValue(VineBlock.getPropertyForFace(direction), true), Constants.BlockFlags.BLOCK_UPDATE);
+                                        world.setBlock(mutablePos, Blocks.VINE.defaultBlockState().setValue(VineBlock.getPropertyForFace(direction), true), ForgeConstants.BlockFlags.BLOCK_UPDATE);
                                         mutablePos.move(Direction.DOWN);
                                     }
                                     break;

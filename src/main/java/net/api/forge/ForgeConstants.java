@@ -17,40 +17,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.minecraftforge.common.util;
+package net.api.forge;
 
 /**
  * A class containing constants for magic numbers used in the minecraft codebase.
  * Everything here should be checked each update, and have a comment relating to where to check it.
  */
 @SuppressWarnings("all")
-public class Constants
+public class ForgeConstants
 {
-    /**
-     * NBT Tag type IDS, used when storing the nbt to disc, Should align with {@link net.minecraft.nbt.INBT#create}
-     * and {@link net.minecraft.nbt.INBT#getTypeName}
-     *
-     * Main use is checking tag type in {@link net.minecraft.nbt.CompoundNBT#contains(String, int)}
-     *
-     */
-    public static class NBT
-    {
-        public static final int TAG_END         = 0;
-        public static final int TAG_BYTE        = 1;
-        public static final int TAG_SHORT       = 2;
-        public static final int TAG_INT         = 3;
-        public static final int TAG_LONG        = 4;
-        public static final int TAG_FLOAT       = 5;
-        public static final int TAG_DOUBLE      = 6;
-        public static final int TAG_BYTE_ARRAY  = 7;
-        public static final int TAG_STRING      = 8;
-        public static final int TAG_LIST        = 9;
-        public static final int TAG_COMPOUND    = 10;
-        public static final int TAG_INT_ARRAY   = 11;
-        public static final int TAG_LONG_ARRAY  = 12;
-        public static final int TAG_ANY_NUMERIC = 99;
-    }
-
     /**
      * The world event IDS, used when calling {@link IWorld#playEvent(int, BlockPos, int)}. <br>
      * Can be found from {@link net.minecraft.client.renderer.WorldRenderer#playEvent}<br>
@@ -124,7 +99,7 @@ public class Constants
         public static final int BREAK_BLOCK_EFFECTS             = 2001;
         /**
          * {@code data} is the rgb color int that should be used for the potion particles<br>
-         * This is the same as {@link Constants.WorldEvents#POTION_IMPACT} but uses the particle type {@link ParticleTypes#EFFECT}
+         * This is the same as {@link ForgeConstants.WorldEvents#POTION_IMPACT} but uses the particle type {@link ParticleTypes#EFFECT}
          */
         public static final int POTION_IMPACT_INSTANT           = 2002;
         public static final int ENDER_EYE_SHATTER               = 2003;
@@ -136,7 +111,7 @@ public class Constants
         public static final int DRAGON_FIREBALL_HIT             = 2006;
         /**
          * {@code data} is the rgb color int that should be used for the potion particles<br>
-         * This is the same as {@link Constants.WorldEvents#POTION_IMPACT_INSTANT} but uses the particle type {@link ParticleTypes#INSTANT_EFFECT}
+         * This is the same as {@link ForgeConstants.WorldEvents#POTION_IMPACT_INSTANT} but uses the particle type {@link ParticleTypes#INSTANT_EFFECT}
          */
         public static final int POTION_IMPACT                   = 2007;
         public static final int SPAWN_EXPLOSION_PARTICLE        = 2008;

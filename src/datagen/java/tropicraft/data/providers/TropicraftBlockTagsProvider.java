@@ -1,4 +1,4 @@
-package net.tropicraft.core.common.data;
+package tropicraft.data.providers;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -7,7 +7,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag.Named;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FlowerPotBlock;
-import net.minecraftforge.common.data.ExistingFileHelper;
 import net.tropicraft.core.common.TropicraftTags;
 
 import java.lang.reflect.Array;
@@ -22,7 +21,7 @@ import static net.tropicraft.core.common.block.TropicraftFlower.*;
 
 public class TropicraftBlockTagsProvider extends BlockTagsProvider {
 
-    public TropicraftBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
+    public TropicraftBlockTagsProvider(DataGenerator generatorIn) {
         super(generatorIn);
     }
     ArrayList<Supplier<FlowerPotBlock>> TEMPARRAY = new ArrayList<>();

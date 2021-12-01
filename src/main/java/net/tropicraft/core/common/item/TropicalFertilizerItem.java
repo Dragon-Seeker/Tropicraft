@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.DecoratedFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.AbstractFlowerFeature;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 
 import java.util.List;
 import java.util.Random;
@@ -64,7 +64,7 @@ public class TropicalFertilizerItem extends BoneMealItem {
                             }
 
                             if (blockstate1.canSurvive(world, blockpos1)) {
-                                world.setBlock(blockpos1, blockstate1, Constants.BlockFlags.DEFAULT);
+                                world.setBlock(blockpos1, blockstate1, ForgeConstants.BlockFlags.DEFAULT);
                             }
                             break;
                         }

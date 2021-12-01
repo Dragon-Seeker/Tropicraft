@@ -1,4 +1,4 @@
-package net.tropicraft.core.common.data;
+package tropicraft.data.providers;
 
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;

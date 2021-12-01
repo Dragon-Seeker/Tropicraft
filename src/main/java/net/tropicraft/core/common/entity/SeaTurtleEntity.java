@@ -31,8 +31,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeAttributes;
+import net.api.forge.ForgeConstants;
 import net.tropicraft.core.common.dimension.TropicraftDimension;
 import net.tropicraft.core.common.entity.egg.SeaTurtleEggEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
@@ -254,7 +254,7 @@ public class SeaTurtleEntity extends Turtle {
         if (this.isAlive() && this.isLayingEgg() && this.digCounter >= 1 && this.digCounter % 5 == 0) {
             BlockPos pos = this.blockPosition();
             if (this.level.getBlockState(pos.below()).getMaterial() == Material.SAND) {
-                this.level.levelEvent(Constants.WorldEvents.BREAK_BLOCK_EFFECTS, pos, Block.getId(Blocks.SAND.defaultBlockState()));
+                this.level.levelEvent(ForgeConstants.WorldEvents.BREAK_BLOCK_EFFECTS, pos, Block.getId(Blocks.SAND.defaultBlockState()));
             }
         }
 
@@ -372,10 +372,10 @@ public class SeaTurtleEntity extends Turtle {
 
                 if (!isInWater()) {
                     if (getCanFly()) {
-                        this.setDeltaMovement(this.getDeltaMovement().add(0, -this.getAttribute(ForgeMod.ENTITY_GRAVITY).getValue() * 0.05, 0));
+                        this.setDeltaMovement(this.getDeltaMovement().add(0, -this.getAttribute(ForgeAttributes.ENTITY_GRAVITY).getValue() * 0.05, 0));
                     } else {
                         // Lower max speed when breaching, as a penalty to uncareful driving
-                        this.setDeltaMovement(this.getDeltaMovement().multiply(0.9, 0.99, 0.9).add(0, -this.getAttribute(ForgeMod.ENTITY_GRAVITY).getValue(), 0));
+                        this.setDeltaMovement(this.getDeltaMovement().multiply(0.9, 0.99, 0.9).add(0, -this.getAttribute(ForgeAttributes.ENTITY_GRAVITY).getValue(), 0));
                     }
                 }
 

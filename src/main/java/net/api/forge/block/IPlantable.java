@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.minecraftforge.common;
+package net.api.forge.block;
 
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FlowerBlock;
@@ -39,7 +39,7 @@ public interface IPlantable
         if (this == Blocks.BROWN_MUSHROOM) return PlantType.CAVE;
         if (this == Blocks.NETHER_WART)    return PlantType.NETHER;
         if (this == Blocks.TALL_GRASS)      return PlantType.PLAINS;
-        return net.minecraftforge.common.PlantType.PLAINS;
+        return PlantType.PLAINS;
     }
 
     BlockState getPlant(BlockGetter world, BlockPos pos);

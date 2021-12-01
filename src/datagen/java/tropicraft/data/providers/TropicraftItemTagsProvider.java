@@ -1,4 +1,4 @@
-package net.tropicraft.core.common.data;
+package tropicraft.data.providers;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -10,7 +10,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.FlowerBlock;
-import net.minecraftforge.common.data.ExistingFileHelper;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.item.AshenMaskItem;
@@ -23,7 +22,7 @@ import static net.tropicraft.core.common.TropicraftTags.Items.*;
 
 public class TropicraftItemTagsProvider extends ItemTagsProvider {
 
-    public TropicraftItemTagsProvider(DataGenerator generatorIn, BlockTagsProvider blockTags, ExistingFileHelper existingFileHelper) {
+    public TropicraftItemTagsProvider(DataGenerator generatorIn, BlockTagsProvider blockTags) {
         super(generatorIn, blockTags);
     }
 

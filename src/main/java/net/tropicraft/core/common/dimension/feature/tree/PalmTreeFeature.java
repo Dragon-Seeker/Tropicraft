@@ -9,7 +9,7 @@ import net.minecraft.world.level.LevelSimulatedRW;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 import net.tropicraft.core.common.block.CoconutBlock;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import org.apache.commons.lang3.ArrayUtils;
@@ -61,7 +61,7 @@ public abstract class PalmTreeFeature extends Feature<NoneFeatureConfiguration> 
         for (Direction d : DIRECTIONS) {
             BlockPos pos2 = pos.relative(d);
             if (random.nextInt(chance) == 0 && TreeFeature.isAirOrLeaves(world, pos2)) {
-                world.setBlock(pos2, coconut.setValue(CoconutBlock.FACING, d.getOpposite()), Constants.BlockFlags.DEFAULT);
+                world.setBlock(pos2, coconut.setValue(CoconutBlock.FACING, d.getOpposite()), ForgeConstants.BlockFlags.DEFAULT);
             }
         }
     }

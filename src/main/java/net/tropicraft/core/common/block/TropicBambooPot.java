@@ -1,4 +1,4 @@
-package net.api.frogeExpansion;
+package net.tropicraft.core.common.block;
 
 import com.google.common.collect.Maps;
 import net.fabricmc.api.EnvType;

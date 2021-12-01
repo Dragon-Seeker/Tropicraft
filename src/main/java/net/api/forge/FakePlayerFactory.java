@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.minecraftforge.common.util;
+package net.api.forge;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;

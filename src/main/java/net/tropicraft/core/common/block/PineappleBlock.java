@@ -19,9 +19,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.PlantType;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 
 import java.util.Random;
 
@@ -84,14 +82,14 @@ public class PineappleBlock extends TallFlowerBlock implements BonemealableBlock
             if (growth >= TOTAL_GROW_TICKS - 1) {
                 // Set current state
                 BlockState growthState = state.setValue(STAGE, TOTAL_GROW_TICKS);
-                world.setBlock(pos, growthState, Constants.BlockFlags.DEFAULT | Constants.BlockFlags.NO_RERENDER);
+                world.setBlock(pos, growthState, ForgeConstants.BlockFlags.DEFAULT | ForgeConstants.BlockFlags.NO_RERENDER);
 
                 // Place actual pineapple plant above stem
                 BlockState fullGrowth = growthState.setValue(HALF, DoubleBlockHalf.UPPER);
-                world.setBlock(pos.above(), fullGrowth, Constants.BlockFlags.DEFAULT);
+                world.setBlock(pos.above(), fullGrowth, ForgeConstants.BlockFlags.DEFAULT);
             } else {
                 BlockState growthState = state.setValue(STAGE, growth + 1);
-                world.setBlock(pos, growthState, Constants.BlockFlags.DEFAULT | Constants.BlockFlags.NO_RERENDER);
+                world.setBlock(pos, growthState, ForgeConstants.BlockFlags.DEFAULT | ForgeConstants.BlockFlags.NO_RERENDER);
             }
         }
     }

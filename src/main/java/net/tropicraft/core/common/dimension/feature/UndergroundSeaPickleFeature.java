@@ -9,7 +9,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.common.util.Constants;
+import net.api.forge.ForgeConstants;
 
 import java.util.Random;
 
@@ -36,7 +36,7 @@ public class UndergroundSeaPickleFeature extends Feature<NoneFeatureConfiguratio
             }
 
             BlockState pickle = Blocks.SEA_PICKLE.defaultBlockState().setValue(SeaPickleBlock.PICKLES, count);
-            world.setBlock(pos, pickle, Constants.BlockFlags.BLOCK_UPDATE);
+            world.setBlock(pos, pickle, ForgeConstants.BlockFlags.BLOCK_UPDATE);
             return true;
         }
 

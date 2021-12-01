@@ -24,11 +24,10 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
-public final class ReedsBlock extends Block implements SimpleWaterloggedBlock, IPlantable {
+public final class ReedsBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
 
@@ -107,7 +106,7 @@ public final class ReedsBlock extends Block implements SimpleWaterloggedBlock, I
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
-    @Override
+
     public BlockState getPlant(BlockGetter world, BlockPos pos) {
         return this.defaultBlockState();
     }

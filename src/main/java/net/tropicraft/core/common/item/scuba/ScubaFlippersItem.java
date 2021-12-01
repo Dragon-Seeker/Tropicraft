@@ -2,9 +2,8 @@ package net.tropicraft.core.common.item.scuba;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.api.frogeExpansion.ItemEx;
+import net.api.forge.ItemEx;
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -13,13 +12,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.LazyLoadedValue;
-import net.minecraftforge.common.ForgeMod;
+import net.api.forge.ForgeAttributes;
 import net.tropicraft.Constants;
 
 import java.util.UUID;
-
-import net.minecraft.world.item.Item.Properties;
-import org.jetbrains.annotations.Nullable;
 
 public class ScubaFlippersItem extends ScubaArmorItem implements DynamicAttributeTool, ItemEx {
 
@@ -33,7 +29,7 @@ public class ScubaFlippersItem extends ScubaArmorItem implements DynamicAttribut
         this.boostedModifiers = new LazyLoadedValue<>(() ->
                 ImmutableMultimap.<Attribute, AttributeModifier>builder()
                         .putAll(super.getDefaultAttributeModifiers(EquipmentSlot.FEET))
-                        .put(ForgeMod.SWIM_SPEED, SWIM_SPEED_BOOST)
+                        .put(ForgeAttributes.SWIM_SPEED, SWIM_SPEED_BOOST)
                         .build()
         );
     }

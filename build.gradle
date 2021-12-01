@@ -40,7 +40,6 @@ repositories {
 
 sourceSets {
     portaforgy{}
-
     main {
         compileClasspath += sourceSets.portaforgy.output
         runtimeClasspath += sourceSets.portaforgy.output
@@ -48,7 +47,12 @@ sourceSets {
             srcDir 'src/generated/resources'
         }
     }
-
+    datagen {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+        compileClasspath += sourceSets.portaforgy.output
+        runtimeClasspath += sourceSets.portaforgy.output
+    }
     test {
         compileClasspath += sourceSets.portaforgy.output
         runtimeClasspath += sourceSets.portaforgy.output
@@ -57,11 +61,15 @@ sourceSets {
 
 configurations {
     portaforgyImplementation.extendsFrom(compileClasspath)
+    datagenImplementation.extendsFrom(compileClasspath)
+    datagenRuntimeOnly.extendsFrom(runtimeClasspath)
 }
+
+
 
 loom {
     //silentMojangMappingsLicense()
-    accessWidener = file("src/main/resources/tropicraftFabric.accesswidener")
+    accessWidenerPath = file("src/main/resources/tropicraftFabric.accesswidener")
 }
 
 
@@ -85,6 +93,17 @@ dependencies {
     include "io.github.onyxstudios:Cardinal-Components-API:3.1.1"
 
 }
+
+import net.fabricmc.loom.task.RunClientTask;
+
+task dataGen(type: RunClientTask, dependsOn: downloadAssets, group: "tropicraft", description: "Generates various JSON assets for the mod, thanks to ae2"){
+    classpath = configurations.runtimeClasspath
+    classpath sourceSets.portaforgy.output
+    classpath sourceSets.main.output
+//    classpath sourceSets.datagen.output
+    systemProperty "tropicraft.generateData", "true"
+}
+
 
 jar {
     manifest {
