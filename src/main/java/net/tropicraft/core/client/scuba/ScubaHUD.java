@@ -2,7 +2,7 @@ package net.tropicraft.core.client.scuba;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.api.components.MyComponents;
+import net.bermuda.common.components.MyComponents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

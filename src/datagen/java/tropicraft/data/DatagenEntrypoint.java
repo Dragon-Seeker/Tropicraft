@@ -11,10 +11,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.server.Bootstrap;
-import net.tropicraft.Tropicraft;
-import net.tropicraft.core.client.TropicraftClient;
-import net.tropicraft.core.common.data.TropicraftWorldgenProvider;
-import tropicraft.data.providers.*;
+import net.tropicraft.core.client.data.TropicraftBlockstateProvider;
+import net.tropicraft.core.client.data.TropicraftItemModelProvider;
+import net.tropicraft.core.client.data.TropicraftLangProvider;
+import net.tropicraft.core.common.data.*;
 import net.tropicraft.core.common.dimension.biome.TropicraftBiomes;
 import net.tropicraft.core.common.dimension.carver.TropicraftConfiguredCarvers;
 import net.tropicraft.core.common.dimension.feature.TropicraftConfiguredFeatures;
@@ -92,8 +92,8 @@ public class DatagenEntrypoint implements ClientModInitializer {
 
         SharedConstants.tryDetectVersion();
         Bootstrap.bootStrap();
-        new Tropicraft().onInitialize();
-        new TropicraftClient().onInitializeClient();
+//        new Tropicraft().onInitialize();
+//        new TropicraftClient().onInitializeClient();
 
         try {
             dump(outputPath, existingDataPaths);

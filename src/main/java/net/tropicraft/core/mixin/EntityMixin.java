@@ -1,6 +1,6 @@
 package net.tropicraft.core.mixin;
 
-import net.api.forge.entity.ExtEntity;
+import net.bermuda.common.forge.entity.ExtEntity;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 

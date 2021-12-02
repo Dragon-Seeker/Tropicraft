@@ -2,7 +2,6 @@ package net.tropicraft.core.client.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import net.api.forge.entity.ExtEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -15,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 import net.tropicraft.core.common.entity.SeaTurtleEntity;
 import net.tropicraft.core.common.entity.placeable.BeachFloatEntity;
 import net.tropicraft.core.common.entity.placeable.FurnitureEntity;
-import net.tropicraft.core.events.PlayerRenderEvents;
+import net.bermuda.common.events.PlayerRenderEvents;
 
 //@EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MODID)
 @Environment(EnvType.CLIENT)

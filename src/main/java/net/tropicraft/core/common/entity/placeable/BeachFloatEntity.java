@@ -1,8 +1,8 @@
 package net.tropicraft.core.common.entity.placeable;
 
 import com.google.common.collect.ImmutableList;
-import net.api.forge.entity.ExtEntity;
-import net.api.network.ExtraSpawnDataEntity;
+import net.bermuda.common.forge.entity.ExtEntity;
+import net.bermuda.common.network.ExtraSpawnDataEntity;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;

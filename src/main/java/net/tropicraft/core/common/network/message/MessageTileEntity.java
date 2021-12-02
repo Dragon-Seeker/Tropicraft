@@ -1,7 +1,7 @@
 package net.tropicraft.core.common.network.message;
 
 import com.google.common.reflect.TypeToken;
-import net.api.network.ISimplePacket;
+import net.bermuda.common.network.ISimplePacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;

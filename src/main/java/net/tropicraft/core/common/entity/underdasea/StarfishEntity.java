@@ -1,6 +1,6 @@
 package net.tropicraft.core.common.entity.underdasea;
 
-import net.api.network.ExtraSpawnDataEntity;
+import net.bermuda.common.network.ExtraSpawnDataEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;

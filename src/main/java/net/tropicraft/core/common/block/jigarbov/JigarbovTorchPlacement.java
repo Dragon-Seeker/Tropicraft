@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import org.jetbrains.annotations.Nullable;
 

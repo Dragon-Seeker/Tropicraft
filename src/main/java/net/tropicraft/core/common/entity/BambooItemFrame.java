@@ -1,6 +1,6 @@
 package net.tropicraft.core.common.entity;
 
-import net.api.network.ExtraSpawnDataEntity;
+import net.bermuda.common.network.ExtraSpawnDataEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;

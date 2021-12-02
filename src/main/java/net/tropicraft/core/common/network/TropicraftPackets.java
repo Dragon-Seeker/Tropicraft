@@ -1,7 +1,7 @@
 package net.tropicraft.core.common.network;
 
-import net.api.network.ISimplePacket;
-import net.api.network.NetworkWrapper;
+import net.bermuda.common.network.ISimplePacket;
+import net.bermuda.common.network.NetworkWrapper;
 import net.fabricmc.api.EnvType;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

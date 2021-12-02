@@ -2,7 +2,7 @@ package net.tropicraft.core.common.item.scuba;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.api.forge.ItemEx;
+import net.bermuda.common.forge.ItemEx;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;

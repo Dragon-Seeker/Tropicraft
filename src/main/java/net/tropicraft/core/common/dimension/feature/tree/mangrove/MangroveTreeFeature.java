@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 import net.tropicraft.core.common.TropicraftTags;
 
 import java.util.Random;

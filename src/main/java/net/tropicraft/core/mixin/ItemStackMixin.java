@@ -1,7 +1,7 @@
 package net.tropicraft.core.mixin;
 
 import com.google.common.collect.Multimap;
-import net.api.forge.ItemEx;
+import net.bermuda.common.forge.ItemEx;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;

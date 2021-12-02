@@ -24,7 +24,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 
 import java.util.Locale;
 import java.util.Random;

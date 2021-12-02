@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.AABB;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 import net.tropicraft.core.client.ParticleEffects;
 import org.jetbrains.annotations.Nullable;
 

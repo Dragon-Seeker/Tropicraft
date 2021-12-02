@@ -1,7 +1,7 @@
 package net.tropicraft;
 
 import com.google.common.reflect.Reflection;
-import net.api.TropicraftEventRegister;
+import net.bermuda.registery.TropicraftEventRegister;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;

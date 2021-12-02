@@ -18,6 +18,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
@@ -31,8 +32,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
-import net.api.forge.ForgeAttributes;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeAttributes;
+import net.bermuda.common.forge.ForgeConstants;
 import net.tropicraft.core.common.dimension.TropicraftDimension;
 import net.tropicraft.core.common.entity.egg.SeaTurtleEggEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
@@ -545,5 +546,14 @@ public class SeaTurtleEntity extends Turtle {
     @Override
     public boolean hasEgg() {
         return entityData.get(HAS_EGG);
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 30.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(ForgeAttributes.ENTITY_GRAVITY).add(ForgeAttributes.SWIM_SPEED);
+    }
+
+    @Override
+    public boolean rideableUnderWater() {
+        return true;
     }
 }

@@ -10,7 +10,7 @@ import net.minecraft.world.level.LevelWriter;
 import net.minecraft.world.level.LevelSimulatedRW;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 
 import java.util.ArrayList;

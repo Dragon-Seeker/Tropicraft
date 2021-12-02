@@ -1,6 +1,6 @@
 package net.tropicraft.core.common.block;
 
-import net.api.forge.block.BlockExtension;
+import net.bermuda.common.forge.block.BlockExtension;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 
 public class BlockTropicraftSand extends FallingBlock implements BlockExtension {
     public static final BooleanProperty UNDERWATER = BooleanProperty.create("underwater");

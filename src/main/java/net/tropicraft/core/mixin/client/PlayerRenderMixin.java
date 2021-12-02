@@ -1,11 +1,10 @@
 package net.tropicraft.core.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.api.forge.entity.ExtEntity;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.tropicraft.core.events.PlayerRenderEvents;
+import net.bermuda.common.events.PlayerRenderEvents;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

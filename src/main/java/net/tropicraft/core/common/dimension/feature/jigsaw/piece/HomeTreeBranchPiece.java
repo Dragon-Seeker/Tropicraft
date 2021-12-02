@@ -3,7 +3,7 @@ package net.tropicraft.core.common.dimension.feature.jigsaw.piece;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;

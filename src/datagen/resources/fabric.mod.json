@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "tropicraftdatagen",
+  "version": "1.0.0",
+  "name": "Tropicraft Datagen",
+  "description": "Data Gen for Tropicraft, Thanks to AE2 Team for the implmentation",
+  "authors": ["TeamAppliedEnergistics"],
+  "contact": {
+  },
+  "license": "LGPL",
+  "icon": "assets/appliedenergistics2/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["tropicraft.data.DatagenEntrypoint"]
+  },
+  "depends": {
+    "fabricloader": ">=0.7.1",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "tropicraft": "*"
+  }
+}

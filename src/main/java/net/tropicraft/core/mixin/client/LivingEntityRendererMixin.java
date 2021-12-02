@@ -1,7 +1,7 @@
 package net.tropicraft.core.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.api.forge.entity.ExtEntity;
+import net.bermuda.common.forge.entity.ExtEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -22,28 +22,25 @@ public class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityM
 
     @Unique private Entity vehicalCache;
 
-    @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isPassenger()Z", shift = At.Shift.AFTER, ordinal = 0))
+    @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "FIELD", target = "Lnet/minecraft/client/model/EntityModel;riding:Z", shift = At.Shift.AFTER))
     private void modelChange(T livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci){
         model.riding = livingEntity.isPassenger() && (livingEntity.getVehicle() instanceof ExtEntity extEntity && extEntity.shouldRiderSit());
     }
 
-
-
-
-    @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isPassenger()Z", shift = At.Shift.BEFORE, ordinal = 1))
-    private void passagerCheckChange1(T livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci){
-        if(livingEntity.getVehicle() instanceof ExtEntity extEntity && !extEntity.shouldRiderSit()){
-            vehicalCache = livingEntity.vehicle;
-            livingEntity.vehicle = null;
-        }
-    }
-
-    @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;prepareMobModel(Lnet/minecraft/world/entity/Entity;FFF)V", shift = At.Shift.BEFORE))
-    private void passagerCheckChange2Test(T livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci){
-        if(livingEntity.getVehicle() instanceof ExtEntity extEntity && !extEntity.shouldRiderSit()){
-            livingEntity.vehicle = vehicalCache;
-        }
-    }
+//    @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isPassenger()Z", shift = At.Shift.BEFORE, ordinal = 1))
+//    private void passagerCheckChange1(T livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci){
+//        if(livingEntity.getVehicle() instanceof ExtEntity extEntity && !extEntity.shouldRiderSit()){
+//            vehicalCache = livingEntity.vehicle;
+//            livingEntity.vehicle = null;
+//        }
+//    }
+//
+//    @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;prepareMobModel(Lnet/minecraft/world/entity/Entity;FFF)V", shift = At.Shift.BEFORE))
+//    private void passagerCheckChange2Test(T livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci){
+//        if(livingEntity.getVehicle() instanceof ExtEntity extEntity && !extEntity.shouldRiderSit()){
+//            livingEntity.vehicle = vehicalCache;
+//        }
+//    }
 
 //    @ModifyVariable(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isPassenger()Z", shift = At.Shift.AFTER, ordinal = 1), index = 1)
 //    private boolean passagerCheckChange1(boolean var, T livingEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i){

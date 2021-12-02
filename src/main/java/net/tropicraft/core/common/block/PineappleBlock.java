@@ -19,7 +19,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 
 import java.util.Random;
 

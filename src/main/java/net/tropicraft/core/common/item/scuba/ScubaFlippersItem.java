@@ -2,7 +2,7 @@ package net.tropicraft.core.common.item.scuba;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.api.forge.ItemEx;
+import net.bermuda.common.forge.ItemEx;
 import net.fabricmc.fabric.api.tool.attribute.v1.DynamicAttributeTool;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.LazyLoadedValue;
-import net.api.forge.ForgeAttributes;
+import net.bermuda.common.forge.ForgeAttributes;
 import net.tropicraft.Constants;
 
 import java.util.UUID;

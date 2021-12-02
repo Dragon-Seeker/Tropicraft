@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.DecoratedFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.AbstractFlowerFeature;
 import net.minecraft.server.level.ServerLevel;
-import net.api.forge.ForgeConstants;
+import net.bermuda.common.forge.ForgeConstants;
 
 import java.util.List;
 import java.util.Random;

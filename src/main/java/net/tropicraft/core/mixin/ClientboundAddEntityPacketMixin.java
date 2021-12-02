@@ -1,9 +1,7 @@
 package net.tropicraft.core.mixin;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import net.api.network.ClientboundAddEntityPacketExtensions;
-import net.api.network.ExtraSpawnDataEntity;
+import net.bermuda.common.network.ClientboundAddEntityPacketExtensions;
+import net.bermuda.common.network.ExtraSpawnDataEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

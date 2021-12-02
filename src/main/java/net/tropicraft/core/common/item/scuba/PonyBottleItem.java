@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.tropicraft.core.events.ItemUseTickEvent;
+import net.bermuda.common.events.ItemUseTickEvent;
 
 //import javax.annotation.ParametersAreNonnullByDefault;
 
