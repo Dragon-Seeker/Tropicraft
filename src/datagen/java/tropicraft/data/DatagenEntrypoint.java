@@ -9,6 +9,10 @@ import java.util.List;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.SharedConstants;
+import net.minecraft.server.Bootstrap;
+import net.tropicraft.Tropicraft;
+import net.tropicraft.core.client.TropicraftClient;
 import net.tropicraft.core.common.data.TropicraftWorldgenProvider;
 import tropicraft.data.providers.*;
 import net.tropicraft.core.common.dimension.biome.TropicraftBiomes;
@@ -33,12 +37,12 @@ public class DatagenEntrypoint implements ClientModInitializer {
             gen.addProvider(new TropicraftLangProvider(gen));
         }
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT || FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER ) {
-            TropicraftBlockTagsProvider blockTags = new TropicraftBlockTagsProvider(gen, existingFileHelper);
+            TropicraftBlockTagsProvider blockTags = new TropicraftBlockTagsProvider(gen);
             gen.addProvider(blockTags);
-            gen.addProvider(new TropicraftItemTagsProvider(gen, blockTags, existingFileHelper));
+            gen.addProvider(new TropicraftItemTagsProvider(gen, blockTags));
             gen.addProvider(new TropicraftRecipeProvider(gen));
             gen.addProvider(new TropicraftLootTableProvider(gen));
-            gen.addProvider(new TropicraftEntityTypeTagsProvider(gen, existingFileHelper));
+            gen.addProvider(new TropicraftEntityTypeTagsProvider(gen));
 
             gatherWorldgenData(gen);
         }
@@ -74,12 +78,22 @@ public class DatagenEntrypoint implements ClientModInitializer {
 
     public void runIfEnabled() {
         if (!"true".equals(System.getProperty("tropicraft.generateData"))) {
+            System.out.println("Tropicraft: Skipping data generation. System property not set.");
             return;
         }
 
-        var outputPath = Paths.get("../src/generated/resources");
-        //var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");
-        var existingDataPaths = Arrays.asList(Paths.get("../src/main/resources"));//Arrays.stream("src/main/resources".split(";")).map(Paths::get).toList();
+//        var outputPath = Paths.get("../src/generated/resources");
+//        //var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");
+//        var existingDataPaths = Arrays.asList(Paths.get("../src/main/resources"));//Arrays.stream("src/main/resources".split(";")).map(Paths::get).toList();
+
+        var outputPath = Paths.get(System.getProperty("tropicraft.generateData.outputPath"));
+        var existingData = System.getProperty("tropicraft.generateData.existingData").split(";");
+        var existingDataPaths = Arrays.stream(existingData).map(Paths::get).toList();
+
+        SharedConstants.tryDetectVersion();
+        Bootstrap.bootStrap();
+        new Tropicraft().onInitialize();
+        new TropicraftClient().onInitializeClient();
 
         try {
             dump(outputPath, existingDataPaths);

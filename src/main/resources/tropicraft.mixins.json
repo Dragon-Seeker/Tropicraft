@@ -14,9 +14,12 @@
     "StructureProcessorMixin",
     "DimensionsOptionsAccessor",
     "SugarCaneMixin",
-    "CactusMixin"
+    "CactusMixin",
+    "EntityMixin"
   ],
   "client": [
+    "client.PlayerRenderMixin",
+    "client.LivingEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

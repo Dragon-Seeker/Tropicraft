@@ -33,6 +33,9 @@ repositories {
         name = "Ladysnake Mods"
         url = 'https://ladysnake.jfrog.io/artifactory/mods'
     }
+    maven {
+        url 'https://jitpack.io'
+    }
 
     jcenter()
     mavenCentral()
@@ -65,14 +68,6 @@ configurations {
     datagenRuntimeOnly.extendsFrom(runtimeClasspath)
 }
 
-
-
-loom {
-    //silentMojangMappingsLicense()
-    accessWidenerPath = file("src/main/resources/tropicraftFabric.accesswidener")
-}
-
-
 repositories {
 	mavenLocal()
 }
@@ -92,18 +87,35 @@ dependencies {
     modImplementation "io.github.onyxstudios:Cardinal-Components-API:3.1.1"
     include "io.github.onyxstudios:Cardinal-Components-API:3.1.1"
 
+    modImplementation 'com.github.Chocohead:Fabric-ASM:v2.3'
+
 }
 
-import net.fabricmc.loom.task.RunClientTask;
+//import net.fabricmc.loom.task.RunClientTask;
 
-task dataGen(type: RunClientTask, dependsOn: downloadAssets, group: "tropicraft", description: "Generates various JSON assets for the mod, thanks to ae2"){
-    classpath = configurations.runtimeClasspath
-    classpath sourceSets.portaforgy.output
-    classpath sourceSets.main.output
-//    classpath sourceSets.datagen.output
-    systemProperty "tropicraft.generateData", "true"
+
+//task dataGen(type: runClient, dependsOn: downloadAssets, group: "tropicraft", description: "Generates various JSON assets for the mod, thanks to ae2"){
+//    classpath = configurations.runtimeClasspath
+//    classpath sourceSets.portaforgy.output
+//    classpath sourceSets.main.output
+////    classpath sourceSets.datagen.output
+//    systemProperty "tropicraft.generateData", "true"
+//}
+
+
+loom {
+    //silentMojangMappingsLicense()
+    accessWidenerPath = file("src/main/resources/tropicraftFabric.accesswidener")
+    runs {
+        datagenTest{
+            client()
+            source "datagen"
+            property "tropicraft.generateData", "true"
+            property "tropicraft.generateData.outputPath", file("src/generated/resources").absolutePath
+            property "tropicraft.generateData.existingData", file("src/main/resources").absolutePath
+        }
+    }
 }
-
 
 jar {
     manifest {
