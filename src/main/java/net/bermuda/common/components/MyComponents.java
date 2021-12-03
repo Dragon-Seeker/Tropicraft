@@ -4,6 +4,7 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
+import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.tropicraft.Constants;
@@ -15,6 +16,9 @@ public class MyComponents implements EntityComponentInitializer {
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        registry.beginRegistration(Player.class, SCUBADATA).impl(ScubaData.class).end(ScubaData::new);
+        registry.registerForPlayers(SCUBADATA, player -> {
+            return new ScubaData(player);
+        }, RespawnCopyStrategy.ALWAYS_COPY);
+//        registry.beginRegistration(Player.class, SCUBADATA).impl(ScubaData.class).end(ScubaData::new);
     }
 }

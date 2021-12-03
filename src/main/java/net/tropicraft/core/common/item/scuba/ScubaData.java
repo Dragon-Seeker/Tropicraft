@@ -1,9 +1,14 @@
 package net.tropicraft.core.common.item.scuba;
 
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import dev.onyxstudios.cca.api.v3.component.sync.PlayerSyncPredicate;
 import dev.onyxstudios.cca.api.v3.component.tick.ClientTickingComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import dev.onyxstudios.cca.api.v3.entity.PlayerComponent;
+import dev.onyxstudios.cca.api.v3.entity.PlayerSyncCallback;
+import dev.onyxstudios.cca.internal.entity.CardinalComponentsEntity;
+import net.bermuda.common.components.MyComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +28,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponent, ServerTickingComponent, ClientTickingComponent { // INBTSerializable<CompoundTag>, ICapabilityProvider {
+public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponent, ServerTickingComponent, ClientTickingComponent{ // INBTSerializable<CompoundTag>, ICapabilityProvider {
 
     private static final Set<ServerPlayer> underwaterPlayers = Collections.newSetFromMap(new WeakHashMap<>());
 
@@ -33,7 +38,6 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
         this.owner = owner;
     }
 
-
     @Override
     public void serverTick() {
         Level world = owner.level;
@@ -42,17 +46,12 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
             ItemStack chestStack = owner.getItemBySlot(EquipmentSlot.CHEST);
             Item chestItem = chestStack.getItem();
             if (chestItem instanceof ScubaArmorItem) {
-                //LazyComponentKey<ScubaData> data = owner.getCapability(CAPABILITY);
+
                 if (!world.isClientSide) {
                     underwaterPlayers.add((ServerPlayer) owner);
                 }
                 if (isUnderWater(owner)) {
-//                    data.ifPresent(d -> {
-//                        d.tick(event.player);
-//                        if (!world.isClientSide) {
-//                            d.updateClient((ServerPlayer) owner, false);
-//                        }
-//                    });
+                    tick();
                     ((ScubaArmorItem)chestItem).tickAir(owner, EquipmentSlot.CHEST, chestStack);
                     if (!world.isClientSide && world.getGameTime() % 60 == 0) {
                         // TODO this effect could be better, custom packet?
@@ -65,8 +64,8 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
                                 0.25, 0.25, 0.25, motion.length());
                     }
                 } else if (!world.isClientSide && underwaterPlayers.remove(owner)) { // Update client state as they leave the water
-
                     //data.ifPresent(d -> d.updateClient((ServerPlayer) owner, false));
+                    MyComponents.SCUBADATA.sync(this.owner);
                 }
             }
         //}
@@ -91,8 +90,7 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
         return 0;
     }
 
-    @Override
-    public void clientTick() {
+    public void tick() {
         this.diveTime++;
         if (owner.level.getGameTime() % 100 == 0) {
             dirty = true;
@@ -186,6 +184,13 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
     public void applySyncPacket(FriendlyByteBuf buf) {
         this.deserializeBuffer(buf);
         //AutoSyncedComponent.super.applySyncPacket(buf);
+    }
+
+    @Override
+    public void clientTick() {
+        if (isUnderWater(owner)) {
+            tick();
+        }
     }
 
 

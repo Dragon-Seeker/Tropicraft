@@ -26,6 +26,9 @@
     ],
     "client": [
       "net.tropicraft.core.client.TropicraftClient"
+    ],
+    "cardinal-components-entity": [
+      "net.bermuda.common.components.MyComponents"
     ]
   },
   "mixins": [
@@ -33,6 +36,11 @@
     "tropicraft.mixins.shadow.json"
   ],
 
+  "custom": {
+    "cardinal-components": [
+      "tropicraft:scuba_data"
+    ]
+  },
   "accessWidener" : "tropicraftFabric.accesswidener",
 
   "depends": {
