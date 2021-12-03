@@ -1,6 +1,6 @@
 package net.tropicraft.core.common.block;
 
-import net.bermuda.common.block.TropicraftExperimentalLeaveBlock;
+import net.bermuda.common.block.experimental.TropicraftExperimentalLeaveBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;

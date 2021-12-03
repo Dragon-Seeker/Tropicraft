@@ -1,4 +1,4 @@
-package net.bermuda.common.block;
+package net.bermuda.common.block.experimental;
 
 import net.minecraft.core.Vec3i;
 
