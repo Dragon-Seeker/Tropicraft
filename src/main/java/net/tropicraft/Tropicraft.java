@@ -48,7 +48,7 @@ public class Tropicraft implements ModInitializer {
             FabricItemGroupBuilder.build(new ResourceLocation(Constants.MODID, "tropicraft"),
                     () -> new ItemStack(TropicraftFlower.RED_ANTHURIUM.get()));
 
-    public static boolean DatagenSwitch = true;
+    public static boolean EXPERIMENTAL_LEAVE_DECAY = true;
 
     @Override
     public void onInitialize() {

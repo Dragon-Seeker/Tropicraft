@@ -125,7 +125,7 @@ public class TropicraftBlocks {
     public static final LeavesBlock LEMON_LEAVES = register("lemon_leaves", Builder.leaves(true));
     public static final LeavesBlock LIME_LEAVES = register("lime_leaves", Builder.leaves(true));
     public static final LeavesBlock ORANGE_LEAVES = register("orange_leaves", Builder.leaves(true));
-    public static final LeavesBlock PAPAYA_LEAVES = register("papaya_leaves", Builder.leaves(false));
+    public static final LeavesBlock PAPAYA_LEAVES = register("papaya_leaves", Builder.leaves(true));
 
     public static final SaplingBlock GRAPEFRUIT_SAPLING = register("grapefruit_sapling", Builder.sapling(TropicraftTrees.GRAPEFRUIT));
     public static final SaplingBlock LEMON_SAPLING = register("lemon_sapling", Builder.sapling(TropicraftTrees.LEMON));

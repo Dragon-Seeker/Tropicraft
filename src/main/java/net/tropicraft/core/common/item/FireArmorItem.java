@@ -78,129 +78,131 @@ public class FireArmorItem extends TropicraftArmorItem {
         ParticleStatus particles = Minecraft.getInstance().options.particles;
         if (particles == ParticleStatus.MINIMAL) return;
 
-        if (this == TropicraftItems.FIRE_BOOTS) {
-            boolean onLava = false;
-            boolean inLava = false;
-            //for (int x = -1; x < 2; x++) {
-            //for (int z = -1; z < 2; z++) {
-            int x = 0;
-            int z = 0;
-            if (motion.y < 0) {
-                BlockState state = player.level.getBlockState(new BlockPos(Mth.floor(player.getX() + x), Mth.floor(player.getY() - 2), Mth.floor(player.getZ() + z)));
-                if (state.getMaterial() == Material.LAVA) {
-                    onLava = true;
+        for(ItemStack item : player.getArmorSlots()){
+            if (this == TropicraftItems.FIRE_BOOTS && item.getItem() == TropicraftItems.FIRE_BOOTS) {
+                boolean onLava = false;
+                boolean inLava = false;
+                //for (int x = -1; x < 2; x++) {
+                //for (int z = -1; z < 2; z++) {
+                int x = 0;
+                int z = 0;
+                if (motion.y < 0) {
+                    BlockState state = player.level.getBlockState(new BlockPos(Mth.floor(player.getX() + x), Mth.floor(player.getY() - 2), Mth.floor(player.getZ() + z)));
+                    if (state.getMaterial() == Material.LAVA) {
+                        onLava = true;
+                    }
                 }
-            }
-            BlockState block2 = player.level.getBlockState(new BlockPos(Mth.floor(player.getX() + x), Mth.floor(player.getY() - 1), Mth.floor(player.getZ() + z)));
-            if (block2.getMaterial() == Material.LAVA) {
-                inLava = true;
-            }
-
-            // why do we do this on the client?
-            if (onLava && !inLava) {
-                player.setDeltaMovement(motion.multiply(1, 0, 1));
-                player.setOnGround(true);
-            }
-
-            // why do we do this on the client???????
-            if (inLava) {
-                if (plSpeed < 0.4D) {
-                    player.setDeltaMovement(motion.multiply(1.5D, 1.5D, 1.5D));
+                BlockState block2 = player.level.getBlockState(new BlockPos(Mth.floor(player.getX() + x), Mth.floor(player.getY() - 1), Mth.floor(player.getZ() + z)));
+                if (block2.getMaterial() == Material.LAVA) {
+                    inLava = true;
                 }
-            }
 
-            float look = player.level.getGameTime() * (10 + (onLava ? 10 : 0));
-            double dist = 1F;
+                // why do we do this on the client?
+                if (onLava && !inLava) {
+                    player.setDeltaMovement(motion.multiply(1, 0, 1));
+                    player.setOnGround(true);
+                }
 
-            double gatherX = player.getX();
-            double gatherY = player.getBoundingBox().minY;
-            double gatherZ = player.getZ();
+                // why do we do this on the client???????
+                if (inLava) {
+                    if (plSpeed < 0.4D) {
+                        player.setDeltaMovement(motion.multiply(1.5D, 1.5D, 1.5D));
+                    }
+                }
 
-            double motionX = ((rand.nextFloat() * speed) - (speed/2));
-            double motionZ = ((rand.nextFloat() * speed) - (speed/2));
+                float look = player.level.getGameTime() * (10 + (onLava ? 10 : 0));
+                double dist = 1F;
 
-            final int numFeetParticles = particles == ParticleStatus.DECREASED ? 2 : 11;
+                double gatherX = player.getX();
+                double gatherY = player.getBoundingBox().minY;
+                double gatherZ = player.getZ();
 
-            for (int i = 0; i < numFeetParticles + (onLava ? 5 : 0); i++) {
-                motionX = (-Math.sin((look) / 180.0F * 3.1415927F) * Math.cos(0 / 180.0F * 3.1415927F) * (speed + (0.1 * rand.nextDouble())));
-                motionZ = (Math.cos((look) / 180.0F * 3.1415927F) * Math.cos(0 / 180.0F * 3.1415927F) * (speed + (0.1 * rand.nextDouble())));
+                double motionX = ((rand.nextFloat() * speed) - (speed/2));
+                double motionZ = ((rand.nextFloat() * speed) - (speed/2));
+
+                final int numFeetParticles = particles == ParticleStatus.DECREASED ? 2 : 11;
+
+                for (int i = 0; i < numFeetParticles + (onLava ? 5 : 0); i++) {
+                    motionX = (-Math.sin((look) / 180.0F * 3.1415927F) * Math.cos(0 / 180.0F * 3.1415927F) * (speed + (0.1 * rand.nextDouble())));
+                    motionZ = (Math.cos((look) / 180.0F * 3.1415927F) * Math.cos(0 / 180.0F * 3.1415927F) * (speed + (0.1 * rand.nextDouble())));
+
+                    SimpleParticleType particle = ParticleTypes.FLAME;
+                    if (rand.nextInt(22) == 0) particle = ParticleTypes.LARGE_SMOKE;
+
+                    if (onLava || rand.nextInt(1 + extraRand) == 0) {
+                        Vec3 motion1 = player.getDeltaMovement();
+                        player.level.addParticle(particle,
+                                gatherX + ((rand.nextFloat() * range) - (range/2)),
+                                gatherY + ((rand.nextFloat() * range) - (range/2)),
+                                gatherZ + ((rand.nextFloat() * range) - (range/2)),
+                                motion1.x + motionX,
+                                0.01F,
+                                motion1.z + motionZ);
+
+                        player.level.addParticle(particle,
+                                (double)gatherX + ((rand.nextFloat() * range) - (range/2)),
+                                (double)gatherY + ((rand.nextFloat() * range) - (range/2)),
+                                (double)gatherZ + ((rand.nextFloat() * range) - (range/2)),
+                                motion1.x - motionX,
+                                0.01F,
+                                motion1.z - motionZ);
+                    }
+                }
+
+            } else if (this == TropicraftItems.FIRE_LEGGINGS && item.getItem() == TropicraftItems.FIRE_LEGGINGS) {
+                SimpleParticleType particle = ParticleTypes.FLAME;
+                if (rand.nextInt(2) == 0) particle = ParticleTypes.LARGE_SMOKE;
+
+                if (rand.nextInt(3 + extraRand) == 0) {
+                    player.level.addParticle(particle,
+                            player.getX() + ((rand.nextFloat() * range) - (range/2)),
+                            player.getY() - 0.8F + ((rand.nextFloat() * range) - (range/2)),
+                            player.getZ() + ((rand.nextFloat() * range) - (range/2)),
+                            ((rand.nextFloat() * speed) - (speed/2)),
+                            -0.05F,
+                            ((rand.nextFloat() * speed) - (speed/2)));
+                }
+            } else if (this == TropicraftItems.FIRE_CHESTPLATE && item.getItem() == TropicraftItems.FIRE_CHESTPLATE) {
+                float look = -180F;
+                double dist = 0.5F;
+
+                double gatherX = player.getX() + (-Math.sin((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
+                double gatherZ = player.getZ() + (Math.cos((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
 
                 SimpleParticleType particle = ParticleTypes.FLAME;
-                if (rand.nextInt(22) == 0) particle = ParticleTypes.LARGE_SMOKE;
+                if (rand.nextInt(2) == 0) particle = ParticleTypes.LARGE_SMOKE;
 
-                if (onLava || rand.nextInt(1 + extraRand) == 0) {
-                    Vec3 motion1 = player.getDeltaMovement();
+                if (rand.nextInt(1 + extraRand) == 0) {
                     player.level.addParticle(particle,
                             gatherX + ((rand.nextFloat() * range) - (range/2)),
-                            gatherY + ((rand.nextFloat() * range) - (range/2)),
+                            player.getY() - 0.4F + ((rand.nextFloat() * range) - (range/2)),
                             gatherZ + ((rand.nextFloat() * range) - (range/2)),
-                            motion1.x + motionX,
-                            0.01F,
-                            motion1.z + motionZ);
-
-                    player.level.addParticle(particle,
-                            (double)gatherX + ((rand.nextFloat() * range) - (range/2)),
-                            (double)gatherY + ((rand.nextFloat() * range) - (range/2)),
-                            (double)gatherZ + ((rand.nextFloat() * range) - (range/2)),
-                            motion1.x - motionX,
-                            0.01F,
-                            motion1.z - motionZ);
+                            ((rand.nextFloat() * speed) - (speed/2)),
+                            -0.01F,
+                            ((rand.nextFloat() * speed) - (speed/2)));
                 }
-            }
 
-        } else if (this == TropicraftItems.FIRE_LEGGINGS) {
-            SimpleParticleType particle = ParticleTypes.FLAME;
-            if (rand.nextInt(2) == 0) particle = ParticleTypes.LARGE_SMOKE;
+            } else if (this == TropicraftItems.FIRE_HELMET && item.getItem() == TropicraftItems.FIRE_HELMET) {
+                float look = -180F;
+                double dist = 0.5F;
 
-            if (rand.nextInt(3 + extraRand) == 0) {
-                player.level.addParticle(particle,
-                        player.getX() + ((rand.nextFloat() * range) - (range/2)),
-                        player.getY() - 0.8F + ((rand.nextFloat() * range) - (range/2)),
-                        player.getZ() + ((rand.nextFloat() * range) - (range/2)),
-                        ((rand.nextFloat() * speed) - (speed/2)),
-                        -0.05F,
-                        ((rand.nextFloat() * speed) - (speed/2)));
-            }
-        } else if (this == TropicraftItems.FIRE_CHESTPLATE) {
-            float look = -180F;
-            double dist = 0.5F;
+                range = 2F;
 
-            double gatherX = player.getX() + (-Math.sin((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
-            double gatherZ = player.getZ() + (Math.cos((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
+                double gatherX = player.getX() + (-Math.sin((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
+                double gatherZ = player.getZ() + (Math.cos((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
 
-            SimpleParticleType particle = ParticleTypes.FLAME;
-            if (rand.nextInt(2) == 0) particle = ParticleTypes.LARGE_SMOKE;
+                SimpleParticleType particle = ParticleTypes.FLAME;
+                if (rand.nextInt(2) == 0) particle = ParticleTypes.LARGE_SMOKE;
 
-            if (rand.nextInt(1 + extraRand) == 0) {
-                player.level.addParticle(particle,
-                        gatherX + ((rand.nextFloat() * range) - (range/2)),
-                        player.getY() - 0.4F + ((rand.nextFloat() * range) - (range/2)),
-                        gatherZ + ((rand.nextFloat() * range) - (range/2)),
-                        ((rand.nextFloat() * speed) - (speed/2)),
-                        -0.01F,
-                        ((rand.nextFloat() * speed) - (speed/2)));
-            }
-
-        } else if (this == TropicraftItems.FIRE_HELMET) {
-            float look = -180F;
-            double dist = 0.5F;
-
-            range = 2F;
-
-            double gatherX = player.getX() + (-Math.sin((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
-            double gatherZ = player.getZ() + (Math.cos((player.getYRot()+look) / 180.0F * 3.1415927F) * Math.cos(player.getXRot() / 180.0F * 3.1415927F) * dist);
-
-            SimpleParticleType particle = ParticleTypes.FLAME;
-            if (rand.nextInt(2) == 0) particle = ParticleTypes.LARGE_SMOKE;
-
-            if (rand.nextInt(2) == 0) {
-                player.level.addParticle(particle,
-                        gatherX + ((rand.nextFloat() * range) - (range/2)),
-                        player.getY() + 0.7F,
-                        gatherZ + ((rand.nextFloat() * range) - (range/2)),
-                        ((rand.nextFloat() * speed) - (speed/2)),
-                        -0.01F,
-                        ((rand.nextFloat() * speed) - (speed/2)));
+                if (rand.nextInt(2) == 0) {
+                    player.level.addParticle(particle,
+                            gatherX + ((rand.nextFloat() * range) - (range/2)),
+                            player.getY() + 0.7F,
+                            gatherZ + ((rand.nextFloat() * range) - (range/2)),
+                            ((rand.nextFloat() * speed) - (speed/2)),
+                            -0.01F,
+                            ((rand.nextFloat() * speed) - (speed/2)));
+                }
             }
         }
     }

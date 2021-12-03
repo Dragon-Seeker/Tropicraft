@@ -34,7 +34,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 //@Mod.EventBusSubscriber(modid = Constants.MODID)
-public class VolcanoGenerator implements ServerLifecycleEvents.ServerStarting {
+public class VolcanoGenerator {
 
     public static Set<ResourceLocation> volcanoSpawnBiomesLand = ImmutableSet.of(
             TropicraftBiomes.TROPICS.location(), TropicraftBiomes.RAINFOREST_PLAINS.location()
@@ -74,8 +74,7 @@ public class VolcanoGenerator implements ServerLifecycleEvents.ServerStarting {
         this.biomeSource = biomeSource;
     }
 
-    @Override
-    public void onServerStarting(MinecraftServer server) {
+    public static void onServerStarting(MinecraftServer server) {
         // we don't really have a structure but we fake it
         CommandDispatcher<CommandSourceStack> dispatcher = server.getCommands().getDispatcher();
 

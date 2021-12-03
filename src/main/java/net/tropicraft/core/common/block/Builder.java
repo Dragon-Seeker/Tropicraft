@@ -1,5 +1,6 @@
 package net.tropicraft.core.common.block;
 
+import net.bermuda.common.block.TropicraftExperimentalLeaveBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.tropicraft.Tropicraft;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -110,7 +112,7 @@ public class Builder {
     }
 
     public static Supplier<LeavesBlock> leaves(boolean decay) {
-        return block(decay ? LeavesBlock::new : TropicraftLeavesBlock::new, lazyProp(() -> Blocks.OAK_LEAVES));
+        return block(decay ? LeavesBlock::new : (Tropicraft.EXPERIMENTAL_LEAVE_DECAY ? TropicraftExperimentalLeaveBlock::new : TropicraftLeavesBlock::new), lazyProp(() -> Blocks.OAK_LEAVES));
     }
 
     public static Supplier<LeavesBlock> mangroveLeaves(Supplier<PropaguleBlock> propagule) {

@@ -27,7 +27,7 @@ public final class TropicraftTemplatePools {
     public final StructureTemplatePool koaFish;
     public final StructureTemplatePool homeTreeStarts;
     public final StructureTemplatePool homeTreeRoofs;
-    public final StructureTemplatePool homeTreeDummy;
+//    public final StructureTemplatePool homeTreeDummy;
     public final StructureTemplatePool homeTreeTrunkMiddle;
     public final StructureTemplatePool homeTreeTrunkTop;
     public final StructureTemplatePool homeTreeBranchesSouth;
@@ -111,12 +111,12 @@ public final class TropicraftTemplatePools {
                 singlePiece("home_tree/roofs/roof_0", processors.homeTreeBase, 1)
         );
 
-        this.homeTreeDummy = pools.register(
-                "home_tree/dummy",
-                StructureTemplatePool.Projection.RIGID,
-                singlePiece("home_tree/dummy", processors.homeTreeBase, 1),
-                singlePiece("home_tree/outer_dummy", processors.homeTreeBase, 1)
-        );
+//        this.homeTreeDummy = pools.register(
+//                "home_tree/dummy",
+//                StructureTemplatePool.Projection.RIGID,
+//                singlePiece("home_tree/dummy", processors.homeTreeBase, 1),
+//                singlePiece("home_tree/outer_dummy", processors.homeTreeBase, 1)
+//        );
 
         this.homeTreeTrunkMiddle = pools.register(
                 "home_tree/trunks/middle",

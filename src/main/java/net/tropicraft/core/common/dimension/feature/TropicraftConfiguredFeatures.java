@@ -84,7 +84,7 @@ public final class TropicraftConfiguredFeatures {
     public final ConfiguredFeature<?, ?> overgrownTallGoldenLeatherFern;
     public final ConfiguredFeature<?, ?> overgrownHugeGoldenLeatherFern;
 
-    public final ConfiguredFeature<?, ?> pleodendron;
+//    public final ConfiguredFeature<?, ?> pleodendron;
 
     public final ConfiguredFeature<?, ?> pineapplePatch;
     public final ConfiguredFeature<?, ?> tropicsFlowers;
@@ -188,16 +188,16 @@ public final class TropicraftConfiguredFeatures {
             ).decorated(Features.Decorators.ADD_32).decorated(Features.Decorators.HEIGHTMAP_SQUARE).count(6);
         });
 
-        this.pleodendron = features.tree("pleodendron",
-                new TreeConfiguration.TreeConfigurationBuilder(
-                        new SimpleStateProvider(Blocks.JUNGLE_LOG.defaultBlockState()),
-                        new PleodendronTrunkPlacer(10, 8, 0),
-                        new SimpleStateProvider(Blocks.JUNGLE_LEAVES.defaultBlockState()),
-                        new SimpleStateProvider(Blocks.AIR.defaultBlockState()),
-                        new PleodendronFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 1),
-                        new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
-                ).build(),
-                0, 0.08f, 1);
+//        this.pleodendron = features.tree("pleodendron",
+//                new TreeConfiguration.TreeConfigurationBuilder(
+//                        new SimpleStateProvider(Blocks.JUNGLE_LOG.defaultBlockState()),
+//                        new PleodendronTrunkPlacer(10, 8, 0),
+//                        new SimpleStateProvider(Blocks.JUNGLE_LEAVES.defaultBlockState()),
+//                        new SimpleStateProvider(Blocks.AIR.defaultBlockState()),
+//                        new PleodendronFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 1),
+//                        new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
+//                ).build(),
+//                0, 0.08f, 1);
 
         this.papaya = features.tree("papaya",
                 new TreeConfiguration.TreeConfigurationBuilder(
@@ -485,7 +485,7 @@ public final class TropicraftConfiguredFeatures {
     }
 
     public void addPleodendron(BiomeGenerationSettings.Builder generation) {
-        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, this.pleodendron);
+//        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, this.pleodendron);
     }
 
     public void addPapaya(BiomeGenerationSettings.Builder generation) {
