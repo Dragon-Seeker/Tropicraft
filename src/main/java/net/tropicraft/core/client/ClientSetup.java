@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.ThrownTridentRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.level.block.RedstoneWallTorchBlock;
@@ -17,6 +18,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.tropicraft.Constants;
+import net.tropicraft.core.client.entity.experimental.BambooSpearModel;
+import net.tropicraft.core.client.entity.experimental.ThrownBambooSpearRenderer;
 import net.tropicraft.core.client.entity.model.*;
 import net.tropicraft.core.client.entity.render.*;
 import net.tropicraft.core.client.scuba.ModelScubaGear;
@@ -85,6 +88,8 @@ public class ClientSetup {
     public static ModelLayerLocation FEET_SCUBA_LAYER;
     public static ModelLayerLocation HEAD_SCUBA_LAYER;
     public static ModelLayerLocation TANK_SCUBA_LAYER;
+
+    public static ModelLayerLocation BAMBOO_SPEAR;
 
     public static void setupBlockRenderLayers() {
         RenderType cutout = RenderType.cutout();
@@ -199,6 +204,8 @@ public class ClientSetup {
 
         TANK_SCUBA_LAYER = registerLayer("pony_bottle", () -> ModelScubaGear.create(), event);
 
+        BAMBOO_SPEAR = registerLayer("bamboo_spear", () -> BambooSpearModel.createBodyLayer(), event);
+
         setupScubaGearModels();
     }
 
@@ -250,6 +257,8 @@ public class ClientSetup {
         event.registerEntityRenderer(TropicraftEntities.SPIDER_MONKEY.get(), SpiderMonkeyRenderer::new);
         event.registerEntityRenderer(TropicraftEntities.WHITE_LIPPED_PECCARY.get(), WhiteLippedPeccaryRenderer::new);
         event.registerEntityRenderer(TropicraftEntities.CUBERA.get(), CuberaRenderer::new);
+
+        event.registerEntityRenderer(TropicraftEntities.BAMBOO_SPEAR.get(), ThrownBambooSpearRenderer::new);
 
         setupTileEntityRenderers(event);
 

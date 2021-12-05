@@ -5,6 +5,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,6 +32,7 @@ import net.tropicraft.core.common.entity.placeable.*;
 import net.tropicraft.core.common.entity.projectile.ExplodingCoconutEntity;
 import net.tropicraft.core.common.entity.projectile.LavaBallEntity;
 import net.tropicraft.core.common.entity.projectile.PoisonBlotEntity;
+import net.tropicraft.core.common.entity.spear.ThrownBambooSpear;
 import net.tropicraft.core.common.entity.underdasea.*;
 
 import java.util.Random;
@@ -91,6 +93,8 @@ public class TropicraftEntities {
     public static final RegistryObject<EntityType<SpiderMonkeyEntity>> SPIDER_MONKEY = register("spider_monkey", TropicraftEntities::spiderMonkey);
     public static final RegistryObject<EntityType<WhiteLippedPeccaryEntity>> WHITE_LIPPED_PECCARY = register("white_lipped_peccary", TropicraftEntities::whiteLippedPeccary);
     public static final RegistryObject<EntityType<CuberaEntity>> CUBERA = register("cubera", TropicraftEntities::cubera);
+
+    public static final RegistryObject<EntityType<ThrownBambooSpear>> BAMBOO_SPEAR = register("bamboo_spear", TropicraftEntities::spear);
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final Supplier<EntityType.Builder<E>> sup) {
         return ENTITIES.register(name, () -> sup.get().build(name));
@@ -458,6 +462,13 @@ public class TropicraftEntities {
                 .setTrackingRange(8)
                 .setUpdateInterval(3)
                 .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<ThrownBambooSpear> spear() {
+        return EntityType.Builder.<ThrownBambooSpear>of(ThrownBambooSpear::new, MobCategory.MISC)
+                .sized(0.5F, 0.5F)
+                .clientTrackingRange(4)
+                .updateInterval(20);
     }
 
     public static void registerSpawns() {
