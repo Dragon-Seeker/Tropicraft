@@ -2,6 +2,7 @@ package net.tropicraft.core.common.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,14 +19,21 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.phys.Vec3;
 import net.tropicraft.core.common.entity.spear.ThrownBambooSpear;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class SpearItem extends TridentItem {
 
@@ -38,7 +46,6 @@ public class SpearItem extends TridentItem {
 		this.tier = tier;
 
 		this.defaultModifiers = ImmutableMultimap.<Attribute, AttributeModifier>builder()
-//				.putAll(super.getAttributeModifiers(EquipmentSlot.MAINHAND, new ItemStack(this)))
 				.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", attackDamage, AttributeModifier.Operation.ADDITION))
 				.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION))
 				.build();
@@ -46,7 +53,7 @@ public class SpearItem extends TridentItem {
 
 	@Override
 	public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-		//Taken from Trident Item
+		//Taken from Trident Item release Using
 		if (entityLiving instanceof Player) {
 			Player player = (Player)entityLiving;
 			int i = this.getUseDuration(stack) - timeLeft;
@@ -54,11 +61,11 @@ public class SpearItem extends TridentItem {
 				int j = EnchantmentHelper.getRiptide(stack);
 				if (j <= 0 || player.isInWaterOrRain()) {
 					if (!worldIn.isClientSide) {
-						stack.hurtAndBreak(1, player, (p_43388_) -> {
-							p_43388_.broadcastBreakEvent(player.getUsedItemHand());
+						stack.hurtAndBreak(1, player, (playerEntity) -> {
+							playerEntity.broadcastBreakEvent(player.getUsedItemHand());
 						});
 						if (j == 0) {
-							ThrownBambooSpear thrownspear = new ThrownBambooSpear(worldIn, player, stack);
+							ThrownBambooSpear thrownspear = this.createSpear(worldIn, player, stack);
 							thrownspear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F + (float)j * 0.5F, 1.0F);
 							if (player.getAbilities().instabuild) {
 								thrownspear.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
@@ -125,6 +132,29 @@ public class SpearItem extends TridentItem {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return super.canApplyAtEnchantingTable(stack, enchantment);
+		if(enchantment.equals(Enchantments.CHANNELING)) {
+			return false;
+		}
+		else {
+			return super.canApplyAtEnchantingTable(stack, enchantment);
+		}
+	}
+
+	private ThrownBambooSpear createSpear(Level level, Player player, ItemStack stack){
+		ThrownBambooSpear spear = new ThrownBambooSpear(level, player, stack);
+		spear.setEffectsFromItem(stack);
+		return spear;
+	}
+
+	public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+		PotionUtils.addPotionTooltip(pStack, pTooltip, 0.125F);
+	}
+
+	public String getDescriptionId(ItemStack pStack) {
+		return PotionUtils.getPotion(pStack).getName(this.getDescriptionId() + ".effect.");
+	}
+
+	public ItemStack getDefaultInstance() {
+		return PotionUtils.setPotion(super.getDefaultInstance(), Potions.POISON);
 	}
 }

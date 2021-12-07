@@ -1,6 +1,10 @@
 package net.tropicraft.core.common.entity.spear;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Sets;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -8,12 +12,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -22,13 +32,20 @@ import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.item.TropicraftItems;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Set;
 
+//A copy of the ThrownTrident Enity class
+//TODO 1.17: Change the sound effects to be more close to a bamboo spear, also implmented tipped spears as difference between the trident
 public class ThrownBambooSpear extends AbstractArrow {
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownBambooSpear.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownBambooSpear.class, EntityDataSerializers.BOOLEAN);
     private ItemStack spearItem = new ItemStack(TropicraftItems.BAMBOO_SPEAR.get());
     private boolean dealtDamage;
     public int clientSideReturnSpearTickCount;
+
+    private Potion potion = Potions.EMPTY;
+    private final Set<MobEffectInstance> effects = Sets.newHashSet();
 
     public ThrownBambooSpear(EntityType<? extends ThrownBambooSpear> entityType, Level world) {
         super(entityType, world);
@@ -179,12 +196,34 @@ public class ThrownBambooSpear extends AbstractArrow {
 
         this.dealtDamage = pCompound.getBoolean("DealtDamage");
         this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(this.spearItem));
+
+        if (pCompound.contains("Potion", 8)) {
+            this.potion = PotionUtils.getPotion(pCompound);
+        }
+
+        for(MobEffectInstance mobeffectinstance : PotionUtils.getCustomEffects(pCompound)) {
+            this.addEffect(mobeffectinstance);
+        }
     }
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.put("Spear", this.spearItem.save(new CompoundTag()));
         pCompound.putBoolean("DealtDamage", this.dealtDamage);
+
+        if (this.potion != Potions.EMPTY) {
+            pCompound.putString("Potion", Registry.POTION.getKey(this.potion).toString());
+        }
+
+        if (!this.effects.isEmpty()) {
+            ListTag listtag = new ListTag();
+
+            for(MobEffectInstance mobeffectinstance : this.effects) {
+                listtag.add(mobeffectinstance.save(new CompoundTag()));
+            }
+
+            pCompound.put("CustomPotionEffects", listtag);
+        }
     }
 
     public void tickDespawn() {
@@ -202,4 +241,56 @@ public class ThrownBambooSpear extends AbstractArrow {
     public boolean shouldRender(double pX, double pY, double pZ) {
         return true;
     }
+
+    public static ItemStack getEffectOfSpear() {
+        ItemStack itemStack = new ItemStack(Items.TIPPED_ARROW);
+        itemStack = PotionUtils.setCustomEffects(itemStack, ImmutableList.of(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 3 * 20, 20)));
+        return itemStack;
+    }
+
+    public void setEffectsFromItem(ItemStack pStack) {
+        if (pStack.is(TropicraftItems.BAMBOO_SPEAR.get())){//pStack.is(Items.POTION) && pStack.is(Items.SPLASH_POTION) && pStack.is(Items.LINGERING_POTION)) {
+            this.potion = PotionUtils.getPotion(pStack);
+            Collection<MobEffectInstance> collection = PotionUtils.getCustomEffects(pStack);
+            if (!collection.isEmpty()) {
+                for(MobEffectInstance mobeffectinstance : collection) {
+                    this.effects.add(new MobEffectInstance(mobeffectinstance));
+                }
+            }
+
+//            int i = getCustomColor(pStack);
+//            if (i == -1) {
+//                this.updateColor();
+//            } else {
+//                this.setFixedColor(i);
+//            }
+        } else if (pStack.is(Items.ARROW)) {
+            this.potion = Potions.EMPTY;
+            this.effects.clear();
+//            this.entityData.set(ID_EFFECT_COLOR, -1);
+        }
+
+    }
+
+    public void addEffect(MobEffectInstance pEffect) {
+        this.effects.add(pEffect);
+        //this.getEntityData().set(ID_EFFECT_COLOR, PotionUtils.getColor(PotionUtils.getAllEffects(this.potion, this.effects)));
+    }
+
+    protected void doPostHurtEffects(LivingEntity pLiving) {
+        super.doPostHurtEffects(pLiving);
+        Entity entity = this.getEffectSource();
+
+        for(MobEffectInstance mobeffectinstance : this.potion.getEffects()) {
+            pLiving.addEffect(new MobEffectInstance(mobeffectinstance.getEffect(), Math.max(mobeffectinstance.getDuration() / 8, 1), mobeffectinstance.getAmplifier(), mobeffectinstance.isAmbient(), mobeffectinstance.isVisible()), entity);
+        }
+
+        if (!this.effects.isEmpty()) {
+            for(MobEffectInstance mobeffectinstance1 : this.effects) {
+                pLiving.addEffect(mobeffectinstance1, entity);
+            }
+        }
+
+    }
+
 }
