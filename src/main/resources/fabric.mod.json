@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "tropicraft",
   "version": "${version}",
-
   "name": "Tropicraft Fabric Port",
   "description": "A fabric port of the popular tropical mod: Tropicraft. (Unoffical)",
   "authors": [
@@ -46,7 +45,8 @@
   "depends": {
     "fabricloader": ">=0.11.6",
     "fabric": "*",
-    "minecraft": "1.17.x"
+    "minecraft": "1.17.x",
+    "cardinal-components": "3.1.1"
   },
   "suggests": {
     "another-mod": "*"
