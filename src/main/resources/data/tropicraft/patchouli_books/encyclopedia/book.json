@@ -1,0 +1,10 @@
+{
+  "name": "tropicraft.encyclopedia_tropica.name",
+  "landing_text": "tropicraft.encyclopedia.encyclopedia.desc",
+  "model": "tropicraft:encyclopedia_tropica",
+  "creative_tab": "tropicraft",
+  "version": 1,
+  "i18n": "true",
+  "use_blocky_font": "true",
+  "subtitle": "tropicraft.encyclopedia_tropica.tooltip"
+}

@@ -3,6 +3,7 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = 'https://repo.spongepowered.org/maven' }
         maven { url = 'https://maven.parchmentmc.org' }
+        maven { url = 'https://maven.blamejared.com' }
         jcenter()
         mavenCentral()
     }
@@ -109,6 +110,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
+    implementation fg.deobf("vazkii.patchouli:Patchouli:1.17.1-58-SNAPSHOT")
 }
 
 jar {

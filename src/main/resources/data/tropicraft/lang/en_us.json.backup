@@ -491,72 +491,34 @@
   "tropicraft.container.bambooChest": "Bamboo Chest",
   "tropicraft.container.bambooChestDouble": "Large Bamboo Chest",
 
-  "tropicraft.encyclopedia_tropica.name" : "Encyclopedia Tropica",
-  "tropicraft.encyclopedia_tropica.tooltip" : "A sandy and slightly sun bleached book filled with useful information about the world around you",
+  "_comment": "# Encyclopedia Sections",
+  "tropicraft.encyclopedia.section.foods.title": "Tropical Food",
+  "tropicraft.encyclopedia.section.drinks.title": "Tropical Drinks",
+  "tropicraft.encyclopedia.section.world.title": "Tropics World",
+  "tropicraft.encyclopedia.section.tribes.title": "Tribes",
+  "tropicraft.encyclopedia.section.mobs.land.title": "Land Animals",
+  "tropicraft.encyclopedia.section.mobs.water.title": "Under Da Sea",
+  "tropicraft.encyclopedia.section.tools.title": "Tropical Tools",
+  "tropicraft.encyclopedia.section.armor.title": "Armors",
+  "tropicraft.encyclopedia.section.scuba.title": "Scuba Gear",
+  "tropicraft.encyclopedia.section.beach_accessories.title": "Beach Accessories",
+  "tropicraft.encyclopedia.section.nature.title": "Tropical Flora",
+  "tropicraft.encyclopedia.section.decor.title": "Decorative",
+  "tropicraft.encyclopedia.section.flowers.title": "Tropics Flowers",
+  "tropicraft.encyclopedia.section.shells.title": "Shells",
+  "tropicraft.encyclopedia.section.music.title": "Tropical Music",
 
-  "_comment1": "# Encyclopedia Sections",
-  "tropicraft.encyclopedia.category.foods": "Tropical Food",
-  "tropicraft.encyclopedia.category.foods.desc": "[WIP]: General Info about tropicrafts food goes here",
+  "tropicraft.encyclopedia.section.misc.title": "Miscellaneous",
+  "tropicraft.encyclopedia.section.lovetropics.title": "Love Tropics",
 
-  "tropicraft.encyclopedia.category.drinks": "Tropical Drinks",
-  "tropicraft.encyclopedia.category.drinks.desc": "[WIP]: General Info about tropicrafts drinks goes here",
-
-  "tropicraft.encyclopedia.category.world": "Tropics World",
-  "tropicraft.encyclopedia.category.world.desc": "[WIP]: General Info about tropicrafts world goes here",
-
-  "tropicraft.encyclopedia.category.tribes": "Tribes",
-  "tropicraft.encyclopedia.category.tribes.desc": "[WIP]: General Info about tropicrafts tribes goes here",
-
-  "tropicraft.encyclopedia.category.mobs.land": "Land Animals",
-  "tropicraft.encyclopedia.category.mobs.land.desc": "[WIP]: General Info about tropicrafts mobs that exist on land goes here",
-
-  "tropicraft.encyclopedia.category.mobs.water": "Under Da Sea",
-  "tropicraft.encyclopedia.category.mobs.water.desc": "[WIP]: General Info about tropicrafts mobs that exist on water goes here",
-
-  "tropicraft.encyclopedia.category.tools": "Tropical Tools",
-  "tropicraft.encyclopedia.category.tools.desc": "[WIP]: General Info about tropicrafts tools goes here",
-
-  "tropicraft.encyclopedia.category.armor": "Armors",
-  "tropicraft.encyclopedia.category.armor.desc": "[WIP]: General Info about tropicrafts armor goes here",
-
-  "tropicraft.encyclopedia.category.scuba": "Scuba Gear",
-  "tropicraft.encyclopedia.category.scuba.desc": "[WIP]: General Info about tropicrafts scuba gear goes here",
-
-  "tropicraft.encyclopedia.category.beach_accessories": "Beach Accessories",
-  "tropicraft.encyclopedia.category.beach_accessories.desc": "[WIP]: General Info about tropicrafts beach accessories goes here",
-
-  "tropicraft.encyclopedia.category.nature": "Tropical Flora",
-  "tropicraft.encyclopedia.category.nature.desc": "[WIP]: General Info about tropicrafts nature goes here",
-
-  "tropicraft.encyclopedia.category.decor": "Decorative",
-  "tropicraft.encyclopedia.category.decor.desc": "[WIP]: General Info about tropicrafts decor goes here",
-
-  "tropicraft.encyclopedia.category.machines": "Machines",
-  "tropicraft.encyclopedia.category.machines.desc": "[WIP]: General Info about tropicrafts machines goes here",
-
-  "tropicraft.encyclopedia.category.flowers": "Tropics Flowers",
-  "tropicraft.encyclopedia.category.flowers.desc": "[WIP]: General Info about tropicrafts flowers goes here",
-
-  "tropicraft.encyclopedia.category.shells": "Shells",
-  "tropicraft.encyclopedia.category.shells.desc": "[WIP]: General Info about tropicrafts shells goes here",
-
-  "tropicraft.encyclopedia.category.music": "Tropical Music",
-  "tropicraft.encyclopedia.category.music.desc": "[WIP]: General Info about tropicrafts music goes here",
-
-  "tropicraft.encyclopedia.category.misc": "Miscellaneous",
-  "tropicraft.encyclopedia.category.misc.desc": "[WIP]: General Info about tropicrafts misc goes here",
-
-  "tropicraft.encyclopedia.category.lovetropics": "Love Tropics",
-  "tropicraft.encyclopedia.category.lovetropics.desc": "General information about the love tropics event hosted by the tropicraft devs every year.",
-
-  "tropicraft.encyclopedia.ltinfo": "What is Love Tropics?",
+  "tropicraft.encyclopedia.ltinfo.title": "What is Love Tropics?",
   "tropicraft.encyclopedia.ltinfo.desc": "Love Tropics is a yearly charity stream organized by Team Tropicraft to support tropical areas affected by natural disasters. Last year (2018), we raised over $35,000 for Team Rubicon!\n\nEach year, we put the name of everyone who donated in this book to be immortalized for their generosity. Join us next year for a great time with your favorite Mojangstas, streamers, YouTubers, and mod developers!\n\nGo to lovetropics.com for more info.",
-  "tropicraft.encyclopedia.lt17": "Love Tropics 2017",
-  "tropicraft.encyclopedia.lt18": "Love Tropics 2018",
+  "tropicraft.encyclopedia.lt17.title": "Love Tropics 2017",
+  "tropicraft.encyclopedia.lt18.title": "Love Tropics 2018",
 
   "tropicraft.donations.donation":  "%s donated %s!",
 
-  "_comment2": "# Encyclopedia Entries",
+  "_comment": "# Encyclopedia Entries",
 
   "tropicraft.encyclopedia.acai_vine.title": "Acai Vine",
   "tropicraft.encyclopedia.acai_vine.desc": "Rotten branches that are growing from the ground that used to grow the acai fruit.",
@@ -684,12 +646,8 @@
   "tropicraft.encyclopedia.easternisles.title": "Eastern Isles",
   "tropicraft.encyclopedia.easternisles.desc": "This awesome drum and bass track was produced by Frox. Kick back and enjoy.",
 
-
-
   "tropicraft.encyclopedia.encyclopedia.title": "About Encyclopedia",
-  "tropicraft.encyclopedia.encyclopedia.desc": "This book is the source for information about the Tropics many items. Having been printed with magical ink, the book writes itself as you acquire the item. What awaits is for you to find out!",
-
-
+  "tropicraft.encyclopedia.encyclopedia.desc": "The Encyclopedia Tropica is the source for information about the Tropics many items. Having been printed with magical ink, the book writes itself as you acquire the item. New Entries will be blue, and you can navigate the pages using the tabs on the sides of the book. Items that are craftable will have an anvil tab.",
 
   "tropicraft.encyclopedia.eudialyte.title": "Eudialyte",
   "tropicraft.encyclopedia.eudialyte.desc": "This pink-ish colorful crystal can be found when you mine Eudialyte ore, which is found underground in the tropicraft realm. It is a great material for tools.",
@@ -699,12 +657,6 @@
 
   "tropicraft.encyclopedia.fertilizer.title": "Fertilizer",
   "tropicraft.encyclopedia.fertilizer.desc": "Fertilizer functions similar to bone meal, but also grows tropical flowers and fruit plants like pineapples.",
-
-  "tropicraft.encyclopedia.fire_armor.entry": "Fire Armor",
-  "tropicraft.encyclopedia.fire_armor.entry.desc": "[WIP: MAY NEED TO BE UPDATED]Armor constructed of an unknown material that gains durability when in fire, but don't stand in the fire too long, or you will be burned!",
-
-  "tropicraft.encyclopedia.fire_armor.crafting": "Obtaining the Armor",
-  "tropicraft.encyclopedia.fire_armor.crafting.desc": "By throwing scale armor into a volcano, the armor starts to burn away and leaves behind armor born from the fire.",
 
   "tropicraft.encyclopedia.fireboots.title": "Fire Boots",
   "tropicraft.encyclopedia.fireboots.desc": "Boots constructed of an unknown material that gains durability when in fire, but don't stand in the fire too long, or you will be burned!",
@@ -876,9 +828,6 @@
 
   "tropicraft.encyclopedia.rubenautilus.title": "Rube Nautilus",
   "tropicraft.encyclopedia.rubenautilus.desc": "Named after one of the current modders of tropicraft, MrRube, the Rube Nautilus was actually made by MrRube before v1.0 of Tropicraft, but was never given a use...until now!",
-
-  "tropicraft.encyclopedia.scale_armor.entry": "Scale Armor",
-  "tropicraft.encyclopedia.scale_armor.desc": "Armor made out of iguana scales provide fire resistance for whomever wears them",
 
   "tropicraft.encyclopedia.scaleboots.title": "Scale Boots",
   "tropicraft.encyclopedia.scaleboots.desc": "Boots made out of iguana scales that provide fire resistance for whomever wears them",
