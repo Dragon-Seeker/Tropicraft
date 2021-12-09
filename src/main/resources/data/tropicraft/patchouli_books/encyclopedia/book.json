@@ -6,5 +6,8 @@
   "version": 1,
   "i18n": "true",
   "use_blocky_font": "true",
-  "subtitle": "tropicraft.encyclopedia_tropica.tooltip"
+  "subtitle": "tropicraft.encyclopedia_tropica.tooltip",
+  "macros": {
+    "$(wip)": "[WIP] Will be reimplemented when portal's are working again"
+  }
 }

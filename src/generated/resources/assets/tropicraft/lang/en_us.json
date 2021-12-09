@@ -598,7 +598,8 @@
   "tropicraft.encyclopedia.bamboofencegate.desc": "This bamboo fence gate works fantastic with fences of all types. Like other bamboo blocks, it isn't very strong.",
 
   "tropicraft.encyclopedia.bamboospear.title": "Bamboo Spear",
-  "tropicraft.encyclopedia.bamboospear.desc": "This sharpened stick is extremely powerful when first crafted. Be warned though, the spear looses its sharpness quickly.",
+  "tropicraft.encyclopedia.bamboospear.desc": "[WIP] Possible update to how this item works may come in the future.",
+  "tropicraft.encyclopedia.bamboospear.desc2": "This sharpened stick is extremely powerful when first crafted. Be warned though, the spear looses its sharpness quickly.",
 
   "tropicraft.encyclopedia.bamboostick.title": "Bamboo Stick",
   "tropicraft.encyclopedia.bamboostick.desc": "A stick made of bamboo. Used in many tropical recipes to replace the use of sticks.",
@@ -626,6 +627,9 @@
 
   "tropicraft.encyclopedia.caipirinha.title": "Caipirinha",
   "tropicraft.encyclopedia.caipirinha.desc": "Though the Koa are not too fond of this citrusy drink, the lime and sugarcane that comprise it complement any beautiful sunset in the tropics.",
+
+  "tropicraft.encyclopedia.mai_tai.title": "Mai Tai",
+  "tropicraft.encyclopedia.mai_tai.desc": "[WIP] A staple at any Koa party, the lime and orange blend nicely with the Koa's secret rum stash.",
 
   "tropicraft.encyclopedia.canna.title": "Canna",
   "tropicraft.encyclopedia.canna.desc": "This yellow-orange flower blends in well in the tropical realm, complementing the hard-hitting red of the red anthurium.",
@@ -672,8 +676,9 @@
   "tropicraft.encyclopedia.curarebowl.title": "Curare Bowl",
   "tropicraft.encyclopedia.curarebowl.desc": "Mix various types of flowers in this bowl to create different types of curare, which can be used to make darts with all sorts of potion effects.",
 
-  "tropicraft.encyclopedia.dagger.title": "Dagger",
+  "tropicraft.encyclopedia.dagger.title": "Koa Dagger",
   "tropicraft.encyclopedia.dagger.desc": "Weilded by the Koa tribe when hunting or when attacked.",
+  "tropicraft.encyclopedia.dagger.desc2": "Quite a fast weapon but not the most damaging weapon",
 
   "tropicraft.encyclopedia.dart.title": "Dart",
   "tropicraft.encyclopedia.dart.desc": "This neurotoxin-laced dart is capable of stopping most mobs in their tracks. Be careful though, the effect is only temporary. Darts can have varying potion effects associated with them.",
@@ -864,6 +869,9 @@
 
   "tropicraft.encyclopedia.pinacolada.title": "Pina Colada",
   "tropicraft.encyclopedia.pinacolada.desc": "This refreshing drink is made by mixing pineapples and coconut chunks in a bamboo mug. Watch out though, monkeys enjoy pina coladas just as much as you do.",
+
+  "tropicraft.encyclopedia.coconut_water.title": "Coconut Water",
+  "tropicraft.encyclopedia.coconut_water.desc": "Simple but refreshing drink of coconut Water",
 
   "tropicraft.encyclopedia.portalstarter.title": "Tropicraft Portal Enchanter",
   "tropicraft.encyclopedia.portalstarter.desc": "This item, made with enchanted azurite and zircon, forms a portal that can be used to teleport between the Tropics and overworld when right-clicked on a 3x3 flat square of sandstone filled with water inside.",
