@@ -9,9 +9,9 @@
       "text": "tropicraft.encyclopedia.fishingnet.desc"
     },
     {
-      "type": "patchouli:crafting",
-      "recipe": "tropicraft:fishing_net",
-      "text": "$(wip)"
+      "type": "patchouli:spotlight",
+      "item": "tropicraft:fishing_net",
+      "text": "tropicraft.encyclopedia.fishingnet.desc2"
     }
   ]
 }

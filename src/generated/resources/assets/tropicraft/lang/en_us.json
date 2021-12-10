@@ -728,6 +728,7 @@
 
   "tropicraft.encyclopedia.fishingnet.title": "Fishing Net",
   "tropicraft.encyclopedia.fishingnet.desc": "This sturdy net is great for picking up the small fish that inhabit the Tropics. Be sure to have a water bucket, or you won't have anywhere to place you fish.",
+  "tropicraft.encyclopedia.fishingnet.desc2": "[WIP] Such tool is traded by the koa villagers for some pearls",
 
   "tropicraft.encyclopedia.flowerpot.title": "Flower Pot",
   "tropicraft.encyclopedia.flowerpot.desc": "This flower pot can be used to beautify any garden by holding any tropical flower, plant, or sapling",
@@ -817,7 +818,7 @@
   "tropicraft.encyclopedia.marlincooked.desc": "Mmmm. Yummy in my tummy. This is what you get when you cook Fresh Marlin.",
 
   "tropicraft.encyclopedia.mineralsand.title": "Mineral Sands",
-  "tropicraft.encyclopedia.mineralsand.dec": " This special type of sand is rumored to contain various minerals. Their use is currently unknown.",
+  "tropicraft.encyclopedia.mineralsand.desc": " This special type of sand is rumored to contain various minerals. Their use is currently unknown.",
 
   "tropicraft.encyclopedia.mixer.title": "EIH Mixer",
   "tropicraft.encyclopedia.mixer.desc": "Mix various types of fruits with this to get different cocktails. You could have your own bar!",
@@ -862,7 +863,8 @@
   "tropicraft.encyclopedia.pearlw.desc": "Has a moderately high trade value with the Koa tribe; found inside Solonox shells.",
 
   "tropicraft.encyclopedia.pineapple.title": "Pineapple",
-  "tropicraft.encyclopedia.pineapple.desc": "Since it is easily sustainable, the pineapple makes a great source of food. If you slash them on the stem with a sword, you will receive pineapple cubes. Combined with a bamboo mug and coconut chunks, you can make yourself a refreshing pina colada.",
+  "tropicraft.encyclopedia.pineapple.desc": "Typically found within the tropics, pineapples can also be found within the overworlds jungles in small patches. Since it is easily sustainable, the pineapple makes a great source of food.",
+  "tropicraft.encyclopedia.pineapple.desc2": "If you slash them on the stem with a sword, you will receive pineapple cubes. Combined with a bamboo mug and coconut chunks, you can make yourself a refreshing pina colada.",
 
   "tropicraft.encyclopedia.pineapplecubes.title": "Pineapple Cubes",
   "tropicraft.encyclopedia.pineapplecubes.desc": "This great food source can easily be obtained by slashing a pineapple with a sword.",
@@ -871,9 +873,9 @@
   "tropicraft.encyclopedia.pinacolada.desc": "This refreshing drink is made by mixing pineapples and coconut chunks in a bamboo mug. Watch out though, monkeys enjoy pina coladas just as much as you do.",
 
   "tropicraft.encyclopedia.coconut_water.title": "Coconut Water",
-  "tropicraft.encyclopedia.coconut_water.desc": "Simple but refreshing drink of coconut Water",
+  "tropicraft.encyclopedia.coconut_water.desc": "[WIP] Simple but refreshing drink of coconut Water",
 
-  "tropicraft.encyclopedia.portalstarter.title": "Tropicraft Portal Enchanter",
+  "tropicraft.encyclopedia.portalstarter.title": "Portal Enchanter",
   "tropicraft.encyclopedia.portalstarter.desc": "This item, made with enchanted azurite and zircon, forms a portal that can be used to teleport between the Tropics and overworld when right-clicked on a 3x3 flat square of sandstone filled with water inside.",
 
   "tropicraft.encyclopedia.purifiedsand.title": "Purified Sand",

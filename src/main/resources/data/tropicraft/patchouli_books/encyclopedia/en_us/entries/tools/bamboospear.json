@@ -2,7 +2,7 @@
   "name": "tropicraft.encyclopedia.bamboospear.title",
   "icon": "tropicraft:bamboo_spear",
   "category": "tropicraft:tools",
-  "sortnum ": "1",
+  "sortnum": "1",
   "pages": [
     {
       "type": "patchouli:text",

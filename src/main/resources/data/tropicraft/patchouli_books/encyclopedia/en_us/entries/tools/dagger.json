@@ -2,7 +2,7 @@
   "name": "tropicraft.encyclopedia.dagger.title",
   "icon": "tropicraft:dagger",
   "category": "tropicraft:tools",
-  "sortnum ": "3",
+  "sortnum": "3",
   "pages": [
     {
       "type": "patchouli:text",

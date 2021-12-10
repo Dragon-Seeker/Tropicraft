@@ -2,7 +2,7 @@
   "name": "tropicraft.encyclopedia.blowgun.title",
   "icon": "tropicraft:blow_gun",
   "category": "tropicraft:tools",
-  "sortnum ": "2",
+  "sortnum": "2",
   "pages": [
     {
       "type": "patchouli:text",

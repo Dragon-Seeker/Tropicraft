@@ -2,6 +2,7 @@
   "name": "tropicraft.encyclopedia.fishbucket.title",
   "icon": "tropicraft:tropical_fish_bucket",
   "category": "tropicraft:tools",
+  "sortnum": "6",
   "pages": [
     {
       "type": "patchouli:text",

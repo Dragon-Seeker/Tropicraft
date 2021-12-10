@@ -2,7 +2,7 @@
   "name": "tropicraft.encyclopedia.portalstarter.title",
   "icon": "tropicraft:water_wand",
   "category": "tropicraft:tools",
-  "sortnum": "6",
+  "sortnum": "8",
   "pages": [
     {
       "type": "patchouli:text",
