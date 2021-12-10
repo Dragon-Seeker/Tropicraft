@@ -2,7 +2,7 @@
   "name": "tropicraft.encyclopedia.rayraw.title",
   "icon": "tropicraft:raw_ray",
   "category": "tropicraft:foods",
-  "sortnum": "4",
+  "sortnum": "5",
   "pages": [
     {
       "type": "patchouli:text",

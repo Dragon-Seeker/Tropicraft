@@ -2,7 +2,7 @@
   "name": "tropicraft.encyclopedia.marlinmeat.title",
   "icon": "tropicraft:fresh_marlin",
   "category": "tropicraft:foods",
-  "sortnum": "3",
+  "sortnum": "5",
   "pages": [
     {
       "type": "patchouli:text",
