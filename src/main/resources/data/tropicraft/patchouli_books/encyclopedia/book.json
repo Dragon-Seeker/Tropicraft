@@ -8,6 +8,7 @@
   "use_blocky_font": "true",
   "subtitle": "tropicraft.encyclopedia_tropica.tooltip",
   "macros": {
-    "$(wip)": "[WIP] Will be reimplemented when portal's are working again"
+    "$(wip)": "[WIP] Will be reimplemented when portal's are working again",
+    "$(wipdesc)": "Work in progress description"
   }
 }
