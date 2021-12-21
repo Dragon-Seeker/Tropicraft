@@ -7,10 +7,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-
     }
 }
 plugins {
@@ -102,13 +101,25 @@ sourceSets.main.resources {
 }
 
 repositories {
-	mavenLocal()
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = "https://maven.shedaniel.me" }
+
+    mavenLocal()
+    mavenCentral()
 }
+
+
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
     annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
+
+    implementation fg.deobf("vazkii.patchouli:Patchouli:1.17.1-58-SNAPSHOT")
+
+    runtimeOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:5.1.40")
+    runtimeOnly fg.deobf("dev.architectury:architectury-forge:2.6.35")
+
+    implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:6.2.333")
 }
 
 jar {

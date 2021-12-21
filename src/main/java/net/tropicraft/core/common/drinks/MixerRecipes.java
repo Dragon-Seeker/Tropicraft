@@ -30,6 +30,7 @@ public final class MixerRecipes {
         registerMixerRecipe(Drink.PINA_COLADA, Ingredient.pineappleCubes, Ingredient.coconut);
         registerMixerRecipe(Drink.PINA_COLADA, Ingredient.pineapple, Ingredient.coconutChunk);
         registerMixerRecipe(Drink.PINA_COLADA, Ingredient.pineapple, Ingredient.coconut);
+        registerMixerRecipe(Drink.PINA_COLADA, Ingredient.pineapple, Ingredient.coconutChunk, Ingredient.waterBucket);
         registerMixerRecipe(Drink.COCONUT_WATER, Ingredient.coconut, Ingredient.waterBucket);
         registerMixerRecipe(Drink.MAI_TAI, Ingredient.orange, Ingredient.lime, Ingredient.waterBucket);
     }
