@@ -1,7 +1,5 @@
 package net.tropicraft.core.client.data;
 
-import java.util.function.Supplier;
-
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.IItemProvider;
@@ -20,6 +18,8 @@ import net.tropicraft.core.common.entity.placeable.UmbrellaEntity;
 import net.tropicraft.core.common.item.CocktailItem;
 import net.tropicraft.core.common.item.FurnitureItem;
 import net.tropicraft.core.common.item.TropicraftItems;
+
+import java.util.function.Supplier;
 
 public class TropicraftItemModelProvider extends ItemModelProvider {
 
@@ -64,7 +64,11 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         blockItem(TropicraftBlocks.FOAMY_SAND);
         blockItem(TropicraftBlocks.VOLCANIC_SAND);
         blockItem(TropicraftBlocks.MINERAL_SAND);
-        
+
+        // Mud
+        blockItem(TropicraftBlocks.MUD);
+        blockItem(TropicraftBlocks.MUD_WITH_PIANGUAS);
+
         // Bundles
         blockItem(TropicraftBlocks.BAMBOO_BUNDLE);
         blockItem(TropicraftBlocks.THATCH_BUNDLE);
@@ -78,7 +82,28 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         
         blockItem(TropicraftBlocks.MAHOGANY_WOOD);
         blockItem(TropicraftBlocks.PALM_WOOD);
-        
+
+        blockItem(TropicraftBlocks.PAPAYA_LOG);
+        blockItem(TropicraftBlocks.PAPAYA_WOOD);
+
+        blockItem(TropicraftBlocks.RED_MANGROVE_LOG);
+        blockItem(TropicraftBlocks.RED_MANGROVE_WOOD);
+
+        blockItem(TropicraftBlocks.LIGHT_MANGROVE_LOG);
+        blockItem(TropicraftBlocks.LIGHT_MANGROVE_WOOD);
+
+        blockItem(TropicraftBlocks.BLACK_MANGROVE_LOG);
+        blockItem(TropicraftBlocks.BLACK_MANGROVE_WOOD);
+
+        blockItem(TropicraftBlocks.STRIPPED_MANGROVE_LOG);
+        blockItem(TropicraftBlocks.STRIPPED_MANGROVE_WOOD);
+
+        blockItem(TropicraftBlocks.MANGROVE_PLANKS);
+
+        withExistingParent(name(TropicraftBlocks.RED_MANGROVE_ROOTS), modLoc("block/red_mangrove_roots_stem"));
+        withExistingParent(name(TropicraftBlocks.LIGHT_MANGROVE_ROOTS), modLoc("block/light_mangrove_roots_stem"));
+        withExistingParent(name(TropicraftBlocks.BLACK_MANGROVE_ROOTS), modLoc("block/black_mangrove_roots_stem"));
+
         // Stairs & Slabs
         blockItem(TropicraftBlocks.BAMBOO_STAIRS);
         blockItem(TropicraftBlocks.THATCH_STAIRS);
@@ -86,13 +111,15 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         blockItem(TropicraftBlocks.PALM_STAIRS);
         blockItem(TropicraftBlocks.MAHOGANY_STAIRS);
         blockItem(TropicraftBlocks.THATCH_STAIRS_FUZZY);
-        
+        blockItem(TropicraftBlocks.MANGROVE_STAIRS);
+
         blockItem(TropicraftBlocks.BAMBOO_SLAB);
         blockItem(TropicraftBlocks.THATCH_SLAB);
         blockItem(TropicraftBlocks.CHUNK_SLAB);
         blockItem(TropicraftBlocks.PALM_SLAB);
         blockItem(TropicraftBlocks.MAHOGANY_SLAB);
-        
+        blockItem(TropicraftBlocks.MANGROVE_SLAB);
+
         // Leaves
         blockItem(TropicraftBlocks.MAHOGANY_LEAVES);
         blockItem(TropicraftBlocks.PALM_LEAVES);
@@ -102,7 +129,13 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         blockItem(TropicraftBlocks.LEMON_LEAVES);
         blockItem(TropicraftBlocks.LIME_LEAVES);
         blockItem(TropicraftBlocks.ORANGE_LEAVES);
-        
+        blockItem(TropicraftBlocks.PAPAYA_LEAVES);
+
+        blockItem(TropicraftBlocks.RED_MANGROVE_LEAVES);
+        blockItem(TropicraftBlocks.TALL_MANGROVE_LEAVES);
+        blockItem(TropicraftBlocks.TEA_MANGROVE_LEAVES);
+        blockItem(TropicraftBlocks.BLACK_MANGROVE_LEAVES);
+
         // Saplings
         blockSprite(TropicraftBlocks.MAHOGANY_SAPLING);
         blockSprite(TropicraftBlocks.PALM_SAPLING);
@@ -110,19 +143,27 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         blockSprite(TropicraftBlocks.LEMON_SAPLING);
         blockSprite(TropicraftBlocks.LIME_SAPLING);
         blockSprite(TropicraftBlocks.ORANGE_SAPLING);
-        
+        blockSprite(TropicraftBlocks.PAPAYA_SAPLING);
+
+        blockSprite(TropicraftBlocks.RED_MANGROVE_PROPAGULE);
+        blockSprite(TropicraftBlocks.TALL_MANGROVE_PROPAGULE);
+        blockSprite(TropicraftBlocks.TEA_MANGROVE_PROPAGULE);
+        blockSprite(TropicraftBlocks.BLACK_MANGROVE_PROPAGULE);
+
         // Fences, Gates, and Walls
         blockWithInventoryModel(TropicraftBlocks.BAMBOO_FENCE);
         blockWithInventoryModel(TropicraftBlocks.THATCH_FENCE);
         blockWithInventoryModel(TropicraftBlocks.CHUNK_FENCE);
         blockWithInventoryModel(TropicraftBlocks.PALM_FENCE);
         blockWithInventoryModel(TropicraftBlocks.MAHOGANY_FENCE);
-        
+        blockWithInventoryModel(TropicraftBlocks.MANGROVE_FENCE);
+
         blockItem(TropicraftBlocks.BAMBOO_FENCE_GATE);
         blockItem(TropicraftBlocks.THATCH_FENCE_GATE);
         blockItem(TropicraftBlocks.CHUNK_FENCE_GATE);
         blockItem(TropicraftBlocks.PALM_FENCE_GATE);
         blockItem(TropicraftBlocks.MAHOGANY_FENCE_GATE);
+        blockItem(TropicraftBlocks.MANGROVE_FENCE_GATE);
 
         blockWithInventoryModel(TropicraftBlocks.CHUNK_WALL);
 
@@ -131,22 +172,30 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         generated(TropicraftBlocks.THATCH_DOOR);
         generated(TropicraftBlocks.PALM_DOOR);
         generated(TropicraftBlocks.MAHOGANY_DOOR);
-        
+        generated(TropicraftBlocks.MANGROVE_DOOR);
+
         blockItem(TropicraftBlocks.BAMBOO_TRAPDOOR, "_bottom");
         blockItem(TropicraftBlocks.THATCH_TRAPDOOR, "_bottom");
         blockItem(TropicraftBlocks.PALM_TRAPDOOR, "_bottom");
         blockItem(TropicraftBlocks.MAHOGANY_TRAPDOOR, "_bottom");
-        
+        blockItem(TropicraftBlocks.MANGROVE_TRAPDOOR, "_bottom");
+
         // Misc remaining blocks
         blockSprite(TropicraftBlocks.IRIS, modLoc("block/iris_top"));
         blockSprite(TropicraftBlocks.PINEAPPLE, modLoc("block/pineapple_top"));
+        blockSprite(TropicraftBlocks.PAPAYA, modLoc("item/papaya"));
         
         blockItem(TropicraftBlocks.SMALL_BONGO_DRUM);
         blockItem(TropicraftBlocks.MEDIUM_BONGO_DRUM);
         blockItem(TropicraftBlocks.LARGE_BONGO_DRUM);
         
         blockSprite(TropicraftBlocks.BAMBOO_LADDER);
-        
+
+        blockItem(TropicraftBlocks.BAMBOO_BOARDWALK, "_short");
+        blockItem(TropicraftBlocks.PALM_BOARDWALK, "_short");
+        blockItem(TropicraftBlocks.MAHOGANY_BOARDWALK, "_short");
+        blockItem(TropicraftBlocks.MANGROVE_BOARDWALK, "_short");
+
         withExistingParent(name(TropicraftBlocks.BAMBOO_CHEST), mcLoc("item/chest"))
             .texture("particle", modLoc("block/bamboo_side"));
         blockItem(TropicraftBlocks.SIFTER);
@@ -154,7 +203,9 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
             .texture("particle", modLoc("block/chunk"));
         withExistingParent(name(TropicraftBlocks.AIR_COMPRESSOR), modLoc("item/tall_machine"))
             .texture("particle", modLoc("block/chunk"));
-        
+
+        generated(TropicraftBlocks.GOLDEN_LEATHER_FERN, modLoc("item/golden_leather_fern"));
+
         generated(TropicraftBlocks.TIKI_TORCH);
         
         blockSprite(TropicraftBlocks.COCONUT);
@@ -163,6 +214,10 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         
         generated(TropicraftItems.BAMBOO_ITEM_FRAME);
         generated(TropicraftItems.FISHING_NET);
+
+        blockSprite(TropicraftBlocks.REEDS, modLoc("block/reeds_top_tall"));
+
+        generated(TropicraftItems.PIANGUAS);
 
         // ITEMS
         
@@ -314,6 +369,15 @@ public class TropicraftItemModelProvider extends ItemModelProvider {
         generated(TropicraftItems.COWKTAIL_SPAWN_EGG);
         generated(TropicraftItems.MAN_O_WAR_SPAWN_EGG);
         generated(TropicraftItems.TROPIBEE_SPAWN_EGG);
+        generated(TropicraftItems.TAPIR_SPAWN_EGG);
+        generated(TropicraftItems.JAGUAR_SPAWN_EGG);
+        generated(TropicraftItems.BROWN_BASILISK_LIZARD_SPAWN_EGG);
+        generated(TropicraftItems.GREEN_BASILISK_LIZARD_SPAWN_EGG);
+        generated(TropicraftItems.HUMMINGBIRD_SPAWN_EGG);
+        generated(TropicraftItems.FIDDLER_CRAB_SPAWN_EGG);
+        generated(TropicraftItems.SPIDER_MONKEY_SPAWN_EGG);
+        generated(TropicraftItems.WHITE_LIPPED_PECCARY_SPAWN_EGG);
+        generated(TropicraftItems.CUBERA_SPAWN_EGG);
 
         // Armor
         generated(TropicraftItems.FIRE_BOOTS);

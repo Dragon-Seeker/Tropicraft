@@ -21,10 +21,17 @@ public final class TropicraftConfiguredSurfaceBuilders {
     public final ConfiguredSurfaceBuilder<?> tropics;
     public final ConfiguredSurfaceBuilder<?> sandy;
 
+    public final ConfiguredSurfaceBuilder<?> mangrove;
+    public final ConfiguredSurfaceBuilder<?> osaRainforest;
+
     public TropicraftConfiguredSurfaceBuilders(WorldgenDataConsumer<? extends ConfiguredSurfaceBuilder<?>> worldgen) {
         Register surfaceBuilders = new Register(worldgen);
 
-        SurfaceBuilderConfig landConfig = new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.getDefaultState(), Blocks.DIRT.getDefaultState(), Blocks.STONE.getDefaultState());
+        BlockState grass = Blocks.GRASS_BLOCK.getDefaultState();
+        BlockState dirt = Blocks.DIRT.getDefaultState();
+        BlockState stone = Blocks.STONE.getDefaultState();
+
+        SurfaceBuilderConfig landConfig = new SurfaceBuilderConfig(grass, dirt, stone);
         SurfaceBuilderConfig sandyConfig = new SurfaceBuilderConfig(PURIFIED_SAND.getValue(), PURIFIED_SAND.getValue(), UNDERWATER_PURIFIED_SAND.getValue());
         SurfaceBuilderConfig sandyUnderwaterConfig = new SurfaceBuilderConfig(UNDERWATER_PURIFIED_SAND.getValue(), UNDERWATER_PURIFIED_SAND.getValue(), UNDERWATER_PURIFIED_SAND.getValue());
 
@@ -34,6 +41,9 @@ public final class TropicraftConfiguredSurfaceBuilders {
         this.sandy = surfaceBuilders.register("sandy", TropicraftSurfaceBuilders.UNDERWATER,
                 new UnderwaterSurfaceBuilder.Config(sandyConfig, landConfig, sandyUnderwaterConfig)
         );
+
+        this.mangrove = surfaceBuilders.register("mangrove", TropicraftSurfaceBuilders.MANGROVE, new SurfaceBuilderConfig(grass, dirt, dirt));
+        this.osaRainforest = surfaceBuilders.register("osa_rainforest", TropicraftSurfaceBuilders.OSA_RAINFOREST, new SurfaceBuilderConfig(grass, dirt, dirt));
     }
 
     static final class Register {
@@ -45,7 +55,11 @@ public final class TropicraftConfiguredSurfaceBuilders {
         }
 
         public <C extends ISurfaceBuilderConfig, S extends SurfaceBuilder<C>> ConfiguredSurfaceBuilder<?> register(String id, RegistryObject<S> surfaceBuilder, C config) {
-            return this.worldgen.register(new ResourceLocation(Constants.MODID, id), surfaceBuilder.get().func_242929_a(config));
+            return this.register(id, surfaceBuilder.get(), config);
+        }
+
+        public <C extends ISurfaceBuilderConfig, S extends SurfaceBuilder<C>> ConfiguredSurfaceBuilder<?> register(String id, S surfaceBuilder, C config) {
+            return this.worldgen.register(new ResourceLocation(Constants.MODID, id), surfaceBuilder.func_242929_a(config));
         }
     }
 }

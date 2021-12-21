@@ -2,10 +2,12 @@ package net.tropicraft;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.reflect.Reflection;
+import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.command.CommandSource;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -26,6 +28,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.tropicraft.core.client.BasicColorHandler;
 import net.tropicraft.core.client.ClientSetup;
 import net.tropicraft.core.client.data.TropicraftBlockstateProvider;
@@ -35,6 +38,7 @@ import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.block.tileentity.TropicraftTileEntityTypes;
 import net.tropicraft.core.common.command.CommandTropicsTeleport;
+import net.tropicraft.core.common.command.debug.MapBiomesCommand;
 import net.tropicraft.core.common.data.*;
 import net.tropicraft.core.common.dimension.TropicraftDimension;
 import net.tropicraft.core.common.dimension.biome.TropicraftBiomeProvider;
@@ -45,11 +49,16 @@ import net.tropicraft.core.common.dimension.chunk.TropicraftChunkGenerator;
 import net.tropicraft.core.common.dimension.feature.TropicraftConfiguredFeatures;
 import net.tropicraft.core.common.dimension.feature.TropicraftConfiguredStructures;
 import net.tropicraft.core.common.dimension.feature.TropicraftFeatures;
+import net.tropicraft.core.common.dimension.feature.block_placer.TropicraftBlockPlacerTypes;
 import net.tropicraft.core.common.dimension.feature.block_state_provider.TropicraftBlockStateProviders;
 import net.tropicraft.core.common.dimension.feature.jigsaw.*;
+import net.tropicraft.core.common.dimension.feature.jigsaw.piece.HomeTreeBranchPiece;
 import net.tropicraft.core.common.dimension.feature.jigsaw.piece.NoRotateSingleJigsawPiece;
 import net.tropicraft.core.common.dimension.feature.jigsaw.piece.SingleNoAirJigsawPiece;
 import net.tropicraft.core.common.dimension.feature.pools.TropicraftTemplatePools;
+import net.tropicraft.core.common.dimension.feature.tree.TropicraftFoliagePlacers;
+import net.tropicraft.core.common.dimension.feature.tree.TropicraftTreeDecorators;
+import net.tropicraft.core.common.dimension.feature.tree.TropicraftTrunkPlacers;
 import net.tropicraft.core.common.dimension.surfacebuilders.TropicraftConfiguredSurfaceBuilders;
 import net.tropicraft.core.common.dimension.surfacebuilders.TropicraftSurfaceBuilders;
 import net.tropicraft.core.common.drinks.MixerRecipes;
@@ -101,9 +110,12 @@ public class Tropicraft {
         TropicraftEntities.ENTITIES.register(modBus);
         TropicraftCarvers.CARVERS.register(modBus);
         TropicraftFeatures.FEATURES.register(modBus);
+        TropicraftFoliagePlacers.FOLIAGE_PLACERS.register(modBus);
+        TropicraftTreeDecorators.TREE_DECORATORS.register(modBus);
         TropicraftFeatures.STRUCTURES.register(modBus);
         TropicraftSurfaceBuilders.SURFACE_BUILDERS.register(modBus);
         TropicraftBlockStateProviders.BLOCK_STATE_PROVIDERS.register(modBus);
+        TropicraftBlockPlacerTypes.BLOCK_PLACER_TYPES.register(modBus);
 
         // Hack in our item frame models the way vanilla does
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
@@ -161,15 +173,22 @@ public class Tropicraft {
         TropicraftBiomeProvider.register();
 
         Reflection.initialize(
-                SingleNoAirJigsawPiece.class, NoRotateSingleJigsawPiece.class,
+                SingleNoAirJigsawPiece.class, NoRotateSingleJigsawPiece.class, HomeTreeBranchPiece.class,
                 AdjustBuildingHeightProcessor.class, AirToCaveAirProcessor.class, SinkInGroundProcessor.class,
                 SmoothingGravityProcessor.class, SteepPathProcessor.class, StructureSupportsProcessor.class,
-                StructureVoidProcessor.class
+                StructureVoidProcessor.class,
+                TropicraftTrunkPlacers.class
         );
     }
 
     private void onServerStarting(final FMLServerStartingEvent event) {
-        CommandTropicsTeleport.register(event.getServer().getCommandManager().getDispatcher());
+        CommandDispatcher<CommandSource> dispatcher = event.getServer().getCommandManager().getDispatcher();
+        CommandTropicsTeleport.register(dispatcher);
+
+        // Dev only debug!
+        if (!FMLEnvironment.production) {
+            MapBiomesCommand.register(dispatcher);
+        }
     }
 
     private void gatherData(GatherDataEvent event) {

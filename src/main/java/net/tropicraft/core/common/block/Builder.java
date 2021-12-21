@@ -62,6 +62,14 @@ public class Builder {
         return block(ctor, prop(Material.SAND, color).sound(SoundType.SAND).harvestTool(ToolType.SHOVEL).hardnessAndResistance(hardness, resistance));
     }
 
+    public static Supplier<MudBlock> mud() {
+        AbstractBlock.Properties properties = Block.Properties.from(Blocks.DIRT).speedFactor(0.5F)
+                .harvestTool(ToolType.SHOVEL)
+                .setAllowsSpawn((s, w, p, e) -> true).setOpaque((s, w, p) -> true)
+                .setBlocksVision((s, w, p) -> true).setSuffocates((s, w, p) -> true);
+        return block(MudBlock::new, properties);
+    }
+
     public static Supplier<RotatedPillarBlock> bundle(final Block.Properties properties) {
         return block(RotatedPillarBlock::new, properties);
     }
@@ -71,13 +79,29 @@ public class Builder {
     }
 
     public static Supplier<RotatedPillarBlock> log(final MaterialColor topColor, final MaterialColor sideColor) {
-        return block(p -> new RotatedPillarBlock(p), prop(Material.WOOD, state -> state.get(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topColor : sideColor).hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        return block(RotatedPillarBlock::new, logProperties(topColor, sideColor));
+    }
+
+    public static Supplier<RotatedPillarBlock> log(final MaterialColor topColor, final MaterialColor sideColor, Supplier<RegistryObject<RotatedPillarBlock>> stripped) {
+        return block(properties -> new TropicraftLogBlock(properties, () -> stripped.get().get()), logProperties(topColor, sideColor));
+    }
+
+    private static AbstractBlock.Properties logProperties(MaterialColor topColor, MaterialColor sideColor) {
+        return prop(Material.WOOD, state -> state.get(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? topColor : sideColor).hardnessAndResistance(2.0F).sound(SoundType.WOOD);
     }
 
     public static Supplier<RotatedPillarBlock> wood(final MaterialColor color) {
-        return block(RotatedPillarBlock::new, prop(Material.WOOD, color).hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        return block(RotatedPillarBlock::new, woodProperties(color));
     }
-    
+
+    public static Supplier<RotatedPillarBlock> wood(final MaterialColor color, Supplier<RegistryObject<RotatedPillarBlock>> stripped) {
+        return block(properties -> new TropicraftLogBlock(properties, () -> stripped.get().get()), woodProperties(color));
+    }
+
+    private static AbstractBlock.Properties woodProperties(MaterialColor color) {
+        return prop(Material.WOOD, color).hardnessAndResistance(2.0F).sound(SoundType.WOOD);
+    }
+
     public static Supplier<StairsBlock> stairs(final RegistryObject<? extends Block> source) {
         return block(p -> new StairsBlock(source.lazyMap(Block::getDefaultState), p), lazyProp(source));
     }
@@ -88,6 +112,22 @@ public class Builder {
 
     public static Supplier<LeavesBlock> leaves(boolean decay) {
         return block(decay ? LeavesBlock::new : TropicraftLeavesBlock::new, lazyProp(Blocks.OAK_LEAVES.delegate));
+    }
+
+    public static Supplier<LeavesBlock> mangroveLeaves(Supplier<RegistryObject<PropaguleBlock>> propagule) {
+        return block(properties -> new MangroveLeavesBlock(properties.tickRandomly(), () -> propagule.get().get()), lazyProp(Blocks.OAK_LEAVES.delegate));
+    }
+
+    public static Supplier<Block> mangroveRoots() {
+        return () -> new MangroveRootsBlock(
+                Block.Properties.create(Material.WOOD)
+                        .hardnessAndResistance(2.0f)
+                        .harvestTool(ToolType.AXE)
+                        .sound(SoundType.WOOD)
+                        .notSolid()
+                        .setOpaque((state, world, pos) -> false)
+                        .setNeedsPostProcessing((state, world, pos) -> true)
+        );
     }
 
     @SafeVarargs
@@ -104,6 +144,14 @@ public class Builder {
         }, lazyProp(Blocks.OAK_SAPLING.delegate));
     }
 
+    public static Supplier<SaplingBlock> waterloggableSapling(final Tree tree) {
+        return block(p -> new WaterloggableSaplingBlock(tree, p), lazyProp(Blocks.OAK_SAPLING.delegate));
+    }
+
+    public static Supplier<PropaguleBlock> propagule(final Tree tree) {
+        return block(p -> new PropaguleBlock(tree, p), lazyProp(Blocks.OAK_SAPLING.delegate));
+    }
+
     public static Supplier<FenceBlock> fence(final Supplier<? extends Block> source) {
         return block(FenceBlock::new, lazyProp(source));
     }
@@ -117,7 +165,7 @@ public class Builder {
     }
 
     public static Supplier<BongoDrumBlock> bongo(final BongoDrumBlock.Size bongoSize) {
-        return block(p -> new BongoDrumBlock(bongoSize, p), prop(Material.WOOD, MaterialColor.WHITE_TERRACOTTA).hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        return block(p -> new BongoDrumBlock(bongoSize, p), woodProperties(MaterialColor.WHITE_TERRACOTTA));
     }
     
     public static Supplier<FlowerPotBlock> pot(final Supplier<FlowerPotBlock> emptyPot, final Supplier<? extends Block> flower, final Supplier<Block.Properties> properties) {

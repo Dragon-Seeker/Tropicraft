@@ -11,13 +11,15 @@ public final class TropicraftBeachLayer implements IBishopTransformer {
     }
 
     @Override
-    public int apply(INoiseRandom iNoiseRandom, int ne, int se, int sw, int nw, int center) {
-        if (biomeIds.isOcean(center) && (!biomeIds.isOcean(ne) || !biomeIds.isOcean(se) || !biomeIds.isOcean(sw) || !biomeIds.isOcean(nw))) {
-            return biomeIds.beach;
+    public int apply(INoiseRandom random, int ne, int se, int sw, int nw, int center) {
+        TropicraftBiomeIds ids = this.biomeIds;
+
+        if (ids.isOcean(center) && (!ids.isOcean(ne) || !ids.isOcean(se) || !ids.isOcean(sw) || !ids.isOcean(nw))) {
+            return ids.beach;
         }
 
-        if (biomeIds.isRiver(center) && (!biomeIds.isRiver(ne) || !biomeIds.isRiver(se) || !biomeIds.isRiver(sw) || !biomeIds.isRiver(nw))) {
-            return biomeIds.beach;
+        if (ids.isRiver(center) && (!ids.isRiver(ne) || !ids.isRiver(se) || !ids.isRiver(sw) || !ids.isRiver(nw))) {
+            return ids.beach;
         }
 
         return center;

@@ -80,6 +80,10 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.VOLCANIC_SAND);
         addBlock(TropicraftBlocks.MINERAL_SAND);
 
+        // Mud
+        addBlock(TropicraftBlocks.MUD);
+        addBlock(TropicraftBlocks.MUD_WITH_PIANGUAS);
+
         // Bundles
         addBlock(TropicraftBlocks.BAMBOO_BUNDLE);
         addBlock(TropicraftBlocks.THATCH_BUNDLE);
@@ -94,6 +98,25 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.MAHOGANY_WOOD);
         addBlock(TropicraftBlocks.PALM_WOOD);
 
+        addBlock(TropicraftBlocks.PAPAYA_LOG);
+        addBlock(TropicraftBlocks.PAPAYA_WOOD);
+
+        addBlock(TropicraftBlocks.RED_MANGROVE_LOG);
+        addBlock(TropicraftBlocks.RED_MANGROVE_WOOD);
+        addBlock(TropicraftBlocks.RED_MANGROVE_ROOTS);
+
+        addBlock(TropicraftBlocks.LIGHT_MANGROVE_LOG);
+        addBlock(TropicraftBlocks.LIGHT_MANGROVE_WOOD);
+        addBlock(TropicraftBlocks.LIGHT_MANGROVE_ROOTS);
+
+        addBlock(TropicraftBlocks.BLACK_MANGROVE_LOG);
+        addBlock(TropicraftBlocks.BLACK_MANGROVE_WOOD);
+        addBlock(TropicraftBlocks.BLACK_MANGROVE_ROOTS);
+
+        addBlock(TropicraftBlocks.STRIPPED_MANGROVE_LOG);
+        addBlock(TropicraftBlocks.STRIPPED_MANGROVE_WOOD);
+        addBlock(TropicraftBlocks.MANGROVE_PLANKS);
+
         // Stairs & Slabs
         addBlock(TropicraftBlocks.BAMBOO_STAIRS);
         addBlock(TropicraftBlocks.THATCH_STAIRS);
@@ -101,12 +124,14 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.PALM_STAIRS);
         addBlock(TropicraftBlocks.MAHOGANY_STAIRS);
         addBlock(TropicraftBlocks.THATCH_STAIRS_FUZZY, "Thatch Roof");
+        addBlock(TropicraftBlocks.MANGROVE_STAIRS);
 
         addBlock(TropicraftBlocks.BAMBOO_SLAB);
         addBlock(TropicraftBlocks.THATCH_SLAB);
         addBlock(TropicraftBlocks.CHUNK_SLAB);
         addBlock(TropicraftBlocks.PALM_SLAB);
         addBlock(TropicraftBlocks.MAHOGANY_SLAB);
+        addBlock(TropicraftBlocks.MANGROVE_SLAB);
 
         // Leaves
         addBlock(TropicraftBlocks.MAHOGANY_LEAVES);
@@ -117,6 +142,11 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.LEMON_LEAVES);
         addBlock(TropicraftBlocks.LIME_LEAVES);
         addBlock(TropicraftBlocks.ORANGE_LEAVES);
+        addBlock(TropicraftBlocks.RED_MANGROVE_LEAVES);
+        addBlock(TropicraftBlocks.TALL_MANGROVE_LEAVES);
+        addBlock(TropicraftBlocks.TEA_MANGROVE_LEAVES);
+        addBlock(TropicraftBlocks.BLACK_MANGROVE_LEAVES);
+        addBlock(TropicraftBlocks.PAPAYA_LEAVES);
 
         // Saplings
         addBlock(TropicraftBlocks.MAHOGANY_SAPLING);
@@ -125,6 +155,11 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.LEMON_SAPLING);
         addBlock(TropicraftBlocks.LIME_SAPLING);
         addBlock(TropicraftBlocks.ORANGE_SAPLING);
+        addBlock(TropicraftBlocks.PAPAYA_SAPLING);
+        addBlockWithTooltip(TropicraftBlocks.RED_MANGROVE_PROPAGULE, "Rhizophora mangle");
+        addBlockWithTooltip(TropicraftBlocks.TALL_MANGROVE_PROPAGULE, "Rhizophora racemosa");
+        addBlockWithTooltip(TropicraftBlocks.TEA_MANGROVE_PROPAGULE, "Pelliciera rhizophorae");
+        addBlockWithTooltip(TropicraftBlocks.BLACK_MANGROVE_PROPAGULE, "Avicennia germinans");
 
         // Fences, Gates, and Walls
         addBlock(TropicraftBlocks.BAMBOO_FENCE);
@@ -132,12 +167,14 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.CHUNK_FENCE);
         addBlock(TropicraftBlocks.PALM_FENCE);
         addBlock(TropicraftBlocks.MAHOGANY_FENCE);
+        addBlock(TropicraftBlocks.MANGROVE_FENCE);
 
         addBlock(TropicraftBlocks.BAMBOO_FENCE_GATE);
         addBlock(TropicraftBlocks.THATCH_FENCE_GATE);
         addBlock(TropicraftBlocks.CHUNK_FENCE_GATE);
         addBlock(TropicraftBlocks.PALM_FENCE_GATE);
         addBlock(TropicraftBlocks.MAHOGANY_FENCE_GATE);
+        addBlock(TropicraftBlocks.MANGROVE_FENCE_GATE);
 
         addBlock(TropicraftBlocks.CHUNK_WALL);
 
@@ -146,11 +183,13 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.THATCH_DOOR);
         addBlock(TropicraftBlocks.PALM_DOOR);
         addBlock(TropicraftBlocks.MAHOGANY_DOOR);
+        addBlock(TropicraftBlocks.MANGROVE_DOOR);
 
         addBlock(TropicraftBlocks.BAMBOO_TRAPDOOR);
         addBlock(TropicraftBlocks.THATCH_TRAPDOOR);
         addBlock(TropicraftBlocks.PALM_TRAPDOOR);
         addBlock(TropicraftBlocks.MAHOGANY_TRAPDOOR);
+        addBlock(TropicraftBlocks.MANGROVE_TRAPDOOR);
 
         // Misc remaining blocks
         addBlock(TropicraftBlocks.IRIS);
@@ -161,6 +200,11 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBlock(TropicraftBlocks.LARGE_BONGO_DRUM);
 
         addBlock(TropicraftBlocks.BAMBOO_LADDER);
+
+        addBlock(TropicraftBlocks.BAMBOO_BOARDWALK);
+        addBlock(TropicraftBlocks.PALM_BOARDWALK);
+        addBlock(TropicraftBlocks.MAHOGANY_BOARDWALK);
+        addBlock(TropicraftBlocks.MANGROVE_BOARDWALK);
 
         addBlock(TropicraftBlocks.BAMBOO_CHEST);
         add(Constants.MODID + ".container.bambooChest", "Bamboo Chest");
@@ -175,11 +219,20 @@ public class TropicraftLangProvider extends LanguageProvider {
 
         addBlock(TropicraftBlocks.COCONUT);
 
+        addBlock(TropicraftBlocks.PAPAYA);
+
         addBlock(TropicraftBlocks.BAMBOO_FLOWER_POT);
         TropicraftBlocks.ALL_POTTED_PLANTS.forEach(this::addBlock);
 
         addBlock(TropicraftBlocks.ZIRCONIUM_BLOCK);
         addBlock(TropicraftBlocks.COFFEE_BUSH);
+
+        // TODO: remove explicit names once we change ids to match
+        addBlock(TropicraftBlocks.GOLDEN_LEATHER_FERN, "Golden Leather Fern");
+        addBlock(TropicraftBlocks.TALL_GOLDEN_LEATHER_FERN);
+        addBlock(TropicraftBlocks.LARGE_GOLDEN_LEATHER_FERN, "Large Golden Leather Fern");
+
+        addBlock(TropicraftBlocks.REEDS);
         
         // ITEMS
         
@@ -269,6 +322,8 @@ public class TropicraftLangProvider extends LanguageProvider {
         addItem(TropicraftItems.WATER_WAND);
         addItem(TropicraftItems.EXPLODING_COCONUT);
         addItem(TropicraftItems.FISHING_NET);
+
+        addItem(TropicraftItems.PIANGUAS);
         
         // Tools
         addItem(TropicraftItems.ZIRCON_AXE);
@@ -314,6 +369,15 @@ public class TropicraftLangProvider extends LanguageProvider {
         addItem(TropicraftItems.COWKTAIL_SPAWN_EGG);
         addItem(TropicraftItems.MAN_O_WAR_SPAWN_EGG);
         addItem(TropicraftItems.TROPIBEE_SPAWN_EGG);
+        addItem(TropicraftItems.TAPIR_SPAWN_EGG);
+        addItem(TropicraftItems.JAGUAR_SPAWN_EGG);
+        addItem(TropicraftItems.BROWN_BASILISK_LIZARD_SPAWN_EGG);
+        addItem(TropicraftItems.GREEN_BASILISK_LIZARD_SPAWN_EGG);
+        addItem(TropicraftItems.HUMMINGBIRD_SPAWN_EGG);
+        addItem(TropicraftItems.FIDDLER_CRAB_SPAWN_EGG);
+        addItem(TropicraftItems.SPIDER_MONKEY_SPAWN_EGG);
+        addItem(TropicraftItems.WHITE_LIPPED_PECCARY_SPAWN_EGG);
+        addItem(TropicraftItems.CUBERA_SPAWN_EGG);
 
         // Armor
         addItem(TropicraftItems.FIRE_BOOTS);
@@ -374,7 +438,16 @@ public class TropicraftLangProvider extends LanguageProvider {
         addEntityType(TropicraftEntities.MAN_O_WAR, "Man o' War");
         addEntityType(TropicraftEntities.TROPI_BEE, "Tropibee");
         addEntityType(TropicraftEntities.V_MONKEY, "Vervet Monkey");
-        
+        addEntityType(TropicraftEntities.TAPIR);
+        addEntityType(TropicraftEntities.JAGUAR);
+        addEntityType(TropicraftEntities.BROWN_BASILISK_LIZARD);
+        addEntityType(TropicraftEntities.GREEN_BASILISK_LIZARD);
+        addEntityType(TropicraftEntities.HUMMINGBIRD);
+        addEntityType(TropicraftEntities.FIDDLER_CRAB);
+        addEntityType(TropicraftEntities.SPIDER_MONKEY);
+        addEntityType(TropicraftEntities.WHITE_LIPPED_PECCARY);
+        addEntityType(TropicraftEntities.CUBERA);
+
         // BIOMES
         
         addBiome(TropicraftBiomes.TROPICS_OCEAN);
@@ -383,10 +456,14 @@ public class TropicraftLangProvider extends LanguageProvider {
         addBiome(TropicraftBiomes.RAINFOREST_PLAINS);
         addBiome(TropicraftBiomes.RAINFOREST_HILLS);
         addBiome(TropicraftBiomes.RAINFOREST_MOUNTAINS);
+        addBiome(TropicraftBiomes.BAMBOO_RAINFOREST);
         addBiome(TropicraftBiomes.RAINFOREST_ISLAND_MOUNTAINS);
         addBiome(TropicraftBiomes.TROPICS_RIVER);
         addBiome(TropicraftBiomes.TROPICS_BEACH);
-        
+        addBiome(TropicraftBiomes.MANGROVES);
+        addBiome(TropicraftBiomes.OVERGROWN_MANGROVES);
+        addBiome(TropicraftBiomes.OSA_RAINFOREST);
+
         // MISC
         
         add(Tropicraft.TROPICRAFT_ITEM_GROUP, "Tropicraft");

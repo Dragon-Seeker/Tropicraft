@@ -36,6 +36,7 @@ public final class TropicraftBiomes {
     public static final int TROPICS_WATER_COLOR = 0x4eecdf;
     public static final int TROPICS_WATER_FOG_COLOR = 0x041f33;
     public static final int TROPICS_FOG_COLOR = 0xC0D8FF;
+    public static final int RAINFOREST_FOG_COLOR = 0xbae6c3;
     public static final int TROPICS_SKY_COLOR = getSkyColor(0.8F);
 
     public static final RegistryKey<Biome> TROPICS_OCEAN = key("tropics_ocean");
@@ -44,9 +45,13 @@ public final class TropicraftBiomes {
     public static final RegistryKey<Biome> RAINFOREST_PLAINS = key("rainforest_plains");
     public static final RegistryKey<Biome> RAINFOREST_HILLS = key("rainforest_hills");
     public static final RegistryKey<Biome> RAINFOREST_MOUNTAINS = key("rainforest_mountains");
+    public static final RegistryKey<Biome> BAMBOO_RAINFOREST = key("bamboo_rainforest");
     public static final RegistryKey<Biome> RAINFOREST_ISLAND_MOUNTAINS = key("rainforest_island_mountains");
     public static final RegistryKey<Biome> TROPICS_RIVER = key("tropics_river");
     public static final RegistryKey<Biome> TROPICS_BEACH = key("tropics_beach");
+    public static final RegistryKey<Biome> MANGROVES = key("mangroves");
+    public static final RegistryKey<Biome> OVERGROWN_MANGROVES = key("overgrown_mangroves");
+    public static final RegistryKey<Biome> OSA_RAINFOREST = key("osa_rainforest");
 
     private static RegistryKey<Biome> key(String id) {
         return RegistryKey.getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(Constants.MODID, id));
@@ -57,12 +62,17 @@ public final class TropicraftBiomes {
     public final Biome rainforestPlains;
     public final Biome rainforestHills;
     public final Biome rainforestMountains;
+    public final Biome bambooRainforest;
     public final Biome rainforestIslandMountains;
 
     public final Biome tropicsOcean;
     public final Biome kelpForest;
 
     public final Biome tropicsRiver;
+
+    public final Biome mangroves;
+    public final Biome overgrownMangroves;
+    public final Biome osaRainforest;
 
     private final TropicraftConfiguredFeatures features;
     private final TropicraftConfiguredStructures structures;
@@ -80,12 +90,17 @@ public final class TropicraftBiomes {
         this.rainforestPlains = worldgen.register(RAINFOREST_PLAINS, createRainforest(0.25F, 0.1F));
         this.rainforestHills = worldgen.register(RAINFOREST_HILLS, createRainforest(0.45F, 0.425F));
         this.rainforestMountains = worldgen.register(RAINFOREST_MOUNTAINS, createRainforest(0.8F, 0.8F));
+        this.bambooRainforest = worldgen.register(BAMBOO_RAINFOREST, createRainforest(0.25F, 0.25F, true));
         this.rainforestIslandMountains = worldgen.register(RAINFOREST_ISLAND_MOUNTAINS, createRainforest(0.1F, 1.2F));
 
         this.tropicsOcean = worldgen.register(TROPICS_OCEAN, createTropicsOcean());
         this.kelpForest = worldgen.register(KELP_FOREST, createKelpForest());
 
         this.tropicsRiver = worldgen.register(TROPICS_RIVER, createTropicsRiver());
+
+        this.mangroves = worldgen.register(MANGROVES, createMangroves(false));
+        this.overgrownMangroves = worldgen.register(OVERGROWN_MANGROVES, createMangroves(true));
+        this.osaRainforest = worldgen.register(OSA_RAINFOREST, createOsaRainforest(0.25F, 0.1F));
     }
 
     @SubscribeEvent
@@ -141,10 +156,13 @@ public final class TropicraftBiomes {
         features.addFruitTrees(generation);
         features.addPalmTrees(generation);
         features.addEih(generation);
+        features.addPapaya(generation);
         features.addTropicsFlowers(generation);
         features.addPineapples(generation);
+        features.addRegularSeagrass(generation);
 
-        DefaultBiomeFeatures.withBadlandsGrass(generation);
+        features.addTropicsGrass(generation);
+        DefaultBiomeFeatures.withLargeFern(generation);
         DefaultBiomeFeatures.withTallGrass(generation);
 
         MobSpawnInfo.Builder spawns = defaultSpawns();
@@ -160,7 +178,7 @@ public final class TropicraftBiomes {
                 .category(Biome.Category.PLAINS)
                 .withGenerationSettings(generation.build())
                 .withMobSpawnSettings(spawns.build())
-                .setEffects(defaultAmbience().build())
+                .setEffects(defaultAmbience(true).build())
                 .build();
     }
 
@@ -168,6 +186,7 @@ public final class TropicraftBiomes {
         BiomeGenerationSettings.Builder generation = defaultGeneration()
                 .withSurfaceBuilder(surfaces.sandy);
 
+        features.addRegularSeagrass(generation);
         carvers.addUnderwater(generation);
 
         features.addPalmTrees(generation);
@@ -175,18 +194,74 @@ public final class TropicraftBiomes {
 
         generation.withStructure(structures.koaVillage);
 
+        MobSpawnInfo.Builder spawns = defaultSpawns();
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.FIDDLER_CRAB.get(), 10, 1, 2));
+
         return new Biome.Builder()
                 .precipitation(Biome.RainType.RAIN)
                 .depth(-0.1F).scale(0.1F)
                 .temperature(1.5F).downfall(1.25F)
                 .category(Biome.Category.BEACH)
                 .withGenerationSettings(generation.build())
-                .withMobSpawnSettings(defaultSpawns().build())
-                .setEffects(defaultAmbience().build())
+                .withMobSpawnSettings(spawns.build())
+                .setEffects(defaultAmbience(false).build())
+                .build();
+    }
+
+    private Biome createOsaRainforest(float depth, float scale) {
+        BiomeGenerationSettings.Builder generation = defaultGeneration()
+                .withSurfaceBuilder(surfaces.osaRainforest);
+
+        carvers.addLand(generation);
+
+        features.addGoldenLeatherFern(generation);
+
+        features.addTropicsGems(generation);
+        features.addPleodendron(generation);
+        features.addRainforestTrees(generation);
+        features.addRegularSeagrass(generation);
+        features.addPapaya(generation);
+
+        features.addTropicsFlowers(generation);
+        features.addPineapples(generation);
+
+        features.addTropicsGrass(generation);
+        DefaultBiomeFeatures.withLargeFern(generation);
+        DefaultBiomeFeatures.withTallGrass(generation);
+
+        generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, features.coffeeBush);
+        generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, features.singleUndergrowth);
+
+        features.addRainforestPlants(generation);
+
+        MobSpawnInfo.Builder spawns = defaultSpawns();
+        spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.OCELOT, 10, 1, 1));
+        spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.PARROT, 10, 1, 2));
+        spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.TREE_FROG.get(), 25, 2, 5));
+        spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.TROPI_SPIDER.get(), 30, 1, 1));
+
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.TAPIR.get(), 15, 2, 4));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.WHITE_LIPPED_PECCARY.get(), 15, 6, 12));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.JAGUAR.get(), 5, 1, 2));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.HUMMINGBIRD.get(), 10, 3, 5));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.SPIDER_MONKEY.get(), 15, 6, 8));
+
+        return new Biome.Builder()
+                .precipitation(Biome.RainType.RAIN)
+                .depth(depth).scale(scale)
+                .temperature(1.5F).downfall(2.0F)
+                .category(Biome.Category.JUNGLE)
+                .withGenerationSettings(generation.build())
+                .withMobSpawnSettings(spawns.build())
+                .setEffects(defaultAmbience(true).build())
                 .build();
     }
 
     private Biome createRainforest(float depth, float scale) {
+        return createRainforest(depth, scale, false);
+    }
+
+    private Biome createRainforest(float depth, float scale, boolean bamboo) {
         BiomeGenerationSettings.Builder generation = defaultGeneration()
                 .withSurfaceBuilder(ConfiguredSurfaceBuilders.GRASS);
 
@@ -194,6 +269,8 @@ public final class TropicraftBiomes {
 
         features.addTropicsGems(generation);
         features.addRainforestTrees(generation);
+        features.addRegularSeagrass(generation);
+        features.addPapaya(generation);
 
         generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, features.rainforestFlowers);
         generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, features.coffeeBush);
@@ -206,11 +283,21 @@ public final class TropicraftBiomes {
 
         features.addRainforestPlants(generation);
 
+        if (bamboo) {
+            features.addBamboo(generation);
+        }
+
         MobSpawnInfo.Builder spawns = defaultSpawns();
         spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.OCELOT, 10, 1, 1));
         spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.PARROT, 10, 1, 2));
         spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.TREE_FROG.get(), 25, 2, 5));
         spawns.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.TROPI_SPIDER.get(), 30, 1, 1));
+
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.TAPIR.get(), 15, 2, 4));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.WHITE_LIPPED_PECCARY.get(), 15, 2, 4));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.JAGUAR.get(), 5, 1, 2));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.HUMMINGBIRD.get(), 10, 3, 5));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.SPIDER_MONKEY.get(), 15, 5, 8));
 
         return new Biome.Builder()
                 .precipitation(Biome.RainType.RAIN)
@@ -219,7 +306,7 @@ public final class TropicraftBiomes {
                 .category(Biome.Category.JUNGLE)
                 .withGenerationSettings(generation.build())
                 .withMobSpawnSettings(spawns.build())
-                .setEffects(defaultAmbience().build())
+                .setEffects(defaultAmbience(true).build())
                 .build();
     }
 
@@ -250,7 +337,7 @@ public final class TropicraftBiomes {
                 .category(Biome.Category.OCEAN)
                 .withGenerationSettings(generation.build())
                 .withMobSpawnSettings(spawns.build())
-                .setEffects(defaultAmbience().build())
+                .setEffects(defaultAmbience(false).build())
                 .build();
     }
 
@@ -276,21 +363,8 @@ public final class TropicraftBiomes {
                 .category(Biome.Category.OCEAN)
                 .withGenerationSettings(generation.build())
                 .withMobSpawnSettings(spawns.build())
-                .setEffects(defaultAmbience().build())
+                .setEffects(defaultAmbience(false).build())
                 .build();
-    }
-
-    private void addOceanWaterCreatures(MobSpawnInfo.Builder spawns) {
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.MARLIN.get(), 10, 1, 4));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.MAN_O_WAR.get(), 2, 1, 1));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.STARFISH.get(), 4, 1, 4));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.SEA_URCHIN.get(), 4, 1, 4));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.DOLPHIN.get(), 3, 4, 7));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.SEAHORSE.get(), 6, 6, 12));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.SEA_TURTLE.get(), 6, 3, 8));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.TROPICAL_FISH.get(), 20, 4, 8));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.EAGLE_RAY.get(), 6, 1, 1));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.HAMMERHEAD.get(), 2, 1, 1));
     }
 
     private Biome createTropicsRiver() {
@@ -302,11 +376,7 @@ public final class TropicraftBiomes {
         features.addTropicsFlowers(generation);
 
         MobSpawnInfo.Builder spawns = defaultSpawns();
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.PIRANHA.get(), 20, 1, 12));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.RIVER_SARDINE.get(), 20, 1, 8));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(EntityType.SQUID, 8, 1, 4));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(EntityType.COD, 4, 1, 5));
-        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(EntityType.SALMON, 4, 1, 5));
+        addRiverWaterCreatures(spawns);
 
         return new Biome.Builder()
                 .precipitation(Biome.RainType.RAIN)
@@ -315,8 +385,96 @@ public final class TropicraftBiomes {
                 .category(Biome.Category.RIVER)
                 .withGenerationSettings(generation.build())
                 .withMobSpawnSettings(spawns.build())
-                .setEffects(defaultAmbience().build())
+                .setEffects(defaultAmbience(false).build())
                 .build();
+    }
+
+    // TODO: rebalance all spawns
+    private Biome createMangroves(boolean overgrown) {
+        BiomeGenerationSettings.Builder generation = defaultGeneration()
+                .withSurfaceBuilder(surfaces.mangrove);
+
+        carvers.addLand(generation);
+
+        features.addMudDisks(generation);
+        if (overgrown) {
+            features.addOvergrownGoldenLeatherFern(generation);
+        }
+        features.addGoldenLeatherFern(generation);
+        features.addMangroveVegetation(generation, overgrown);
+        features.addTropicsFlowers(generation);
+
+        generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.SEAGRASS_DEEP_WARM);
+        features.addMangroveReeds(generation);
+
+        generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.PATCH_GRASS_PLAIN);
+        generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Features.PATCH_WATERLILLY);
+
+        DefaultBiomeFeatures.withTallGrass(generation);
+
+        MobSpawnInfo.Builder spawns = defaultSpawns();
+        spawns.withSpawner(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.FAILGULL.get(), 5, 5, 15));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.TREE_FROG.get(), 4, 4, 4));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.TAPIR.get(), 15, 2, 4));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.WHITE_LIPPED_PECCARY.get(), 15, 2, 4));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.JAGUAR.get(), 8, 1, 3));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.HUMMINGBIRD.get(), 12, 3, 5));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.SPIDER_MONKEY.get(), 15, 5, 8));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.BROWN_BASILISK_LIZARD.get(), 10, 1, 3));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.GREEN_BASILISK_LIZARD.get(), 10, 1, 3));
+
+        addMangroveWaterCreatures(spawns);
+
+        BiomeAmbience.Builder ambience = defaultAmbience(true);
+        ambience.setWaterColor(0x66C197).setWaterFogColor(0x0C3522);
+        ambience.withGrassColor(0x6FB21C);
+
+        return new Biome.Builder()
+                .precipitation(Biome.RainType.RAIN)
+                .depth(-0.25F).scale(-0.045F)
+                .temperature(2.0F).downfall(1.5F)
+                .category(Biome.Category.SWAMP)
+                .withGenerationSettings(generation.build())
+                .withMobSpawnSettings(spawns.build())
+                .setEffects(ambience.build())
+                .build();
+    }
+
+    private void addOceanWaterCreatures(MobSpawnInfo.Builder spawns) {
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.TROPICAL_FISH.get(), 20, 4, 8));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.STARFISH.get(), 4, 1, 4));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.SEAHORSE.get(), 6, 6, 12));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.SEA_URCHIN.get(), 4, 1, 4));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.MAN_O_WAR.get(), 2, 1, 1));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.MARLIN.get(), 10, 1, 4));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.CUBERA.get(), 10, 2, 4));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.EAGLE_RAY.get(), 6, 1, 1));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.SEA_TURTLE.get(), 6, 3, 8));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.DOLPHIN.get(), 3, 4, 7));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.HAMMERHEAD.get(), 2, 1, 1));
+    }
+
+    private void addRiverWaterCreatures(MobSpawnInfo.Builder spawns) {
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.FIDDLER_CRAB.get(), 20, 2, 6));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.PIRANHA.get(), 15, 1, 12));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.RIVER_SARDINE.get(), 20, 1, 8));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(EntityType.SQUID, 8, 1, 4));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(EntityType.COD, 4, 1, 5));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(EntityType.SALMON, 4, 1, 5));
+    }
+
+    private void addMangroveWaterCreatures(MobSpawnInfo.Builder spawns) {
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.FIDDLER_CRAB.get(), 20, 2, 6));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.PIRANHA.get(), 15, 1, 12));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.RIVER_SARDINE.get(), 20, 1, 8));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(EntityType.COD, 4, 1, 5));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(EntityType.SALMON, 4, 1, 5));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(EntityType.TROPICAL_FISH, 12, 1, 5));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.STARFISH.get(), 4, 1, 4));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.SEA_URCHIN.get(), 4, 1, 4));
+        spawns.withSpawner(EntityClassification.WATER_AMBIENT, new MobSpawnInfo.Spawners(TropicraftEntities.SEAHORSE.get(), 6, 6, 12));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(TropicraftEntities.HAMMERHEAD.get(), 2, 1, 1));
+        spawns.withSpawner(EntityClassification.WATER_CREATURE, new MobSpawnInfo.Spawners(EntityType.SQUID, 8, 1, 4));
     }
 
     private BiomeGenerationSettings.Builder defaultGeneration() {
@@ -326,31 +484,27 @@ public final class TropicraftBiomes {
         DefaultBiomeFeatures.withOverworldOres(generation);
         DefaultBiomeFeatures.withCommonOverworldBlocks(generation);
 
-        generation.withStructure(structures.homeTree);
-        generation.withStructure(structures.koaVillage);
-
         return generation;
     }
 
     private MobSpawnInfo.Builder defaultSpawns() {
         MobSpawnInfo.Builder spawns = new MobSpawnInfo.Builder();
 
-        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.PARROT, 20, 1, 2));
-        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.V_MONKEY.get(), 20, 1, 3));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(EntityType.PARROT, 15, 1, 2));
+        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.V_MONKEY.get(), 15, 1, 3));
         spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.IGUANA.get(), 15, 4, 4));
         spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.TROPI_CREEPER.get(), 4, 1, 2));
         spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.EIH.get(), 5, 1, 1));
 
         spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.TROPI_SKELLY.get(), 8, 2, 4));
         spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.TROPI_SPIDER.get(), 8, 2, 2));
-        spawns.withSpawner(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(TropicraftEntities.ASHEN.get(), 6, 2, 4));
 
         return spawns;
     }
 
-    private BiomeAmbience.Builder defaultAmbience() {
+    private BiomeAmbience.Builder defaultAmbience(boolean greenFog) {
         return new BiomeAmbience.Builder()
-                .setFogColor(TROPICS_FOG_COLOR)
+                .setFogColor(greenFog ? RAINFOREST_FOG_COLOR : TROPICS_FOG_COLOR)
                 .withSkyColor(TROPICS_SKY_COLOR)
                 .setWaterColor(TROPICS_WATER_COLOR)
                 .setWaterFogColor(TROPICS_WATER_FOG_COLOR);

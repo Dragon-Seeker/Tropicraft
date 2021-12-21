@@ -1,144 +1,7 @@
 package net.tropicraft.core.common.data;
 
-import static net.tropicraft.core.common.block.TropicraftBlocks.AIR_COMPRESSOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.AZURITE_BLOCK;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_BUNDLE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_CHEST;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_DOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_FENCE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_FENCE_GATE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_FLOWER_POT;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_LADDER;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_SLAB;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_STAIRS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.BAMBOO_TRAPDOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.CHUNK;
-import static net.tropicraft.core.common.block.TropicraftBlocks.CHUNK_FENCE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.CHUNK_FENCE_GATE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.CHUNK_SLAB;
-import static net.tropicraft.core.common.block.TropicraftBlocks.CHUNK_STAIRS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.CHUNK_WALL;
-import static net.tropicraft.core.common.block.TropicraftBlocks.DRINK_MIXER;
-import static net.tropicraft.core.common.block.TropicraftBlocks.EUDIALYTE_BLOCK;
-import static net.tropicraft.core.common.block.TropicraftBlocks.IRIS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.LARGE_BONGO_DRUM;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_DOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_FENCE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_FENCE_GATE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_LOG;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_PLANKS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_SLAB;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_STAIRS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_TRAPDOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MAHOGANY_WOOD;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MANGANESE_BLOCK;
-import static net.tropicraft.core.common.block.TropicraftBlocks.MEDIUM_BONGO_DRUM;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_DOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_FENCE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_FENCE_GATE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_LOG;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_PLANKS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_SLAB;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_STAIRS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_TRAPDOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.PALM_WOOD;
-import static net.tropicraft.core.common.block.TropicraftBlocks.SHAKA_BLOCK;
-import static net.tropicraft.core.common.block.TropicraftBlocks.SIFTER;
-import static net.tropicraft.core.common.block.TropicraftBlocks.SMALL_BONGO_DRUM;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_BUNDLE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_DOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_FENCE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_FENCE_GATE;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_SLAB;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_STAIRS;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_STAIRS_FUZZY;
-import static net.tropicraft.core.common.block.TropicraftBlocks.THATCH_TRAPDOOR;
-import static net.tropicraft.core.common.block.TropicraftBlocks.TIKI_TORCH;
-import static net.tropicraft.core.common.block.TropicraftBlocks.ZIRCONIUM_BLOCK;
-import static net.tropicraft.core.common.block.TropicraftBlocks.ZIRCON_BLOCK;
-import static net.tropicraft.core.common.block.TropicraftFlower.CANNA;
-import static net.tropicraft.core.common.block.TropicraftFlower.COMMELINA_DIFFUSA;
-import static net.tropicraft.core.common.block.TropicraftFlower.DRACAENA;
-import static net.tropicraft.core.common.block.TropicraftFlower.ORANGE_ANTHURIUM;
-import static net.tropicraft.core.common.block.TropicraftFlower.RED_ANTHURIUM;
-import static net.tropicraft.core.common.item.TropicraftItems.AZURITE;
-import static net.tropicraft.core.common.item.TropicraftItems.BAMBOO_ITEM_FRAME;
-import static net.tropicraft.core.common.item.TropicraftItems.BAMBOO_MUG;
-import static net.tropicraft.core.common.item.TropicraftItems.BAMBOO_SPEAR;
-import static net.tropicraft.core.common.item.TropicraftItems.BAMBOO_STICK;
-import static net.tropicraft.core.common.item.TropicraftItems.BEACH_FLOATS;
-import static net.tropicraft.core.common.item.TropicraftItems.BLOW_GUN;
-import static net.tropicraft.core.common.item.TropicraftItems.CHAIRS;
-import static net.tropicraft.core.common.item.TropicraftItems.COCKTAILS;
-import static net.tropicraft.core.common.item.TropicraftItems.COCONUT_CHUNK;
-import static net.tropicraft.core.common.item.TropicraftItems.COFFEE_BERRY;
-import static net.tropicraft.core.common.item.TropicraftItems.COOKED_FISH;
-import static net.tropicraft.core.common.item.TropicraftItems.COOKED_FROG_LEG;
-import static net.tropicraft.core.common.item.TropicraftItems.COOKED_RAY;
-import static net.tropicraft.core.common.item.TropicraftItems.DAGGER;
-import static net.tropicraft.core.common.item.TropicraftItems.EUDIALYTE;
-import static net.tropicraft.core.common.item.TropicraftItems.EUDIALYTE_AXE;
-import static net.tropicraft.core.common.item.TropicraftItems.EUDIALYTE_HOE;
-import static net.tropicraft.core.common.item.TropicraftItems.EUDIALYTE_PICKAXE;
-import static net.tropicraft.core.common.item.TropicraftItems.EUDIALYTE_SHOVEL;
-import static net.tropicraft.core.common.item.TropicraftItems.EUDIALYTE_SWORD;
-import static net.tropicraft.core.common.item.TropicraftItems.FRESH_MARLIN;
-import static net.tropicraft.core.common.item.TropicraftItems.FROG_LEG;
-import static net.tropicraft.core.common.item.TropicraftItems.IGUANA_LEATHER;
-import static net.tropicraft.core.common.item.TropicraftItems.MANGANESE;
-import static net.tropicraft.core.common.item.TropicraftItems.PINEAPPLE_CUBES;
-import static net.tropicraft.core.common.item.TropicraftItems.PINK_PONY_BOTTLE;
-import static net.tropicraft.core.common.item.TropicraftItems.PINK_SCUBA_FLIPPERS;
-import static net.tropicraft.core.common.item.TropicraftItems.PINK_SCUBA_GOGGLES;
-import static net.tropicraft.core.common.item.TropicraftItems.PINK_SCUBA_HARNESS;
-import static net.tropicraft.core.common.item.TropicraftItems.RAW_COFFEE_BEAN;
-import static net.tropicraft.core.common.item.TropicraftItems.RAW_FISH;
-import static net.tropicraft.core.common.item.TropicraftItems.RAW_RAY;
-import static net.tropicraft.core.common.item.TropicraftItems.ROASTED_COFFEE_BEAN;
-import static net.tropicraft.core.common.item.TropicraftItems.SCALE;
-import static net.tropicraft.core.common.item.TropicraftItems.SCALE_BOOTS;
-import static net.tropicraft.core.common.item.TropicraftItems.SCALE_CHESTPLATE;
-import static net.tropicraft.core.common.item.TropicraftItems.SCALE_HELMET;
-import static net.tropicraft.core.common.item.TropicraftItems.SCALE_LEGGINGS;
-import static net.tropicraft.core.common.item.TropicraftItems.SEARED_MARLIN;
-import static net.tropicraft.core.common.item.TropicraftItems.SHAKA;
-import static net.tropicraft.core.common.item.TropicraftItems.TOASTED_NORI;
-import static net.tropicraft.core.common.item.TropicraftItems.TROPICAL_FERTILIZER;
-import static net.tropicraft.core.common.item.TropicraftItems.UMBRELLAS;
-import static net.tropicraft.core.common.item.TropicraftItems.WATER_WAND;
-import static net.tropicraft.core.common.item.TropicraftItems.YELLOW_PONY_BOTTLE;
-import static net.tropicraft.core.common.item.TropicraftItems.YELLOW_SCUBA_FLIPPERS;
-import static net.tropicraft.core.common.item.TropicraftItems.YELLOW_SCUBA_GOGGLES;
-import static net.tropicraft.core.common.item.TropicraftItems.YELLOW_SCUBA_HARNESS;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCON;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCONIUM;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCONIUM_AXE;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCONIUM_HOE;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCONIUM_PICKAXE;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCONIUM_SHOVEL;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCONIUM_SWORD;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCON_AXE;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCON_HOE;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCON_PICKAXE;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCON_SHOVEL;
-import static net.tropicraft.core.common.item.TropicraftItems.ZIRCON_SWORD;
-
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.StringUtils;
-
 import net.minecraft.block.Blocks;
-import net.minecraft.data.CookingRecipeBuilder;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.data.ShapelessRecipeBuilder;
-import net.minecraft.data.SingleItemRecipeBuilder;
+import net.minecraft.data.*;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
@@ -155,6 +18,16 @@ import net.tropicraft.Constants;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.drinks.Drink;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import static net.tropicraft.core.common.block.TropicraftBlocks.*;
+import static net.tropicraft.core.common.block.TropicraftFlower.*;
+import static net.tropicraft.core.common.item.TropicraftItems.*;
 
 public class TropicraftRecipeProvider extends RecipeProvider {
 
@@ -288,10 +161,25 @@ public class TropicraftRecipeProvider extends RecipeProvider {
         
         bark(MAHOGANY_LOG, MAHOGANY_WOOD, consumer);
         bark(PALM_LOG, PALM_WOOD, consumer);
-        
+
+        // Papaya log -> Jungle log
+        ShapelessRecipeBuilder.shapelessRecipe(Blocks.JUNGLE_LOG)
+                .addIngredient(PAPAYA_LOG.get())
+                .addCriterion("has_papaya_log", hasItem(PAPAYA_LOG.get()))
+                .build(consumer);
+
+        bark(PAPAYA_LOG, PAPAYA_WOOD, consumer);
+
+        bark(RED_MANGROVE_LOG, RED_MANGROVE_WOOD, consumer);
+        bark(LIGHT_MANGROVE_LOG, LIGHT_MANGROVE_WOOD, consumer);
+        bark(BLACK_MANGROVE_LOG, BLACK_MANGROVE_WOOD, consumer);
+        bark(STRIPPED_MANGROVE_LOG, STRIPPED_MANGROVE_WOOD, consumer);
+
         // Stairs
         stairs(PALM_PLANKS, PALM_STAIRS, "wooden_stairs", false, consumer);
         stairs(MAHOGANY_PLANKS, MAHOGANY_STAIRS, "wooden_stairs", false, consumer);
+        stairs(MANGROVE_PLANKS, MANGROVE_STAIRS, "wooden_stairs", false, consumer);
+
         stairs(THATCH_BUNDLE, THATCH_STAIRS, null, false, consumer);
         stairs(BAMBOO_BUNDLE, BAMBOO_STAIRS, null, false, consumer);
         stairs(CHUNK, CHUNK_STAIRS, null, true, consumer);
@@ -306,6 +194,8 @@ public class TropicraftRecipeProvider extends RecipeProvider {
         // Slabs
         slab(PALM_PLANKS, PALM_SLAB, "wooden_slab", false, consumer);
         slab(MAHOGANY_PLANKS, MAHOGANY_SLAB, "wooden_slab", false, consumer);
+        slab(MANGROVE_PLANKS, MANGROVE_SLAB, "wooden_slab", false, consumer);
+
         slab(THATCH_BUNDLE, THATCH_SLAB, null, false, consumer);
         slab(BAMBOO_BUNDLE, BAMBOO_SLAB, null, false, consumer);
         slab(CHUNK, CHUNK_SLAB, null, true, consumer);
@@ -313,6 +203,8 @@ public class TropicraftRecipeProvider extends RecipeProvider {
         // Fences
         fence(PALM_PLANKS, PALM_FENCE, "wooden_fence", consumer);
         fence(MAHOGANY_PLANKS, MAHOGANY_FENCE, "wooden_fence", consumer);
+        fence(MANGROVE_PLANKS, MANGROVE_FENCE, "wooden_fence", consumer);
+
         fence(THATCH_BUNDLE, THATCH_FENCE, null, consumer);
         fence(BAMBOO_BUNDLE, BAMBOO_FENCE, null, consumer);
         fence(CHUNK, CHUNK_FENCE, null, consumer);
@@ -320,6 +212,8 @@ public class TropicraftRecipeProvider extends RecipeProvider {
         // Fence Gates
         fenceGate(PALM_PLANKS, PALM_FENCE_GATE, "wooden_fence_gate", consumer);
         fenceGate(MAHOGANY_PLANKS, MAHOGANY_FENCE_GATE, "wooden_fence_gate", consumer);
+        fenceGate(MANGROVE_PLANKS, MANGROVE_FENCE_GATE, "wooden_fence_gate", consumer);
+
         fenceGate(THATCH_BUNDLE, THATCH_FENCE_GATE, null, consumer);
         fenceGate(BAMBOO_BUNDLE, BAMBOO_FENCE_GATE, null, consumer);
         fenceGate(CHUNK, CHUNK_FENCE_GATE, null, consumer);
@@ -330,12 +224,16 @@ public class TropicraftRecipeProvider extends RecipeProvider {
         // Doors
         door(PALM_PLANKS, PALM_DOOR, "wooden_door", consumer);
         door(MAHOGANY_PLANKS, MAHOGANY_DOOR, "wooden_door", consumer);
+        door(MANGROVE_PLANKS, MANGROVE_DOOR, "wooden_door", consumer);
+
         door(THATCH_BUNDLE, THATCH_DOOR, null, consumer);
         door(BAMBOO_BUNDLE, BAMBOO_DOOR, null, consumer);
-        
+
         // Trap doors
         trapDoor(PALM_PLANKS, PALM_TRAPDOOR, "wooden_trapdoor", consumer);
         trapDoor(MAHOGANY_PLANKS, MAHOGANY_TRAPDOOR, "wooden_trapdoor", consumer);
+        trapDoor(MANGROVE_PLANKS, MANGROVE_TRAPDOOR, "wooden_trapdoor", consumer);
+
         trapDoor(THATCH_BUNDLE, THATCH_TRAPDOOR, null, consumer);
         trapDoor(BAMBOO_BUNDLE, BAMBOO_TRAPDOOR, null, consumer);
         
@@ -393,7 +291,12 @@ public class TropicraftRecipeProvider extends RecipeProvider {
             .key('B', Items.BAMBOO)
             .addCriterion("has_bamboo", this.hasItem(Items.BAMBOO))
             .build(consumer);
-        
+
+        boardwalk(BAMBOO_SLAB, BAMBOO_BOARDWALK, consumer);
+        boardwalk(PALM_SLAB, PALM_BOARDWALK, consumer);
+        boardwalk(MAHOGANY_SLAB, MAHOGANY_BOARDWALK, consumer);
+        boardwalk(MANGROVE_SLAB, MANGROVE_BOARDWALK, consumer);
+
         ShapedRecipeBuilder.shapedRecipe(BAMBOO_CHEST.get())
             .patternLine("BBB").patternLine("B B").patternLine("BBB")
             .key('B', Items.BAMBOO)
@@ -674,6 +577,17 @@ public class TropicraftRecipeProvider extends RecipeProvider {
                 .addCriterion("has_" + safeName(source.get()), this.hasItem(source.get()))
                 .build(consumer, safeId(result.get()) + "_from_" + safeName(source.get()) + "_stonecutting");
         }
+    }
+
+    private <T extends IItemProvider & IForgeRegistryEntry<?>> void boardwalk(Supplier<? extends T> slab, Supplier<? extends T> result, Consumer<IFinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shapedRecipe(result.get(), 3)
+                .patternLine("XXX")
+                .patternLine("S S")
+                .key('X', slab.get())
+                .key('S', Tags.Items.RODS_WOODEN)
+                .setGroup("tropicraft:boardwalk")
+                .addCriterion("has_" + safeName(slab.get()), hasItem(slab.get()))
+                .build(consumer);
     }
     
     private <T extends IItemProvider & IForgeRegistryEntry<?>> void fence(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {

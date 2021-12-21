@@ -1,7 +1,7 @@
 {
   "effects": {
     "sky_color": 7907327,
-    "fog_color": 12638463,
+    "fog_color": 12248771,
     "water_color": 5172447,
     "water_fog_color": 270131
   },
@@ -42,30 +42,31 @@
       "tropicraft:curved_palm_tree",
       "tropicraft:large_palm_tree",
       "tropicraft:eih",
+      "tropicraft:papaya",
       "tropicraft:tropics_flowers",
       "tropicraft:iris_flowers",
       "tropicraft:pineapple_patch",
-      "minecraft:patch_grass_badlands",
+      "tropicraft:seagrass",
+      "tropicraft:tropics_grass",
+      "minecraft:patch_large_fern",
       "minecraft:patch_tall_grass"
     ]
   ],
   "starts": [
     "minecraft:mineshaft",
-    "minecraft:stronghold",
-    "tropicraft:home_tree",
-    "tropicraft:koa_village"
+    "minecraft:stronghold"
   ],
   "spawners": {
     "monster": [
       {
         "type": "minecraft:parrot",
-        "weight": 20,
+        "weight": 15,
         "minCount": 1,
         "maxCount": 2
       },
       {
         "type": "tropicraft:v_monkey",
-        "weight": 20,
+        "weight": 15,
         "minCount": 1,
         "maxCount": 3
       },
@@ -98,12 +99,6 @@
         "weight": 8,
         "minCount": 2,
         "maxCount": 2
-      },
-      {
-        "type": "tropicraft:ashen",
-        "weight": 6,
-        "minCount": 2,
-        "maxCount": 4
       },
       {
         "type": "tropicraft:tropibee",

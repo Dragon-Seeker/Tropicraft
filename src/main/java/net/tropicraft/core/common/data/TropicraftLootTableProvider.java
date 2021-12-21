@@ -1,49 +1,38 @@
 package net.tropicraft.core.common.data;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.minecraft.block.*;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.LootTableProvider;
+import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Items;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.BlockStateProperty;
+import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.conditions.MatchTool;
+import net.minecraft.loot.conditions.TableBonus;
+import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.loot.functions.SetCount;
+import net.minecraft.state.properties.DoubleBlockHalf;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
+import net.tropicraft.Constants;
+import net.tropicraft.core.common.TropicraftTags;
+import net.tropicraft.core.common.block.PapayaBlock;
+import net.tropicraft.core.common.block.TikiTorchBlock;
+import net.tropicraft.core.common.block.TropicraftBlocks;
+import net.tropicraft.core.common.item.TropicraftItems;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
-
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.block.Block;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.DoublePlantBlock;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.LootTableProvider;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Items;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootParameterSet;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.ValidationTracker;
-import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.conditions.MatchTool;
-import net.minecraft.loot.conditions.TableBonus;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.state.properties.DoubleBlockHalf;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
-import net.tropicraft.core.common.TropicraftTags;
-import net.tropicraft.core.common.block.TikiTorchBlock;
-import net.tropicraft.core.common.block.TropicraftBlocks;
-import net.tropicraft.core.common.item.TropicraftItems;
 
 public class TropicraftLootTableProvider extends LootTableProvider {
 
@@ -97,7 +86,26 @@ public class TropicraftLootTableProvider extends LootTableProvider {
             dropsSelf(TropicraftBlocks.FOAMY_SAND);
             dropsSelf(TropicraftBlocks.VOLCANIC_SAND);
             dropsSelf(TropicraftBlocks.MINERAL_SAND);
-            
+
+            // Mud
+            dropsSelf(TropicraftBlocks.MUD);
+
+            registerLootTable(TropicraftBlocks.MUD_WITH_PIANGUAS.get(), withExplosionDecay(TropicraftBlocks.MUD_WITH_PIANGUAS.get(),
+                    LootTable.builder()
+                            .addLootPool(LootPool.builder()
+                                    .addEntry(ItemLootEntry.builder(TropicraftBlocks.MUD_WITH_PIANGUAS.get())
+                                            .acceptCondition(SILK_TOUCH)
+                                            .alternatively(ItemLootEntry.builder(TropicraftBlocks.MUD.get()))
+                                    )
+                            )
+                            .addLootPool(LootPool.builder()
+                                    .acceptCondition(NO_SILK_TOUCH)
+                                    .addEntry(ItemLootEntry.builder(TropicraftItems.PIANGUAS.get())
+                                            .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE))
+                                    )
+                            )
+            ));
+
             // Bundles
             dropsSelf(TropicraftBlocks.BAMBOO_BUNDLE);
             dropsSelf(TropicraftBlocks.THATCH_BUNDLE);
@@ -111,7 +119,26 @@ public class TropicraftLootTableProvider extends LootTableProvider {
             
             dropsSelf(TropicraftBlocks.MAHOGANY_WOOD);
             dropsSelf(TropicraftBlocks.PALM_WOOD);
-            
+
+            dropsSelf(TropicraftBlocks.PAPAYA_LOG);
+            dropsSelf(TropicraftBlocks.PAPAYA_WOOD);
+
+            dropsSelf(TropicraftBlocks.RED_MANGROVE_LOG);
+            dropsSelf(TropicraftBlocks.RED_MANGROVE_WOOD);
+            dropsSelf(TropicraftBlocks.RED_MANGROVE_ROOTS);
+
+            dropsSelf(TropicraftBlocks.LIGHT_MANGROVE_LOG);
+            dropsSelf(TropicraftBlocks.LIGHT_MANGROVE_WOOD);
+            dropsSelf(TropicraftBlocks.LIGHT_MANGROVE_ROOTS);
+
+            dropsSelf(TropicraftBlocks.BLACK_MANGROVE_LOG);
+            dropsSelf(TropicraftBlocks.BLACK_MANGROVE_WOOD);
+            dropsSelf(TropicraftBlocks.BLACK_MANGROVE_ROOTS);
+
+            dropsSelf(TropicraftBlocks.STRIPPED_MANGROVE_LOG);
+            dropsSelf(TropicraftBlocks.STRIPPED_MANGROVE_WOOD);
+            dropsSelf(TropicraftBlocks.MANGROVE_PLANKS);
+
             // Stairs & Slabs
             dropsSelf(TropicraftBlocks.BAMBOO_STAIRS);
             dropsSelf(TropicraftBlocks.THATCH_STAIRS);
@@ -119,13 +146,15 @@ public class TropicraftLootTableProvider extends LootTableProvider {
             dropsSelf(TropicraftBlocks.PALM_STAIRS);
             dropsSelf(TropicraftBlocks.MAHOGANY_STAIRS);
             dropsSelf(TropicraftBlocks.THATCH_STAIRS_FUZZY);
-            
+            dropsSelf(TropicraftBlocks.MANGROVE_STAIRS);
+
             slab(TropicraftBlocks.BAMBOO_SLAB);
             slab(TropicraftBlocks.THATCH_SLAB);
             slab(TropicraftBlocks.CHUNK_SLAB);
             slab(TropicraftBlocks.PALM_SLAB);
             slab(TropicraftBlocks.MAHOGANY_SLAB);
-            
+            slab(TropicraftBlocks.MANGROVE_SLAB);
+
             // Leaves
             leaves(TropicraftBlocks.MAHOGANY_LEAVES, TropicraftBlocks.MAHOGANY_SAPLING, RARE_SAPLING_RATES);
             leaves(TropicraftBlocks.PALM_LEAVES, TropicraftBlocks.PALM_SAPLING, SAPLING_RATES);
@@ -135,7 +164,12 @@ public class TropicraftLootTableProvider extends LootTableProvider {
             fruitLeaves(TropicraftBlocks.LEMON_LEAVES, TropicraftBlocks.LEMON_SAPLING, TropicraftItems.LEMON);
             fruitLeaves(TropicraftBlocks.LIME_LEAVES, TropicraftBlocks.LIME_SAPLING, TropicraftItems.LIME);
             fruitLeaves(TropicraftBlocks.ORANGE_LEAVES, TropicraftBlocks.ORANGE_SAPLING, TropicraftItems.ORANGE);
-            
+            leavesNoSapling(TropicraftBlocks.RED_MANGROVE_LEAVES);
+            leavesNoSapling(TropicraftBlocks.TALL_MANGROVE_LEAVES);
+            leavesNoSapling(TropicraftBlocks.TEA_MANGROVE_LEAVES);
+            leavesNoSapling(TropicraftBlocks.BLACK_MANGROVE_LEAVES);
+            leaves(TropicraftBlocks.PAPAYA_LEAVES, TropicraftBlocks.PAPAYA_SAPLING, SAPLING_RATES);
+
             // Saplings
             dropsSelf(TropicraftBlocks.MAHOGANY_SAPLING);
             dropsSelf(TropicraftBlocks.PALM_SAPLING);
@@ -143,19 +177,26 @@ public class TropicraftLootTableProvider extends LootTableProvider {
             dropsSelf(TropicraftBlocks.LEMON_SAPLING);
             dropsSelf(TropicraftBlocks.LIME_SAPLING);
             dropsSelf(TropicraftBlocks.ORANGE_SAPLING);
-            
+            dropsSelf(TropicraftBlocks.PAPAYA_SAPLING);
+            dropsSelf(TropicraftBlocks.RED_MANGROVE_PROPAGULE);
+            dropsSelf(TropicraftBlocks.TALL_MANGROVE_PROPAGULE);
+            dropsSelf(TropicraftBlocks.TEA_MANGROVE_PROPAGULE);
+            dropsSelf(TropicraftBlocks.BLACK_MANGROVE_PROPAGULE);
+
             // Fences, Gates, and Walls
             dropsSelf(TropicraftBlocks.BAMBOO_FENCE);
             dropsSelf(TropicraftBlocks.THATCH_FENCE);
             dropsSelf(TropicraftBlocks.CHUNK_FENCE);
             dropsSelf(TropicraftBlocks.PALM_FENCE);
             dropsSelf(TropicraftBlocks.MAHOGANY_FENCE);
-            
+            dropsSelf(TropicraftBlocks.MANGROVE_FENCE);
+
             dropsSelf(TropicraftBlocks.BAMBOO_FENCE_GATE);
             dropsSelf(TropicraftBlocks.THATCH_FENCE_GATE);
             dropsSelf(TropicraftBlocks.CHUNK_FENCE_GATE);
             dropsSelf(TropicraftBlocks.PALM_FENCE_GATE);
             dropsSelf(TropicraftBlocks.MAHOGANY_FENCE_GATE);
+            dropsSelf(TropicraftBlocks.MANGROVE_FENCE_GATE);
 
             dropsSelf(TropicraftBlocks.CHUNK_WALL);
 
@@ -164,25 +205,39 @@ public class TropicraftLootTableProvider extends LootTableProvider {
             doubleBlock(TropicraftBlocks.THATCH_DOOR);
             doubleBlock(TropicraftBlocks.PALM_DOOR);
             doubleBlock(TropicraftBlocks.MAHOGANY_DOOR);
-            
+            doubleBlock(TropicraftBlocks.MANGROVE_DOOR);
+
             dropsSelf(TropicraftBlocks.BAMBOO_TRAPDOOR);
             dropsSelf(TropicraftBlocks.THATCH_TRAPDOOR);
             dropsSelf(TropicraftBlocks.PALM_TRAPDOOR);
             dropsSelf(TropicraftBlocks.MAHOGANY_TRAPDOOR);
-            
+            dropsSelf(TropicraftBlocks.MANGROVE_TRAPDOOR);
+
             // Misc remaining blocks
             doubleBlock(TropicraftBlocks.IRIS);
             registerLootTable(TropicraftBlocks.PINEAPPLE.get(), b -> droppingChunks(b, TropicraftItems.PINEAPPLE_CUBES,
                 BlockStateProperty.builder(b).fromProperties(
                         StatePropertiesPredicate.Builder.newBuilder().withProp(
                                 DoublePlantBlock.HALF, DoubleBlockHalf.UPPER))));
-            
+
+            dropsSelf(TropicraftBlocks.REEDS);
+            registerLootTable(TropicraftBlocks.PAPAYA.get(), b -> {
+                return LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
+                        .addEntry(withExplosionDecay(b, ItemLootEntry.builder(TropicraftBlocks.PAPAYA.get().asItem()).acceptFunction(SetCount.builder(ConstantRange.of(2))
+                                .acceptCondition(BlockStateProperty.builder(b).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(PapayaBlock.AGE, 1)))))));
+            });
+
             dropsSelf(TropicraftBlocks.SMALL_BONGO_DRUM);
             dropsSelf(TropicraftBlocks.MEDIUM_BONGO_DRUM);
             dropsSelf(TropicraftBlocks.LARGE_BONGO_DRUM);
             
             dropsSelf(TropicraftBlocks.BAMBOO_LADDER);
-            
+
+            dropsSelf(TropicraftBlocks.BAMBOO_BOARDWALK);
+            dropsSelf(TropicraftBlocks.PALM_BOARDWALK);
+            dropsSelf(TropicraftBlocks.MAHOGANY_BOARDWALK);
+            dropsSelf(TropicraftBlocks.MANGROVE_BOARDWALK);
+
             dropsSelf(TropicraftBlocks.BAMBOO_CHEST);
             dropsSelf(TropicraftBlocks.SIFTER);
             dropsSelf(TropicraftBlocks.DRINK_MIXER);
@@ -196,10 +251,18 @@ public class TropicraftLootTableProvider extends LootTableProvider {
             TropicraftBlocks.ALL_POTTED_PLANTS.forEach(ro -> registerLootTable(ro.get(), b -> droppingFlowerPotAndFlower((FlowerPotBlock) b)));
 
             registerLootTable(TropicraftBlocks.COFFEE_BUSH.get(), dropNumberOfItems(TropicraftBlocks.COFFEE_BUSH.get(), TropicraftItems.RAW_COFFEE_BEAN, 1, 3));
+
+            dropsSelf(TropicraftBlocks.GOLDEN_LEATHER_FERN);
+            dropsOther(TropicraftBlocks.TALL_GOLDEN_LEATHER_FERN, TropicraftBlocks.GOLDEN_LEATHER_FERN);
+            dropsOther(TropicraftBlocks.LARGE_GOLDEN_LEATHER_FERN, TropicraftBlocks.GOLDEN_LEATHER_FERN);
         }
         
         private void dropsSelf(Supplier<? extends Block> block) {
             registerDropSelfLootTable(block.get());
+        }
+
+        private void dropsOther(Supplier<? extends Block> block, Supplier<? extends IItemProvider> drops) {
+            registerDropping(block.get(), drops.get());
         }
         
         private void dropsOreItem(Supplier<? extends Block> block, Supplier<? extends IItemProvider> item) {
@@ -279,7 +342,13 @@ public class TropicraftLootTableProvider extends LootTableProvider {
         
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return TropicraftBlocks.BLOCKS.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
+            return TropicraftBlocks.BLOCKS.getEntries().stream()
+                    .map(Supplier::get)
+                    .filter(block -> {
+                        ResourceLocation lootTable = block.getLootTable();
+                        return lootTable != null && lootTable.getNamespace().equals(Constants.MODID);
+                    })
+                    .collect(Collectors.toList());
         }
     }
 }

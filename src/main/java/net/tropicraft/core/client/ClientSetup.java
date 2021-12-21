@@ -1,45 +1,16 @@
 package net.tropicraft.core.client;
 
+import net.minecraft.block.RedstoneWallTorchBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.tropicraft.core.client.entity.render.AshenMaskRenderer;
-import net.tropicraft.core.client.entity.render.AshenRenderer;
-import net.tropicraft.core.client.entity.render.BambooItemFrameRenderer;
-import net.tropicraft.core.client.entity.render.BeachFloatRenderer;
-import net.tropicraft.core.client.entity.render.ChairRenderer;
-import net.tropicraft.core.client.entity.render.CowktailRenderer;
-import net.tropicraft.core.client.entity.render.EIHRenderer;
-import net.tropicraft.core.client.entity.render.EagleRayRenderer;
-import net.tropicraft.core.client.entity.render.EggRenderer;
-import net.tropicraft.core.client.entity.render.FailgullRenderer;
-import net.tropicraft.core.client.entity.render.IguanaRenderer;
-import net.tropicraft.core.client.entity.render.KoaRenderer;
-import net.tropicraft.core.client.entity.render.ManOWarRenderer;
-import net.tropicraft.core.client.entity.render.MarlinRenderer;
-import net.tropicraft.core.client.entity.render.PiranhaRenderer;
-import net.tropicraft.core.client.entity.render.PoisonBlotRenderer;
-import net.tropicraft.core.client.entity.render.SardineRenderer;
-import net.tropicraft.core.client.entity.render.SeaTurtleRenderer;
-import net.tropicraft.core.client.entity.render.SeaUrchinRenderer;
-import net.tropicraft.core.client.entity.render.SeahorseRenderer;
-import net.tropicraft.core.client.entity.render.SharkRenderer;
-import net.tropicraft.core.client.entity.render.StarfishRenderer;
-import net.tropicraft.core.client.entity.render.TreeFrogRenderer;
-import net.tropicraft.core.client.entity.render.TropiBeeRenderer;
-import net.tropicraft.core.client.entity.render.TropiCreeperRenderer;
-import net.tropicraft.core.client.entity.render.TropiSkellyRenderer;
-import net.tropicraft.core.client.entity.render.TropiSpiderRenderer;
-import net.tropicraft.core.client.entity.render.TropicraftDolphinRenderer;
-import net.tropicraft.core.client.entity.render.TropicraftTropicalFishRenderer;
-import net.tropicraft.core.client.entity.render.UmbrellaRenderer;
-import net.tropicraft.core.client.entity.render.VMonkeyRenderer;
-import net.tropicraft.core.client.entity.render.WallItemRenderer;
+import net.tropicraft.core.client.entity.render.*;
 import net.tropicraft.core.client.tileentity.AirCompressorRenderer;
 import net.tropicraft.core.client.tileentity.BambooChestRenderer;
 import net.tropicraft.core.client.tileentity.DrinkMixerRenderer;
@@ -52,34 +23,55 @@ import net.tropicraft.core.common.entity.TropicraftEntities;
 public class ClientSetup {
 
     public static void setupBlockRenderLayers() {
-        RenderType renderType = RenderType.getCutout();
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.AIR_COMPRESSOR.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.COCONUT.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.DRINK_MIXER.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.SIFTER.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.TIKI_TORCH.get(), renderType);
+        RenderType cutout = RenderType.getCutout();
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.AIR_COMPRESSOR.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.COCONUT.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.DRINK_MIXER.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.SIFTER.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.TIKI_TORCH.get(), cutout);
         TropicraftBlocks.FLOWERS.forEach((key, value) -> RenderTypeLookup.setRenderLayer(value.get(), RenderType.getCutout()));
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PINEAPPLE.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.IRIS.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.COFFEE_BUSH.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.GRAPEFRUIT_SAPLING.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.LEMON_SAPLING.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.LIME_SAPLING.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.ORANGE_SAPLING.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.MAHOGANY_SAPLING.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PALM_SAPLING.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PALM_TRAPDOOR.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PALM_DOOR.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_TRAPDOOR.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_DOOR.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_LADDER.get(), renderType);
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_FLOWER_POT.get(), renderType);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PINEAPPLE.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.IRIS.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.COFFEE_BUSH.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.GOLDEN_LEATHER_FERN.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.TALL_GOLDEN_LEATHER_FERN.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.LARGE_GOLDEN_LEATHER_FERN.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.GRAPEFRUIT_SAPLING.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.LEMON_SAPLING.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.LIME_SAPLING.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.ORANGE_SAPLING.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PAPAYA_SAPLING.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.MAHOGANY_SAPLING.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PALM_SAPLING.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PALM_TRAPDOOR.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PALM_DOOR.get(), cutout);
+
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.MANGROVE_TRAPDOOR.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.MANGROVE_DOOR.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_TRAPDOOR.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_DOOR.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_LADDER.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BAMBOO_FLOWER_POT.get(), cutout);
         TropicraftBlocks.BAMBOO_POTTED_TROPICS_PLANTS.forEach(value -> RenderTypeLookup.setRenderLayer(value.get(), RenderType.getCutout()));
         TropicraftBlocks.BAMBOO_POTTED_VANILLA_PLANTS.forEach(value -> RenderTypeLookup.setRenderLayer(value.get(), RenderType.getCutout()));
         TropicraftBlocks.VANILLA_POTTED_TROPICS_PLANTS.forEach(value -> RenderTypeLookup.setRenderLayer(value.get(), RenderType.getCutout()));
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.REEDS.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.PAPAYA.get(), cutout);
 
-        renderType = RenderType.getCutoutMipped();
-        RenderTypeLookup.setRenderLayer(TropicraftBlocks.THATCH_STAIRS_FUZZY.get(), renderType);
+        RenderType cutoutMipped = RenderType.getCutoutMipped();
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.THATCH_STAIRS_FUZZY.get(), cutoutMipped);
+
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.RED_MANGROVE_PROPAGULE.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.TALL_MANGROVE_PROPAGULE.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.TEA_MANGROVE_PROPAGULE.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BLACK_MANGROVE_PROPAGULE.get(), cutout);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.RED_MANGROVE_ROOTS.get(), cutoutMipped);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.LIGHT_MANGROVE_ROOTS.get(), cutoutMipped);
+        RenderTypeLookup.setRenderLayer(TropicraftBlocks.BLACK_MANGROVE_ROOTS.get(), cutoutMipped);
+
+        for (RegistryObject<RedstoneWallTorchBlock> block : TropicraftBlocks.JIGARBOV_WALL_TORCHES.values()) {
+            RenderTypeLookup.setRenderLayer(block.get(), cutoutMipped);
+        }
     }
 
     public static void setupEntityRenderers(final FMLClientSetupEvent event) {
@@ -119,6 +111,15 @@ public class ClientSetup {
         RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.TROPI_BEE.get(), TropiBeeRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.COWKTAIL.get(), CowktailRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.MAN_O_WAR.get(), ManOWarRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.TAPIR.get(), TapirRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.JAGUAR.get(), JaguarRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.BROWN_BASILISK_LIZARD.get(), BasiliskLizardRenderer::brown);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.GREEN_BASILISK_LIZARD.get(), BasiliskLizardRenderer::green);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.HUMMINGBIRD.get(), HummingbirdRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.FIDDLER_CRAB.get(), FiddlerCrabRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.SPIDER_MONKEY.get(), SpiderMonkeyRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.WHITE_LIPPED_PECCARY.get(), WhiteLippedPeccaryRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(TropicraftEntities.CUBERA.get(), CuberaRenderer::new);
     }
 
     public static void setupTileEntityRenderers() {

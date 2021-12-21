@@ -15,6 +15,7 @@ public class TropicraftTags {
     public static class Blocks extends TropicraftTags {
 
         public static final INamedTag<Block> SAND = modTag("sand");
+        public static final INamedTag<Block> MUD = modTag("mud");
 
         public static final INamedTag<Block> SAPLINGS = modTag("saplings");
         public static final INamedTag<Block> LEAVES = modTag("leaves");
@@ -26,6 +27,8 @@ public class TropicraftTags {
 
         public static final INamedTag<Block> LOGS = modTag("logs");
         public static final INamedTag<Block> PLANKS = modTag("planks");
+
+        public static final INamedTag<Block> ROOTS = modTag("roots");
 
         public static final INamedTag<Block> WOODEN_SLABS = modTag("wooden_slabs");
         public static final INamedTag<Block> WOODEN_STAIRS = modTag("wooden_stairs");
@@ -76,6 +79,7 @@ public class TropicraftTags {
         public static final INamedTag<Item> SWORDS = compatTag("swords");
 
         public static final INamedTag<Item> SAND = modTag("sand");
+        public static final INamedTag<Item> MUD = modTag("mud");
 
         public static final INamedTag<Item> SAPLINGS = modTag("saplings");
         public static final INamedTag<Item> LEAVES = modTag("leaves");
@@ -103,6 +107,11 @@ public class TropicraftTags {
         public static final INamedTag<Item> SHELLS = modTag("shells");
 
         public static final INamedTag<Item> ASHEN_MASKS = modTag("ashen_masks");
+
+        public static final INamedTag<Item> FRUITS = modTag("fruits");
+        public static final INamedTag<Item> MEATS = modTag("meats");
+
+        public static final INamedTag<Item> MUSIC_DISCS = modTag("music_discs");
 
         static INamedTag<Item> tag(String modid, String name) {
             return tag(ItemTags::makeWrapperTag, modid, name);

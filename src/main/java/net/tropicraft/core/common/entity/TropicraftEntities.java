@@ -1,5 +1,6 @@
 package net.tropicraft.core.common.entity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
@@ -16,15 +17,16 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tropicraft.Constants;
+import net.tropicraft.core.common.TropicraftTags;
+import net.tropicraft.core.common.dimension.TropicraftDimension;
 import net.tropicraft.core.common.entity.egg.*;
 import net.tropicraft.core.common.entity.hostile.AshenEntity;
 import net.tropicraft.core.common.entity.hostile.TropiSkellyEntity;
 import net.tropicraft.core.common.entity.hostile.TropiSpiderEntity;
-import net.tropicraft.core.common.entity.neutral.EIHEntity;
-import net.tropicraft.core.common.entity.neutral.IguanaEntity;
-import net.tropicraft.core.common.entity.neutral.TreeFrogEntity;
-import net.tropicraft.core.common.entity.neutral.VMonkeyEntity;
+import net.tropicraft.core.common.entity.neutral.*;
 import net.tropicraft.core.common.entity.passive.*;
+import net.tropicraft.core.common.entity.passive.basilisk.BasiliskLizardEntity;
+import net.tropicraft.core.common.entity.passive.monkey.SpiderMonkeyEntity;
 import net.tropicraft.core.common.entity.placeable.*;
 import net.tropicraft.core.common.entity.projectile.ExplodingCoconutEntity;
 import net.tropicraft.core.common.entity.projectile.LavaBallEntity;
@@ -80,6 +82,15 @@ public class TropicraftEntities {
     public static final RegistryObject<EntityType<TropiBeeEntity>> TROPI_BEE = register("tropibee", TropicraftEntities::tropiBee);
     public static final RegistryObject<EntityType<CowktailEntity>> COWKTAIL = register("cowktail", TropicraftEntities::cowktail);
     public static final RegistryObject<EntityType<ManOWarEntity>> MAN_O_WAR = register("man_o_war", TropicraftEntities::manOWar);
+    public static final RegistryObject<EntityType<TapirEntity>> TAPIR = register("tapir", TropicraftEntities::tapir);
+    public static final RegistryObject<EntityType<JaguarEntity>> JAGUAR = register("jaguar", TropicraftEntities::jaguar);
+    public static final RegistryObject<EntityType<BasiliskLizardEntity>> BROWN_BASILISK_LIZARD = register("brown_basilisk_lizard", TropicraftEntities::basiliskLizard);
+    public static final RegistryObject<EntityType<BasiliskLizardEntity>> GREEN_BASILISK_LIZARD = register("green_basilisk_lizard", TropicraftEntities::basiliskLizard);
+    public static final RegistryObject<EntityType<HummingbirdEntity>> HUMMINGBIRD = register("hummingbird", TropicraftEntities::hummingbird);
+    public static final RegistryObject<EntityType<FiddlerCrabEntity>> FIDDLER_CRAB = register("fiddler_crab", TropicraftEntities::fiddlerCrab);
+    public static final RegistryObject<EntityType<SpiderMonkeyEntity>> SPIDER_MONKEY = register("spider_monkey", TropicraftEntities::spiderMonkey);
+    public static final RegistryObject<EntityType<WhiteLippedPeccaryEntity>> WHITE_LIPPED_PECCARY = register("white_lipped_peccary", TropicraftEntities::whiteLippedPeccary);
+    public static final RegistryObject<EntityType<CuberaEntity>> CUBERA = register("cubera", TropicraftEntities::cubera);
 
     private static <E extends Entity, T extends EntityType<E>> RegistryObject<EntityType<E>> register(final String name, final Supplier<EntityType.Builder<E>> sup) {
         return ENTITIES.register(name, () -> sup.get().build(name));
@@ -96,7 +107,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<ManOWarEntity> manOWar() {
-        return EntityType.Builder.create(ManOWarEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(ManOWarEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.6F, 0.8F)
                 .setTrackingRange(10)
                 .setUpdateInterval(3)
@@ -176,7 +187,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<TropicraftTropicalFishEntity> tropicalFish() {
-        return EntityType.Builder.create(TropicraftTropicalFishEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(TropicraftTropicalFishEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.3F, 0.4F)
                 .setTrackingRange(4)
                 .setUpdateInterval(3)
@@ -184,7 +195,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<SardineEntity> riverSardine() {
-        return EntityType.Builder.create(SardineEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(SardineEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.3F, 0.4F)
                 .setTrackingRange(4)
                 .setUpdateInterval(3)
@@ -208,7 +219,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<StarfishEggEntity> starfishEgg() {
-        return EntityType.Builder.create(StarfishEggEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(StarfishEggEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.4F, 0.5F)
                 .setTrackingRange(8)
                 .setUpdateInterval(3)
@@ -216,7 +227,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<StarfishEntity> starfish() {
-        return EntityType.Builder.create(StarfishEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(StarfishEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.5F, 0.5F)
                 .setTrackingRange(4)
                 .setUpdateInterval(15)
@@ -224,7 +235,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<SeaUrchinEggEntity> seaUrchinEgg() {
-        return EntityType.Builder.create(SeaUrchinEggEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(SeaUrchinEggEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.4F, 0.5F)
                 .setTrackingRange(6)
                 .setUpdateInterval(15)
@@ -232,7 +243,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<SeaUrchinEntity> seaUrchin() {
-        return EntityType.Builder.create(SeaUrchinEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(SeaUrchinEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.5F, 0.5F)
                 .setTrackingRange(8)
                 .setUpdateInterval(3)
@@ -256,7 +267,7 @@ public class TropicraftEntities {
     }
 
     private static EntityType.Builder<SeahorseEntity> seahorse() {
-        return EntityType.Builder.create(SeahorseEntity::new, EntityClassification.WATER_CREATURE)
+        return EntityType.Builder.create(SeahorseEntity::new, EntityClassification.WATER_AMBIENT)
                 .size(0.5F, 0.6F)
                 .setTrackingRange(8)
                 .setUpdateInterval(3)
@@ -385,6 +396,70 @@ public class TropicraftEntities {
                 .setShouldReceiveVelocityUpdates(true);
     }
 
+    private static EntityType.Builder<TapirEntity> tapir() {
+        return EntityType.Builder.create(TapirEntity::new, EntityClassification.MONSTER)
+                .size(0.8F, 1.0F)
+                .setTrackingRange(10)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<JaguarEntity> jaguar() {
+        return EntityType.Builder.create(JaguarEntity::new, EntityClassification.MONSTER)
+                .size(0.9F, 1.0F)
+                .setTrackingRange(10)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<BasiliskLizardEntity> basiliskLizard() {
+        return EntityType.Builder.create(BasiliskLizardEntity::new, EntityClassification.MONSTER)
+                .size(0.7F, 0.4F)
+                .setTrackingRange(8)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<HummingbirdEntity> hummingbird() {
+        return EntityType.Builder.create(HummingbirdEntity::new, EntityClassification.MONSTER)
+                .size(0.5F, 0.5F)
+                .setTrackingRange(8)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<FiddlerCrabEntity> fiddlerCrab() {
+        return EntityType.Builder.create(FiddlerCrabEntity::new, EntityClassification.MONSTER)
+                .size(0.5F, 0.2F)
+                .setTrackingRange(10)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<SpiderMonkeyEntity> spiderMonkey() {
+        return EntityType.Builder.create(SpiderMonkeyEntity::new, EntityClassification.MONSTER)
+                .size(0.5F, 0.6F)
+                .setTrackingRange(10)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<WhiteLippedPeccaryEntity> whiteLippedPeccary() {
+        return EntityType.Builder.create(WhiteLippedPeccaryEntity::new, EntityClassification.MONSTER)
+                .size(0.7F, 0.8F)
+                .setTrackingRange(8)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
+    private static EntityType.Builder<CuberaEntity> cubera() {
+        return EntityType.Builder.create(CuberaEntity::new, EntityClassification.WATER_CREATURE)
+                .size(1.2F, 0.8F)
+                .setTrackingRange(8)
+                .setUpdateInterval(3)
+                .setShouldReceiveVelocityUpdates(true);
+    }
+
     public static void registerSpawns() {
         registerWaterSpawn(TROPICAL_FISH.get(), AbstractFishEntity::func_223363_b);
         registerWaterSpawn(RIVER_SARDINE.get(), AbstractFishEntity::func_223363_b);
@@ -408,6 +483,15 @@ public class TropicraftEntities {
         registerLandSpawn(TREE_FROG.get(), TropicraftEntities::canAnimalSpawn);
         registerLandSpawn(V_MONKEY.get(), TropicraftEntities::canAnimalSpawn);
         registerLandSpawn(COWKTAIL.get(), TropicraftEntities::canAnimalSpawn);
+        registerLandSpawn(TAPIR.get(), TropicraftEntities::canAnimalSpawn);
+        registerLandSpawn(JAGUAR.get(), TropicraftEntities::canAnimalSpawn);
+        registerLandSpawn(BROWN_BASILISK_LIZARD.get(), TropicraftEntities::canAnimalSpawn);
+        registerLandSpawn(GREEN_BASILISK_LIZARD.get(), TropicraftEntities::canAnimalSpawn);
+        registerLandSpawn(HUMMINGBIRD.get(), HummingbirdEntity::canHummingbirdSpawnOn);
+        registerNoRestrictionSpawn(FIDDLER_CRAB.get(), FiddlerCrabEntity::canCrabSpawn);
+        registerLandSpawn(SPIDER_MONKEY.get(), TropicraftEntities::canAnimalSpawn);
+        registerLandSpawn(WHITE_LIPPED_PECCARY.get(), TropicraftEntities::canAnimalSpawn);
+        registerWaterSpawn(CUBERA.get(), TropicraftEntities::canSpawnOceanWaterMob);
 
         registerLandSpawn(ASHEN.get(), MobEntity::canSpawnOn);
         registerLandSpawn(FAILGULL.get(), MobEntity::canSpawnOn);
@@ -416,7 +500,10 @@ public class TropicraftEntities {
     }
 
     public static boolean canAnimalSpawn(EntityType<? extends MobEntity> animal, IWorld worldIn, SpawnReason reason, BlockPos pos, Random random) {
-        return worldIn.getBlockState(pos.down()).getBlock() == Blocks.GRASS_BLOCK || worldIn.getBlockState(pos.down()).getMaterial() == Material.SAND;
+        BlockState groundState = worldIn.getBlockState(pos.down());
+        return groundState.getBlock() == Blocks.GRASS_BLOCK
+                || groundState.getMaterial() == Material.SAND
+                || groundState.isIn(TropicraftTags.Blocks.MUD);
     }
 
     private static <T extends MobEntity> void registerLandSpawn(final EntityType<T> type, EntitySpawnPlacementRegistry.IPlacementPredicate<T> predicate) {
@@ -427,12 +514,18 @@ public class TropicraftEntities {
         EntitySpawnPlacementRegistry.register(type, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, predicate);
     }
 
+    private static <T extends MobEntity> void registerNoRestrictionSpawn(final EntityType<T> type,  EntitySpawnPlacementRegistry.IPlacementPredicate<T> predicate) {
+        EntitySpawnPlacementRegistry.register(type, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, predicate);
+    }
+
     public static <T extends MobEntity> boolean canSpawnOceanWaterMob(EntityType<T> waterMob, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
-        return pos.getY() > 90 && pos.getY() < world.getSeaLevel() && world.getFluidState(pos).isTagged(FluidTags.WATER);
+        int seaLevel = TropicraftDimension.getSeaLevel(world);
+        return pos.getY() > 90 && pos.getY() < seaLevel && world.getFluidState(pos).isTagged(FluidTags.WATER);
     }
 
     public static <T extends MobEntity> boolean canSpawnSurfaceOceanWaterMob(EntityType<T> waterMob, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
-        return pos.getY() > world.getSeaLevel() - 3 && pos.getY() < world.getSeaLevel() && world.getFluidState(pos).isTagged(FluidTags.WATER);
+        int seaLevel = TropicraftDimension.getSeaLevel(world);
+        return pos.getY() > seaLevel - 3 && pos.getY() < seaLevel && world.getFluidState(pos).isTagged(FluidTags.WATER);
     }
 
     @SubscribeEvent
@@ -465,5 +558,14 @@ public class TropicraftEntities {
         event.put(TROPI_BEE.get(), TropiBeeEntity.func_234182_eX_().create());
         event.put(COWKTAIL.get(), CowktailEntity.registerAttributes().create());
         event.put(MAN_O_WAR.get(), ManOWarEntity.createAttributes().create());
+        event.put(TAPIR.get(), TapirEntity.createAttributes().create());
+        event.put(JAGUAR.get(), JaguarEntity.createAttributes().create());
+        event.put(BROWN_BASILISK_LIZARD.get(), BasiliskLizardEntity.createAttributes().create());
+        event.put(GREEN_BASILISK_LIZARD.get(), BasiliskLizardEntity.createAttributes().create());
+        event.put(HUMMINGBIRD.get(), HummingbirdEntity.createAttributes().create());
+        event.put(FIDDLER_CRAB.get(), FiddlerCrabEntity.createAttributes().create());
+        event.put(SPIDER_MONKEY.get(), SpiderMonkeyEntity.createAttributes().create());
+        event.put(WHITE_LIPPED_PECCARY.get(), WhiteLippedPeccaryEntity.createAttributes().create());
+        event.put(CUBERA.get(), CuberaEntity.createAttributes().create());
     }
 }

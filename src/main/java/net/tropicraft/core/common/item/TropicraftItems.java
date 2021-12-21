@@ -1,15 +1,7 @@
 package net.tropicraft.core.common.item;
 
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -32,11 +24,14 @@ import net.tropicraft.core.common.entity.TropicraftEntities;
 import net.tropicraft.core.common.entity.placeable.BeachFloatEntity;
 import net.tropicraft.core.common.entity.placeable.ChairEntity;
 import net.tropicraft.core.common.entity.placeable.UmbrellaEntity;
-import net.tropicraft.core.common.item.scuba.PonyBottleItem;
-import net.tropicraft.core.common.item.scuba.ScubaFlippersItem;
-import net.tropicraft.core.common.item.scuba.ScubaGogglesItem;
-import net.tropicraft.core.common.item.scuba.ScubaHarnessItem;
-import net.tropicraft.core.common.item.scuba.ScubaType;
+import net.tropicraft.core.common.item.scuba.*;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @EventBusSubscriber(modid = Constants.MODID, bus = Bus.MOD)
 public class TropicraftItems {
@@ -140,6 +135,15 @@ public class TropicraftItems {
     public static final RegistryObject<Item> COWKTAIL_SPAWN_EGG = register("cowktail_spawn_egg", Builder.spawnEgg(TropicraftEntities.COWKTAIL));
     public static final RegistryObject<Item> MAN_O_WAR_SPAWN_EGG = register("man_o_war_spawn_egg", Builder.spawnEgg(TropicraftEntities.MAN_O_WAR));
     public static final RegistryObject<Item> TROPIBEE_SPAWN_EGG = register("tropibee_spawn_egg", Builder.spawnEgg(TropicraftEntities.TROPI_BEE));
+    public static final RegistryObject<Item> TAPIR_SPAWN_EGG = register("tapir_spawn_egg", Builder.spawnEgg(TropicraftEntities.TAPIR));
+    public static final RegistryObject<Item> JAGUAR_SPAWN_EGG = register("jaguar_spawn_egg", Builder.spawnEgg(TropicraftEntities.JAGUAR));
+    public static final RegistryObject<Item> BROWN_BASILISK_LIZARD_SPAWN_EGG = register("brown_basilisk_lizard_spawn_egg", Builder.spawnEgg(TropicraftEntities.BROWN_BASILISK_LIZARD));
+    public static final RegistryObject<Item> GREEN_BASILISK_LIZARD_SPAWN_EGG = register("green_basilisk_lizard_spawn_egg", Builder.spawnEgg(TropicraftEntities.GREEN_BASILISK_LIZARD));
+    public static final RegistryObject<Item> HUMMINGBIRD_SPAWN_EGG = register("hummingbird_spawn_egg", Builder.spawnEgg(TropicraftEntities.HUMMINGBIRD));
+    public static final RegistryObject<Item> FIDDLER_CRAB_SPAWN_EGG = register("fiddler_crab_spawn_egg", Builder.spawnEgg(TropicraftEntities.FIDDLER_CRAB));
+    public static final RegistryObject<Item> SPIDER_MONKEY_SPAWN_EGG = register("spider_monkey_spawn_egg", Builder.spawnEgg(TropicraftEntities.SPIDER_MONKEY));
+    public static final RegistryObject<Item> WHITE_LIPPED_PECCARY_SPAWN_EGG = register("white_lipped_peccary_spawn_egg", Builder.spawnEgg(TropicraftEntities.WHITE_LIPPED_PECCARY));
+    public static final RegistryObject<Item> CUBERA_SPAWN_EGG = register("cubera_spawn_egg", Builder.spawnEgg(TropicraftEntities.CUBERA));
 
     public static final ImmutableMap<AshenMasks, RegistryObject<AshenMaskItem>> ASHEN_MASKS = Arrays.stream(AshenMasks.values())
             .collect(Maps.toImmutableEnumMap(Function.identity(), type -> register("ashen_mask_" + type.name().toLowerCase(Locale.ROOT), Builder.mask(type))));
@@ -199,6 +203,8 @@ public class TropicraftItems {
             "exploding_coconut", () -> new ExplodingCoconutItem(new Item.Properties().group(Tropicraft.TROPICRAFT_ITEM_GROUP)));
 
     public static final RegistryObject<Item> FISHING_NET = register("fishing_net", () -> new Item(new Item.Properties().group(Tropicraft.TROPICRAFT_ITEM_GROUP).maxStackSize(1)));
+
+    public static final RegistryObject<Item> PIANGUAS = register("pianguas", () -> new Item(new Item.Properties().group(Tropicraft.TROPICRAFT_ITEM_GROUP)));
 
     private static <T extends Item> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ITEMS.register(name, sup);
