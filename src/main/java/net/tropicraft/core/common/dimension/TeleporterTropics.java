@@ -3,6 +3,7 @@ package net.tropicraft.core.common.dimension;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
+import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.TikiTorchBlock;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.tileentity.BambooChestTileEntity;
@@ -27,12 +29,19 @@ import net.tropicraft.core.common.block.tileentity.TropicraftTileEntityTypes;
 import net.tropicraft.core.common.item.TropicraftItems;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.common.base.Patchouli;
+import vazkii.patchouli.common.base.PatchouliAPIImpl;
+import vazkii.patchouli.common.item.ItemModBook;
+import vazkii.patchouli.common.item.PatchouliItems;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class TeleporterTropics implements ITeleporter {
 
@@ -40,6 +49,7 @@ public class TeleporterTropics implements ITeleporter {
     private static final Block PORTAL_WALL_BLOCK = Blocks.SANDSTONE; // todo tropics portal
     private static final Block PORTAL_BLOCK = TropicraftBlocks.PORTAL_WATER.get();
     private static final Block TELEPORTER_BLOCK = TropicraftBlocks.TELEPORT_PORTAL_WATER.get();
+    private static final Supplier<ItemStack> BOOK = () -> PatchouliAPI.get().getBookStack(new ResourceLocation("tropicraft","encyclopedia_tropica"));
 
     private final ServerLevel world;
     private final Random random;
@@ -152,7 +162,7 @@ public class TeleporterTropics implements ITeleporter {
             if (entity instanceof Player player) {
                 if (this.world.dimension() == TropicraftDimension.WORLD) {
                     //TODO improve this logical check to an NBT tag or something?
-                    if (!player.getInventory().contains(new ItemStack(TropicraftItems.NIGEL_STACHE.get()))) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
+                    if (!player.getInventory().contains(BOOK.get())) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
                         // Search for the spawn chest
                         BambooChestTileEntity chest = null;
                         int chestX = Mth.floor(newLocX);
@@ -178,7 +188,7 @@ public class TeleporterTropics implements ITeleporter {
                             boolean hasEncyclopedia = false;
                             for (int inv = 0; inv < chest.getContainerSize(); inv++) {
                                 ItemStack stack = chest.getItem(inv);
-                                if (stack.getItem() == TropicraftItems.NIGEL_STACHE.get()) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
+                                if (stack == BOOK.get()) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
                                     hasEncyclopedia = true;
                                 }
                             }
@@ -188,7 +198,10 @@ public class TeleporterTropics implements ITeleporter {
                                 for (int inv = 0; inv < chest.getContainerSize(); inv++) {
                                     ItemStack stack = chest.getItem(inv);
                                     if (stack.isEmpty()) {
-                                        chest.setItem(inv, new ItemStack(TropicraftItems.NIGEL_STACHE.get(), 1));
+                                        String tagValue = BOOK.get().getOrCreateTag().toString();
+                                        LOGGER.info("[Debug]: The book being put into the chest tag is: " + tagValue);
+
+                                        chest.setItem(inv, BOOK.get());
                                         break;
                                     }
                                 }
