@@ -2,10 +2,22 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "patchouli:guide_book"
+      "tropicraft:encyclopedia_tropica"
     ]
   },
   "criteria": {
+    "has_book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:book"
+            ]
+          }
+        ]
+      }
+    },
     "has_palm_sapling": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -21,12 +33,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "patchouli:guide_book"
+        "recipe": "tropicraft:encyclopedia_tropica"
       }
     }
   },
   "requirements": [
     [
+      "has_book",
       "has_palm_sapling",
       "has_the_recipe"
     ]

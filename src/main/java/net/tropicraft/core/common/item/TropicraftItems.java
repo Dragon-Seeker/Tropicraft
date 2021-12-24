@@ -2,12 +2,16 @@ package net.tropicraft.core.common.item;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -26,7 +30,9 @@ import net.tropicraft.core.common.entity.placeable.ChairEntity;
 import net.tropicraft.core.common.entity.placeable.UmbrellaEntity;
 import net.tropicraft.core.common.item.scuba.*;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
@@ -205,6 +211,8 @@ public class TropicraftItems {
     public static final RegistryObject<Item> FISHING_NET = register("fishing_net", () -> new Item(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP).stacksTo(1)));
 
     public static final RegistryObject<Item> PIANGUAS = register("pianguas", () -> new Item(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP)));
+
+    public static final RegistryObject<Item> ENCYCLOPEDIA = register("encyclopedia_tropica", () -> new EncyclopediaTropica(new Item.Properties().tab(Tropicraft.TROPICRAFT_ITEM_GROUP).stacksTo(1)));
 
     private static <T extends Item> RegistryObject<T> register(final String name, final Supplier<T> sup) {
         return ITEMS.register(name, sup);

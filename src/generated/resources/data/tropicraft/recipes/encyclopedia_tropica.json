@@ -2,10 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
+      "item": "minecraft:book"
+    },
+    {
       "item": "tropicraft:palm_sapling"
     }
   ],
   "result": {
-    "item": "patchouli:guide_book"
+    "item": "tropicraft:encyclopedia_tropica"
   }
 }

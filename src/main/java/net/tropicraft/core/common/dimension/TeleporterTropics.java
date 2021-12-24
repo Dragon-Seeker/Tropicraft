@@ -162,7 +162,7 @@ public class TeleporterTropics implements ITeleporter {
             if (entity instanceof Player player) {
                 if (this.world.dimension() == TropicraftDimension.WORLD) {
                     //TODO improve this logical check to an NBT tag or something?
-                    if (!player.getInventory().contains(Constants.BOOK.get())) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
+                    if (!player.getInventory().contains(TropicraftItems.ENCYCLOPEDIA.get().getDefaultInstance())) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
                         // Search for the spawn chest
                         BambooChestTileEntity chest = null;
                         int chestX = Mth.floor(newLocX);
@@ -188,7 +188,7 @@ public class TeleporterTropics implements ITeleporter {
                             boolean hasEncyclopedia = false;
                             for (int inv = 0; inv < chest.getContainerSize(); inv++) {
                                 ItemStack stack = chest.getItem(inv);
-                                if (stack == Constants.BOOK.get()) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
+                                if (stack == TropicraftItems.ENCYCLOPEDIA.get().getDefaultInstance()) { //TODO [1.17]: Replace Nigel Stache item with encyclopedia when reimplemented
                                     hasEncyclopedia = true;
                                 }
                             }
@@ -198,10 +198,7 @@ public class TeleporterTropics implements ITeleporter {
                                 for (int inv = 0; inv < chest.getContainerSize(); inv++) {
                                     ItemStack stack = chest.getItem(inv);
                                     if (stack.isEmpty()) {
-                                        String tagValue = Constants.BOOK.get().getOrCreateTag().toString();
-                                        LOGGER.info("[Debug]: The book being put into the chest tag is: " + tagValue);
-
-                                        chest.setItem(inv, Constants.BOOK.get());
+                                        chest.setItem(inv, TropicraftItems.ENCYCLOPEDIA.get().getDefaultInstance());
                                         break;
                                     }
                                 }

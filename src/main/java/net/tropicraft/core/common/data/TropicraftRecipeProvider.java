@@ -1,24 +1,22 @@
 package net.tropicraft.core.common.data;
 
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.data.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag.Named;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.tags.Tag.Named;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.TropicraftTags;
-import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.drinks.Drink;
 import org.apache.commons.lang3.StringUtils;
@@ -31,8 +29,6 @@ import java.util.function.Supplier;
 import static net.tropicraft.core.common.block.TropicraftBlocks.*;
 import static net.tropicraft.core.common.block.TropicraftFlower.*;
 import static net.tropicraft.core.common.item.TropicraftItems.*;
-
-import vazkii.patchouli.common.recipe.ShapelessBookRecipe;
 
 public class TropicraftRecipeProvider extends RecipeProvider {
 
@@ -375,8 +371,10 @@ public class TropicraftRecipeProvider extends RecipeProvider {
             .unlockedBy("has_" + safeName(BAMBOO_STICK.get()), has(BAMBOO_STICK.get()))
             .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(Constants.BOOK.get().getItem())
+        ShapelessRecipeBuilder.shapeless(ENCYCLOPEDIA.get())
+                .requires(Items.BOOK)
                 .requires(PALM_SAPLING.get())
+                .unlockedBy("has_" + safeName(Items.BOOK), has(Items.BOOK))
                 .unlockedBy("has_" + safeName(PALM_SAPLING.get()), has(PALM_SAPLING.get()))
                 .save(consumer);
 
