@@ -205,7 +205,11 @@ public class Tropicraft {
             TropicraftBlockstateProvider blockstates = new TropicraftBlockstateProvider(gen, existingFileHelper);
             gen.addProvider(blockstates);
             gen.addProvider(new TropicraftItemModelProvider(gen, blockstates.getExistingHelper()));
-            gen.addProvider(new TropicraftLangProvider(gen));
+
+            //TODO [Enyclopedia]: Currently Disabled as the Patchouli localizations are manually added for the encyclopedia.
+            //  {Dragon_Seeker}: I'd like to bring back the other localizations for differing languagees for the book so maybe
+            //  Ill either re-add them within the book folder or something when the book is closer to being finished
+            //gen.addProvider(new TropicraftLangProvider(gen));
         }
         if (event.includeServer()) {
             TropicraftBlockTagsProvider blockTags = new TropicraftBlockTagsProvider(gen, existingFileHelper);

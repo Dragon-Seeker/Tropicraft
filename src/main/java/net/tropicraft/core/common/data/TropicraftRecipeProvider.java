@@ -1,5 +1,7 @@
 package net.tropicraft.core.common.data;
 
+import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.*;
 import net.minecraft.world.entity.animal.Sheep;
@@ -16,6 +18,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.TropicraftTags;
+import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.drinks.Drink;
 import org.apache.commons.lang3.StringUtils;
@@ -29,12 +32,7 @@ import static net.tropicraft.core.common.block.TropicraftBlocks.*;
 import static net.tropicraft.core.common.block.TropicraftFlower.*;
 import static net.tropicraft.core.common.item.TropicraftItems.*;
 
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import vazkii.patchouli.common.recipe.ShapelessBookRecipe;
 
 public class TropicraftRecipeProvider extends RecipeProvider {
 
@@ -376,6 +374,12 @@ public class TropicraftRecipeProvider extends RecipeProvider {
             .unlockedBy("has_" + safeName(ZIRCON.get()), has(ZIRCON.get()))
             .unlockedBy("has_" + safeName(BAMBOO_STICK.get()), has(BAMBOO_STICK.get()))
             .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(Constants.BOOK.get().getItem())
+                .requires(PALM_SAPLING.get())
+                .unlockedBy("has_" + safeName(PALM_SAPLING.get()), has(PALM_SAPLING.get()))
+                .save(consumer);
+
     }
     
     private ResourceLocation safeId(ResourceLocation id) {

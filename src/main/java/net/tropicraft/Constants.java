@@ -1,8 +1,15 @@
 package net.tropicraft;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import vazkii.patchouli.api.PatchouliAPI;
+
+import java.util.function.Supplier;
+
 public class Constants {
     public static final String MODID = "tropicraft";
     public static final String ARMOR_LOCATION = MODID + ":textures/models/armor/";
+    public static final Supplier<ItemStack> BOOK = () -> PatchouliAPI.get().getBookStack(new ResourceLocation(Constants.MODID,"encyclopedia_tropica"));
 
     public static final String[] LT17_NAMES = {
             "Emibelle", "Mark Conrad", "MongoTheElder", "Taelnia", "Direwolf20", "MrRube", "rckymtnrfc", "Drullkus",
