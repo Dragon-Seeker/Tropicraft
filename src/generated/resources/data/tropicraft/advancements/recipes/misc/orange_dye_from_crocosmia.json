@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "tropicraft:purple_dye"
+      "tropicraft:orange_dye_from_crocosmia"
     ]
   },
   "criteria": {
-    "has_iris": {
+    "has_crocosmia": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "tropicraft:iris"
+              "tropicraft:crocosmia"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "tropicraft:purple_dye"
+        "recipe": "tropicraft:orange_dye_from_crocosmia"
       }
     }
   },
   "requirements": [
     [
-      "has_iris",
+      "has_crocosmia",
       "has_the_recipe"
     ]
   ]

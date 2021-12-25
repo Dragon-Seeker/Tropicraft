@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "tropicraft:purple_dye_from_iris"
+    ]
+  },
+  "criteria": {
+    "has_iris": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tropicraft:iris"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "tropicraft:purple_dye_from_iris"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_iris",
+      "has_the_recipe"
+    ]
+  ]
+}

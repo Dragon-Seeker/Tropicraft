@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "tropicraft:orange_dye_from_orange_anthurium"
+    ]
+  },
+  "criteria": {
+    "has_orange_anthurium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tropicraft:orange_anthurium"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "tropicraft:orange_dye_from_orange_anthurium"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_orange_anthurium",
+      "has_the_recipe"
+    ]
+  ]
+}

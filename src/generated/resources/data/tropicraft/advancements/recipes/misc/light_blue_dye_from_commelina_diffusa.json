@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "tropicraft:orange_dye"
+      "tropicraft:light_blue_dye_from_commelina_diffusa"
     ]
   },
   "criteria": {
-    "has_orange_anthurium": {
+    "has_commelina_diffusa": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "tropicraft:orange_anthurium"
+              "tropicraft:commelina_diffusa"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "tropicraft:orange_dye"
+        "recipe": "tropicraft:light_blue_dye_from_commelina_diffusa"
       }
     }
   },
   "requirements": [
     [
-      "has_orange_anthurium",
+      "has_commelina_diffusa",
       "has_the_recipe"
     ]
   ]

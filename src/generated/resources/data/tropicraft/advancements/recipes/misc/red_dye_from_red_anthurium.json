@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "tropicraft:yellow_dye"
+      "tropicraft:red_dye_from_red_anthurium"
     ]
   },
   "criteria": {
-    "has_canna": {
+    "has_red_anthurium": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "tropicraft:canna"
+              "tropicraft:red_anthurium"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "tropicraft:yellow_dye"
+        "recipe": "tropicraft:red_dye_from_red_anthurium"
       }
     }
   },
   "requirements": [
     [
-      "has_canna",
+      "has_red_anthurium",
       "has_the_recipe"
     ]
   ]

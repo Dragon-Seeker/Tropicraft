@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "tropicraft:red_dye_from_bromeliad"
+    ]
+  },
+  "criteria": {
+    "has_bromeliad": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tropicraft:bromeliad"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "tropicraft:red_dye_from_bromeliad"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bromeliad",
+      "has_the_recipe"
+    ]
+  ]
+}

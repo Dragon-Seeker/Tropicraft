@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "tropicraft:red_dye"
+      "tropicraft:light_blue_dye_from_magic_mushroom"
     ]
   },
   "criteria": {
-    "has_red_anthurium": {
+    "has_magic_mushroom": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "tropicraft:red_anthurium"
+              "tropicraft:magic_mushroom"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "tropicraft:red_dye"
+        "recipe": "tropicraft:light_blue_dye_from_magic_mushroom"
       }
     }
   },
   "requirements": [
     [
-      "has_red_anthurium",
+      "has_magic_mushroom",
       "has_the_recipe"
     ]
   ]

@@ -146,11 +146,24 @@ public class TropicraftRecipeProvider extends RecipeProvider {
         
         // Flowers to dye
         dye(COMMELINA_DIFFUSA, Items.LIGHT_BLUE_DYE.delegate, 1, 2, consumer);
+        dye(MAGIC_MUSHROOM, Items.LIGHT_BLUE_DYE.delegate, 1, 2, consumer);
+
         dye(CANNA, Items.YELLOW_DYE.delegate, 1, 2, consumer);
+
         dye(ORANGE_ANTHURIUM, Items.ORANGE_DYE.delegate, 1, 2, consumer);
+        dye(CROCOSMIA, Items.ORANGE_DYE.delegate, 1, 2, consumer);
+
         dye(RED_ANTHURIUM, Items.RED_DYE.delegate, 1, 2, consumer);
+        dye(BROMELIAD, Items.RED_DYE.delegate, 1, 2, consumer);
+
         dye(DRACAENA, Items.GREEN_DYE.delegate, 1, 2, consumer);
+        dye(PATHOS, Items.GREEN_DYE.delegate, 1, 2, consumer);
+
         dye(IRIS, Items.PURPLE_DYE.delegate, 1, 4, consumer);
+        dye(ACAI_VINE, Items.PURPLE_DYE.delegate, 1, 2, consumer);
+
+        dye(ANEMONE, Items.WHITE_DYE.delegate, 1, 2, consumer);
+        dye(ORCHID, Items.PINK_DYE.delegate, 1, 2, consumer);
 
         // Bundles
         singleItem(Blocks.BAMBOO.delegate, BAMBOO_BUNDLE, 9, 1, consumer);
@@ -537,7 +550,7 @@ public class TropicraftRecipeProvider extends RecipeProvider {
     }
 
     private <T extends ItemLike & IForgeRegistryEntry<?>> void dye(Supplier<? extends T> source, Supplier<? extends T> result, int required, int amount, Consumer<FinishedRecipe> consumer) {
-        singleItemUnfinished(source, result, required, amount).save(consumer, new ResourceLocation(Constants.MODID, result.get().getRegistryName().getPath()));
+        singleItemUnfinished(source, result, required, amount).save(consumer, new ResourceLocation(Constants.MODID, result.get().getRegistryName().getPath() + "_from_" + source.get().getRegistryName().getPath()));
     }
     
     private <T extends ItemLike & IForgeRegistryEntry<?>> void singleItem(Supplier<? extends T> source, Supplier<? extends T> result, int required, int amount, Consumer<FinishedRecipe> consumer) {

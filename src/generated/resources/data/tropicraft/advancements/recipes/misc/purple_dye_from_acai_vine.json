@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "tropicraft:light_blue_dye"
+      "tropicraft:purple_dye_from_acai_vine"
     ]
   },
   "criteria": {
-    "has_commelina_diffusa": {
+    "has_acai_vine": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "tropicraft:commelina_diffusa"
+              "tropicraft:acai_vine"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "tropicraft:light_blue_dye"
+        "recipe": "tropicraft:purple_dye_from_acai_vine"
       }
     }
   },
   "requirements": [
     [
-      "has_commelina_diffusa",
+      "has_acai_vine",
       "has_the_recipe"
     ]
   ]

@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "tropicraft:green_dye"
+      "tropicraft:pink_dye_from_orchid"
     ]
   },
   "criteria": {
-    "has_dracaena": {
+    "has_orchid": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "tropicraft:dracaena"
+              "tropicraft:orchid"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "tropicraft:green_dye"
+        "recipe": "tropicraft:pink_dye_from_orchid"
       }
     }
   },
   "requirements": [
     [
-      "has_dracaena",
+      "has_orchid",
       "has_the_recipe"
     ]
   ]
