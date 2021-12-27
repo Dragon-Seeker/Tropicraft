@@ -2,6 +2,7 @@ package net.tropicraft;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.reflect.Reflection;
+import net.bermuda.patchouli.components.ComponenetRegistry;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.TextComponent;
@@ -137,6 +138,8 @@ public class Tropicraft {
                     .put(TropicraftItems.BAMBOO_ITEM_FRAME.getId(), frameState)
                     .build();
         });
+
+        registerTemplateComponenets();
     }
 
     private static final Pattern QUALIFIER = Pattern.compile("-\\w+\\+\\d+");
@@ -255,5 +258,9 @@ public class Tropicraft {
         catch(IOException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static void registerTemplateComponenets(){
+        ComponenetRegistry.init();
     }
 }

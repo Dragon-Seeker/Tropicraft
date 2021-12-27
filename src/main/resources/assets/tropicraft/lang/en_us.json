@@ -797,51 +797,71 @@
 
   "tropicraft.encyclopedia.acai_vine.title": "Acai Vine",
   "tropicraft.encyclopedia.acai_vine.desc": "Rotten branches that are growing from the ground that used to grow the acai fruit.",
+  "tropicraft.encyclopedia.acai_vine.craftingdesc": "Can be crafted into Purple Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.anemone.title": "Anemone",
   "tropicraft.encyclopedia.anemone.desc": "This bleach white flower adds a nice innocent, calm color to the realm.",
+  "tropicraft.encyclopedia.anemone.craftingdesc": "Can be crafted into White Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.orange_anthurium.title": "Anthurium, Orange",
   "tropicraft.encyclopedia.orange_anthurium.desc": "This strong orange colored flower has an red counterpart.",
+  "tropicraft.encyclopedia.orange_anthurium.craftingdesc": "Can be crafted into Orange Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.red_anthurium.title": "Anthurium, Red",
   "tropicraft.encyclopedia.red_anthurium.desc": "This strong red colored flower has an orange counterpart.",
+  "tropicraft.encyclopedia.red_anthurium.craftingdesc": "Can be crafted into Red Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.bromeliad.title": "Bromeliad",
   "tropicraft.encyclopedia.bromeliad.desc": "This exotic red flower thrives in the thick of rainforests among the tree frogs and moist conditions.",
+  "tropicraft.encyclopedia.bromeliad.craftingdesc": "Can be crafted into Red Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.canna.title": "Canna",
   "tropicraft.encyclopedia.canna.desc": "This yellow-orange flower blends in well in the tropical realm, complementing the hard-hitting red of the red anthurium.",
+  "tropicraft.encyclopedia.canna.craftingdesc": "Can be crafted into Yellow Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.commelina_diffusa.title": "Co. Diffusa",
   "tropicraft.encyclopedia.commelina_diffusa.desc": "Commelina Diffusa adds a pleasant blue to the landscape of the Tropics.",
+  "tropicraft.encyclopedia.commelina_diffusa.craftingdesc": "Can be crafted into Light Blue Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.crocosmia.title": "Crocosmia",
   "tropicraft.encyclopedia.crocosmia.desc": "These fiery little flowers are like miniature suns resting on the ground.",
+  "tropicraft.encyclopedia.crocosmia.craftingdesc": "Can be crafted into Orange Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.croton.title": "Croton",
   "tropicraft.encyclopedia.croton.desc": "Go ahead and try to figure out what color this is. I DARE you.",
+  "tropicraft.encyclopedia.croton.craftingdesc": "You think this is a easy one to make a Dye for!?",
 
   "tropicraft.encyclopedia.dracaena.title": "Dracaena",
   "tropicraft.encyclopedia.dracaena.desc": "This interesting peach and green colored plant can be found only in the rainforest.",
+  "tropicraft.encyclopedia.dracaena.craftingdesc": "Can be crafted into Green Dye within a crafting bench.",
 
-  "tropicraft.encyclopedia.fern.title": "Fern",
-  "tropicraft.encyclopedia.fern.desc": "Ferns can be found in rainforests throughout the realm.",
+  "tropicraft.encyclopedia.tropical_fern.title": "Tropical Fern",
+  "tropicraft.encyclopedia.tropical_fern.desc": "Tropical Ferns can be found in rainforests throughout the realm.",
+  "tropicraft.encyclopedia.tropical_fern.craftingdesc": "Its just a friendly neighborhood Fern.",
+
+  "tropicraft.encyclopedia.golden_fern.title": "Golden Leather Fern",
+  "tropicraft.encyclopedia.golden_fern.desc": "Golden Leather Ferns can be found in Mangrove located close to the ocean side throughout the tropics.",
+  "tropicraft.encyclopedia.golden_fern.craftingdesc": "They come in all different sizes!",
 
   "tropicraft.encyclopedia.foliage.title": "Foliage",
   "tropicraft.encyclopedia.foliage.desc": "Common greenery found in the tropics.",
+  "tropicraft.encyclopedia.foliage.craftingdesc": "What is it called when a large piece of foliage is the same on both sides?\nSymmetree.\n",
 
   "tropicraft.encyclopedia.iris.title": "Iris",
   "tropicraft.encyclopedia.iris.desc": "These tall purple flowers are quite a sight. They can easily be replanted.",
+  "tropicraft.encyclopedia.iris.craftingdesc": "Can be crafted into Purple Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.magic_mushroom.title": "Magic Mushroom",
   "tropicraft.encyclopedia.magic_mushroom.desc": "Found only in the rainforest, these mushrooms are mysterious, need to explore more.",
+  "tropicraft.encyclopedia.magic_mushroom.craftingdesc": "Can be crafted into Light Blue Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.orchid.title": "Orchid",
   "tropicraft.encyclopedia.orchid.desc": "Orchids are perhaps the rarest of all the flowers in the Tropics. Their delicate pink and white petals are sure to add an air of sophistication to your home.",
+  "tropicraft.encyclopedia.orchid.craftingdesc": "Can be crafted into Pink Dye within a crafting bench.",
 
   "tropicraft.encyclopedia.pathos.title": "Pathos",
   "tropicraft.encyclopedia.pathos.desc": "Pathos, in greek, means 'an appeal to emotions'. This plant can only be found in rainforests.",
+  "tropicraft.encyclopedia.pathos.craftingdesc": "Can be crafted into Green Dye within a crafting bench.",
 
   "_comment11": "# Encyclopedia Entries: Nature",
 
@@ -886,7 +906,7 @@
   "tropicraft.encyclopedia.reeds.title": "Reeds",
   "tropicraft.encyclopedia.reeds.desc": "In the Tropics, sugar cane serves a new purpose: thatching.",
 
-  "_comment11": "# Encyclopedia Entries: World",
+  "_comment12": "# Encyclopedia Entries: World",
 
 
   "tropicraft.encyclopedia.ashenmask.title": "Ashen Mask",

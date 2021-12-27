@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.bermuda.mixins",
+  "compatibilityLevel": "JAVA_16",
+  "refmap": "bermuda.refmap.json",
+  "mixins": [
+    "pageAddButtonInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

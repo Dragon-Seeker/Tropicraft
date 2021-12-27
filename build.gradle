@@ -19,7 +19,6 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
 group = 'net.tropicraft'
 archivesBaseName = 'Tropicraft'
@@ -48,6 +47,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             arg "-mixin.config=tropicraft.mixins.json"
+            arg "-mixin.config=bermuda.mixins.json"
 
             mods {
                 tropicraft {
@@ -64,6 +64,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             arg "-mixin.config=tropicraft.mixins.json"
+            arg "-mixin.config=bermuda.mixins.json"
 
             mods {
                 tropicraft {
@@ -82,6 +83,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             arg "-mixin.config=tropicraft.mixins.json"
+            arg "-mixin.config=bermuda.mixins.json"
 
             mods {
                 tropicraft {
@@ -132,7 +134,7 @@ jar {
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"Tropicraft",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "tropicraft.mixins.json"
+            "MixinConfigs": ["tropicraft.mixins.json", "bermuda.mixins.json"]
         ])
     }
 }
@@ -158,6 +160,7 @@ curseforge {
 
 mixin {
     add sourceSets.main, "tropicraft.refmap.json"
+    add sourceSets.main, "bermuda.refmap.json"
 }
 
 if (System.getProperty("idea.sync.active") == "true") {
