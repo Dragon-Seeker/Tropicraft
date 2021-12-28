@@ -79,6 +79,9 @@ public class TropicraftItemTagsProvider extends ItemTagsProvider {
 
         addItemsToTag(MEATS, Items.BEEF, Items.PORKCHOP, Items.CHICKEN, Items.RABBIT, Items.MUTTON);
 
+        TropicraftItems.MUSIC_DISCS.forEach((key, value) -> addItemsToTag(MUSIC_DISCS, value));
+        appendToTag(ItemTags.MUSIC_DISCS, MUSIC_DISCS);
+
         // Copy block tags
         copy(TropicraftTags.Blocks.SAND, SAND);
         copy(TropicraftTags.Blocks.MUD, MUD);

@@ -2,10 +2,7 @@ package net.tropicraft;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.reflect.Reflection;
-import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.commands.CommandSource;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +36,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.fmllegacy.packs.ResourcePackLoader;
 import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
@@ -53,11 +49,11 @@ import net.tropicraft.core.client.data.TropicraftLangProvider;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.TropicraftFlower;
 import net.tropicraft.core.common.block.tileentity.TropicraftTileEntityTypes;
-import net.tropicraft.core.common.command.CommandTropicsTeleport;
-import net.tropicraft.core.common.command.MapBiomesCommand;
+import net.tropicraft.core.common.command.CommandTropics;
 import net.tropicraft.core.common.data.*;
 import net.tropicraft.core.common.data.crafting.TropicraftRecipeSerializer;
 import net.tropicraft.core.common.dimension.TropicraftDimension;
+import net.tropicraft.core.common.dimension.TropicraftPoiTypes;
 import net.tropicraft.core.common.dimension.biome.TropicraftBiomeProvider;
 import net.tropicraft.core.common.dimension.biome.TropicraftBiomes;
 import net.tropicraft.core.common.dimension.carver.TropicraftCarvers;
@@ -122,6 +118,7 @@ public class Tropicraft {
         // Registry objects
         TropicraftBlocks.BLOCKS.register(modBus);
         TropicraftBlocks.BLOCKITEMS.register(modBus);
+        TropicraftPoiTypes.POI_TYPE.register(modBus);
         TropicraftItems.ITEMS.register(modBus);
         ScubaGogglesItem.ATTRIBUTES.register(modBus);
         MixerRecipes.addMixerRecipes();
@@ -202,13 +199,7 @@ public class Tropicraft {
     }
 
     private void onServerStarting(final FMLServerStartingEvent event) {
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getServer().getCommands().getDispatcher();
-        CommandTropicsTeleport.register(dispatcher);
-
-        // Dev only debug!
-        if (!FMLEnvironment.production) {
-            MapBiomesCommand.register(dispatcher);
-        }
+        CommandTropics.register(event.getServer().getCommands().getDispatcher());
     }
 
     private void gatherData(GatherDataEvent event) {
