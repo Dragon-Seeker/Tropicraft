@@ -41,34 +41,33 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
     @Override
     public void serverTick() {
         Level world = owner.level;
-        //if (event.phase == Phase.END) {
-            // TODO support more than chest slot?
-            ItemStack chestStack = owner.getItemBySlot(EquipmentSlot.CHEST);
-            Item chestItem = chestStack.getItem();
-            if (chestItem instanceof ScubaArmorItem) {
+        // TODO support more than chest slot?
+        ItemStack chestStack = owner.getItemBySlot(EquipmentSlot.CHEST);
+        Item chestItem = chestStack.getItem();
+        if (chestItem instanceof ScubaArmorItem) {
 
-                if (!world.isClientSide) {
-                    underwaterPlayers.add((ServerPlayer) owner);
-                }
-                if (isUnderWater(owner)) {
-                    tick();
-                    ((ScubaArmorItem)chestItem).tickAir(owner, EquipmentSlot.CHEST, chestStack);
-                    if (!world.isClientSide && world.getGameTime() % 60 == 0) {
-                        // TODO this effect could be better, custom packet?
-                        Vec3 eyePos = owner.getEyePosition(0);
-                        Vec3 motion = owner.getDeltaMovement();
-                        Vec3 particlePos = eyePos.add(motion.reverse());
-                        ((ServerLevel) world).sendParticles(ParticleTypes.BUBBLE,
-                                particlePos.x(), particlePos.y(), particlePos.z(),
-                                4 + world.random.nextInt(3),
-                                0.25, 0.25, 0.25, motion.length());
-                    }
-                } else if (!world.isClientSide && underwaterPlayers.remove(owner)) { // Update client state as they leave the water
-                    //data.ifPresent(d -> d.updateClient((ServerPlayer) owner, false));
-                    MyComponents.SCUBADATA.sync(this.owner);
-                }
+            if (!world.isClientSide) {
+                underwaterPlayers.add((ServerPlayer) owner);
             }
-        //}
+            if (isUnderWater(owner)) {
+                tick();
+                ((ScubaArmorItem)chestItem).tickAir(owner, EquipmentSlot.CHEST, chestStack);
+                if (!world.isClientSide && world.getGameTime() % 60 == 0) {
+                    // TODO this effect could be better, custom packet?
+                    Vec3 eyePos = owner.getEyePosition(0);
+                    Vec3 motion = owner.getDeltaMovement();
+                    Vec3 particlePos = eyePos.add(motion.reverse());
+                    ((ServerLevel) world).sendParticles(ParticleTypes.BUBBLE,
+                            particlePos.x(), particlePos.y(), particlePos.z(),
+                            4 + world.random.nextInt(3),
+                            0.25, 0.25, 0.25, motion.length());
+                }
+            } else if (!world.isClientSide && underwaterPlayers.remove(owner)) { // Update client state as they leave the water
+                //data.ifPresent(d -> d.updateClient((ServerPlayer) owner, false));
+                MyComponents.SCUBADATA.sync(this.owner);
+            }
+        }
+
     }
 
     private long diveTime;
@@ -111,12 +110,6 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
     public double getMaxDepth() {
         return maxDepth;
     }
-    
-//    void updateClient(ServerPlayer target, boolean force) {
-//        if (dirty || force) {
-//            TropicraftPackets.INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new MessageUpdateScubaData(this));
-//        }
-//    }
 
     @Override
     public boolean shouldCopyForRespawn(boolean lossless, boolean keepInventory, boolean sameCharacter) {
@@ -133,30 +126,6 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
         this.maxDepth = data.getMaxDepth();
     }
 
-//    @Override
-//    public CompoundTag serializeNBT() {
-//        CompoundTag ret = new CompoundTag();
-//        ret.putLong("diveTime", diveTime);
-//        ret.putDouble("maxDepth", maxDepth);
-//        return ret;
-//    }
-//
-//    @Override
-//    public void deserializeNBT(CompoundTag nbt) {
-//        this.diveTime = nbt.getLong("diveTime");
-//        this.maxDepth = nbt.getDouble("maxDepth");
-//    }
-
-    public void serializeBuffer(FriendlyByteBuf buf) {
-        buf.writeLong(diveTime);
-        buf.writeDouble(maxDepth);
-    }
-    
-    public void deserializeBuffer(FriendlyByteBuf buf) {
-        this.diveTime = buf.readLong();
-        this.maxDepth = buf.readDouble();
-    }
-
     @Override
     public void readFromNbt(CompoundTag tag) {
         this.diveTime = tag.getLong("diveTime");
@@ -169,6 +138,16 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
         tag.putDouble("maxDepth", maxDepth);
     }
 
+    public void serializeBuffer(FriendlyByteBuf buf) {
+        buf.writeLong(diveTime);
+        buf.writeDouble(maxDepth);
+    }
+    
+    public void deserializeBuffer(FriendlyByteBuf buf) {
+        this.diveTime = buf.readLong();
+        this.maxDepth = buf.readDouble();
+    }
+
     @Override
     public boolean shouldSyncWith(ServerPlayer player) {
         return player == this.owner;
@@ -177,32 +156,21 @@ public class ScubaData implements PlayerComponent<ScubaData>, AutoSyncedComponen
     @Override
     public void writeSyncPacket(FriendlyByteBuf buf, ServerPlayer recipient) {
         this.serializeBuffer(buf);
-        //AutoSyncedComponent.super.writeSyncPacket(buf, recipient);
     }
 
     @Override
     public void applySyncPacket(FriendlyByteBuf buf) {
         this.deserializeBuffer(buf);
-        //AutoSyncedComponent.super.applySyncPacket(buf);
     }
 
     @Override
     public void clientTick() {
-        if (isUnderWater(owner)) {
-            tick();
+        ItemStack chestStack = owner.getItemBySlot(EquipmentSlot.CHEST);
+        Item chestItem = chestStack.getItem();
+        if (chestItem instanceof ScubaArmorItem) {
+            if (isUnderWater(owner)) {
+                tick();
+            }
         }
     }
-
-
-//    @Nonnull
-//    @Override
-//    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-//        return null;
-//    }
-//
-//    @Nonnull
-//    @Override
-//    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-//        return ICapabilityProvider.super.getCapability(cap);
-//    }
 }
