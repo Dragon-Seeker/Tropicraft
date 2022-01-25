@@ -50,7 +50,7 @@ public class TropicraftBlocks {
             "teleport_portal_water", () -> new PortalWaterBlock(Block.Properties.of(Material.WATER).noDrops()));
 
     public static final RegistryObject<LiquidBlock> PORTAL_WATER = registerNoItem(
-            "portal_water", () -> new LiquidBlock(() -> Fluids.WATER, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops()));
+            "portal_water", () -> new TestPortalWaterBlock(BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops()));
 
     public static final RegistryObject<Block> CHUNK = register(
             "chunk", Builder.block(Block.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(6.0F, 30F)));

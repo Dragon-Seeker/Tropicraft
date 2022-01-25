@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.tropicraft.Constants;
 import net.tropicraft.core.common.block.PortalWaterBlock;
+import net.tropicraft.core.common.block.TestPortalWaterBlock;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 
 import java.util.Set;
@@ -27,6 +28,12 @@ public class TropicraftPoiTypes extends PoiType {
     }
 
     private static Set<BlockState> getBlockStates(RegistryObject<? extends Block> pBlock) {
-        return ImmutableSet.copyOf(pBlock.get().getStateDefinition().getPossibleStates());
+        return ImmutableSet.copyOf(pBlock.get().getStateDefinition().getPossibleStates().stream().filter((blockState) -> {
+            if(blockState.getValue(TestPortalWaterBlock.IS_POI_POSITION)){
+                return true;
+            }else{
+                return false;
+            }
+        }).toList());
     }
 }
