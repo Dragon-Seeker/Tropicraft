@@ -1,10 +1,12 @@
 package net.tropicraft.core.common.dimension;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
@@ -12,6 +14,7 @@ import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,8 +23,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.ITeleporter;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.tropicraft.Constants;
+import net.tropicraft.Tropicraft;
 import net.tropicraft.core.common.TropicraftTags;
 import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.tileentity.BambooChestBlockEntity;
@@ -30,9 +36,13 @@ import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class PortalTropics implements ITeleporter {
     private static final Logger LOGGER = LogUtils.getLogger(); //"Tropicraft Portal"
@@ -40,14 +50,20 @@ public class PortalTropics implements ITeleporter {
     private static final Block PORTAL_BLOCK = TropicraftBlocks.PORTAL_WATER.get();
 
     private static final ResourceLocation PORTAL_TEMPLATE = new ResourceLocation(Constants.MODID, "portal/tropicraft_portal");
+    private static Vec3i portalStructureSize = new Vec3i(1, 1,1);
+
     private static final int OFFSET_Y = 7;
 
     private final ServerLevel level;
 
-    public static final int SEARCH_AREA = 128;
+    public static final int SEARCH_AREA = 256;//128;
 
     public PortalTropics(ServerLevel level) {
         this.level = level;
+
+        level.getStructureManager().get(PORTAL_TEMPLATE).ifPresent((template) -> {
+            portalStructureSize = template.getSize();
+        });
     }
 
     @Nullable
@@ -111,7 +127,7 @@ public class PortalTropics implements ITeleporter {
                 }
             }
         }
-        
+
         debugLog("Portal Information given to the player [x: {}, y: {}, z: {}]", newLocX, newLocY, newLocZ);
 
         return new PortalInfo(new Vec3(newLocX, newLocY, newLocZ), Vec3.ZERO, entity.getYRot(), entity.getXRot());
@@ -158,12 +174,12 @@ public class PortalTropics implements ITeleporter {
     }
 
     public static BlockPos findSafePortalPos(ServerLevel level, Entity entity) {
-        debugLog("Start make portal");
         int searchArea = 16;
         double closestSpot = -1D;
 
         BlockPos entityPosition = entity.getOnPos();
         debugLog("Start position of search is at: [{}]", entityPosition);
+        level.getStructureManager().get(PORTAL_TEMPLATE).ifPresent((template) -> portalStructureSize = template.getSize());
 
         int entityX = Mth.floor(entityPosition.getX());
         int entityZ = Mth.floor(entityPosition.getZ());
@@ -216,31 +232,76 @@ public class PortalTropics implements ITeleporter {
     }
 
     private static boolean isPositionSafe(ServerLevel world, int x, int y, int z) {
-        int seaLevel = world.getSeaLevel();
+        int seaLevel = TropicraftDimension.getSeaLevel(world);
         int baseHeight = world.getChunkSource().getGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, world);
+
+        int surfaceY = y + 1;
 
         debugLog("-----------------------------------------");
         debugLog("Surface Y is at: [Y:{}]", y + 1);
         debugLog("Base Height is at: [Y:{}]", baseHeight);
         debugLog("Sea Level is at: [Y:{}]", seaLevel);
 
-        BlockPos pos = new BlockPos(x, y, z);
-        while (y >= seaLevel - 1 && (world.isEmptyBlock(pos) || !world.getBlockState(pos).is(TropicraftTags.Blocks.PORTAL_SURFACE))) {
-            y = pos.getY();
+        BlockPos pos = new BlockPos(x, surfaceY, z);
+        while (surfaceY >= seaLevel - 1 && (world.isEmptyBlock(pos) || world.getBlockState(pos).is(BlockTags.IMPERMEABLE) || !world.getBlockState(pos).is(TropicraftTags.Blocks.PORTAL_SURFACE))) {
+            surfaceY = pos.getY();
             pos = pos.below();
         }
 
         // Only generate portal between sea level and sea level + 20
-        if (y > seaLevel + 20 || y < seaLevel) {
+        if (surfaceY < seaLevel) { //y > seaLevel + 20 ||
             debugLog("The Height wasn't above the given seaLevel Y:[{}]", seaLevel);
             return false;
         }
 
         // Remove positions that have a major difference between what i'm guessing is the top most position of the chunk before carvers and other such generation features
-        if (baseHeight - y >= 3) {
+        if (baseHeight - surfaceY >= 3) {
             debugLog("It seems that there might be a cave or deep crevasse");
             return false;
         }
+
+        //This section of code will attempt to make sure a portal is not placed on too steep of a position
+
+        final var minimumFlatnessX = portalStructureSize.getX() / 2;
+        final var minimumFlatnessZ = portalStructureSize.getZ() / 2;
+
+        final var portalArea = portalStructureSize.getX() * portalStructureSize.getZ();
+
+        final var mutableBlockPos = new BlockPos.MutableBlockPos().setWithOffset(pos, -minimumFlatnessX, 0, -minimumFlatnessZ);
+
+        var blocksAbovePosition = 0;
+        var blocksBelowPosition = 0;
+
+        double failedBlockPercentage = (1.0 / 10.0);
+
+        for(int xOff = 0; xOff < portalStructureSize.getX(); xOff++){
+            for(int zOff = 0; zOff < portalStructureSize.getZ(); zOff++){
+                if((blocksAbovePosition / ((float) portalArea) > failedBlockPercentage) || (blocksBelowPosition / ((float) portalArea) > failedBlockPercentage)){
+                    debugLog("There area for where the portal will be placed doesn't seem that flat: {}", new BlockPos(x, y, z));
+                    return false;
+                }
+
+                BlockPos above = mutableBlockPos.above();
+
+                //Check if there is no solid ground above where the portal will go
+                if(world.getBlockState(above).is(TropicraftTags.Blocks.PORTAL_SURFACE) /*|| world.getBlockState(above).is(BlockTags.LOGS) || world.getBlockState(above).is(BlockTags.FEATURES_CANNOT_REPLACE) */){
+                    blocksAbovePosition++;
+                }
+
+                BlockPos below = mutableBlockPos.below();
+
+                //Check for solid ground below where the portal will go
+                if(!world.getBlockState(below).is(TropicraftTags.Blocks.PORTAL_SURFACE)){
+                    blocksBelowPosition++;
+                }
+
+                mutableBlockPos.move(0, 0 , 1);
+            }
+
+            mutableBlockPos.move(1, 0 , -portalStructureSize.getZ());
+        }
+
+        debugLog("-----------------------------------------");
 
         return true;
     }
