@@ -4,6 +4,7 @@
     "minecraft:water",
     "#minecraft:dirt",
     "#minecraft:sand",
-    "#minecraft:base_stone_overworld"
+    "#minecraft:base_stone_overworld",
+    "#tropicraft:mud"
   ]
 }

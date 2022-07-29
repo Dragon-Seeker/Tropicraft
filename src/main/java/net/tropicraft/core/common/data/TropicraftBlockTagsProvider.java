@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import net.tropicraft.Constants;
+import net.tropicraft.Tropicraft;
 import net.tropicraft.core.common.TropicraftTags;
 
 import java.util.Arrays;
@@ -123,7 +124,7 @@ public class TropicraftBlockTagsProvider extends BlockTagsProvider {
         createTag(TropicraftTags.Blocks.BONGOS, SMALL_BONGO_DRUM, MEDIUM_BONGO_DRUM, LARGE_BONGO_DRUM);
 
         createTag(TropicraftTags.Blocks.PORTAL_SURFACE, () -> Blocks.WATER);
-        appendToTag(TropicraftTags.Blocks.PORTAL_SURFACE, BlockTags.DIRT, BlockTags.SAND, BlockTags.BASE_STONE_OVERWORLD);
+        appendToTag(TropicraftTags.Blocks.PORTAL_SURFACE, BlockTags.DIRT, BlockTags.SAND, BlockTags.BASE_STONE_OVERWORLD, TropicraftTags.Blocks.MUD);
     }
     
     @SafeVarargs
