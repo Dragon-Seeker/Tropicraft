@@ -27,7 +27,7 @@ import net.tropicraft.core.common.block.TropicraftBlocks;
 import net.tropicraft.core.common.block.tileentity.BambooChestBlockEntity;
 import net.tropicraft.core.common.item.TropicraftItems;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class PortalTropics implements ITeleporter {
-    private static final Logger LOGGER = LogManager.getLogger("Tropicraft Portal");
+    private static final Logger LOGGER = LogUtils.getLogger(); //"Tropicraft Portal"
 
     private static final Block PORTAL_BLOCK = TropicraftBlocks.PORTAL_WATER.get();
 
@@ -64,7 +64,7 @@ public class PortalTropics implements ITeleporter {
         }
 
         long finishTime = System.currentTimeMillis();
-        LOGGER.debug("It took {} seconds for TeleporterTropics.placeInPortal to complete", (finishTime - startTime) / 1000.0F);
+        debugLog("It took {} seconds for TeleporterTropics.placeInPortal to complete", (finishTime - startTime) / 1000.0F);
 
         return portalInfo;
     }
@@ -72,7 +72,7 @@ public class PortalTropics implements ITeleporter {
     public PortalInfo findPortalInfoPoi(Entity entity) {
         BlockPos portalPosition = searchForPortalPoi(level, entity.getOnPos());
         if (portalPosition == null) {
-            LOGGER.debug("No Portal was found within the search radius");
+            debugLog("No Portal was found within the search radius");
             return null;
         }
 
@@ -111,8 +111,9 @@ public class PortalTropics implements ITeleporter {
                 }
             }
         }
+        
+        debugLog("Portal Information given to the player [x: {}, y: {}, z: {}]", newLocX, newLocY, newLocZ);
 
-        LOGGER.debug("Portal Information given to the player [x: {}, y: {}, z: {}]", newLocX, newLocY, newLocZ);
         return new PortalInfo(new Vec3(newLocX, newLocY, newLocZ), Vec3.ZERO, entity.getYRot(), entity.getXRot());
     }
 
@@ -135,12 +136,12 @@ public class PortalTropics implements ITeleporter {
         for (PoiRecord poiRecord : poiRecords) {
             BlockPos pos = poiRecord.getPos();
             if (canPortalPoiExistAt(level, pos)) {
-                LOGGER.debug("Current block Pos Values that was found using poi finder [" + poiRecord.getPos() + "]");
+                debugLog("Current block Pos Values that was found using poi finder [{}}]", poiRecord.getPos());
                 return pos;
             } else {
                 //Removes the poirecord as it doesn't seem there is any portal water at that position
                 poiManager.remove(poiRecord.getPos());
-                LOGGER.debug("Removing POI Record at: [" + pos + "]");
+                debugLog("Removing POI Record at: [{}]", pos);
             }
         }
 
@@ -157,12 +158,12 @@ public class PortalTropics implements ITeleporter {
     }
 
     public static BlockPos findSafePortalPos(ServerLevel level, Entity entity) {
-        LOGGER.debug("Start make portal");
+        debugLog("Start make portal");
         int searchArea = 16;
         double closestSpot = -1D;
 
         BlockPos entityPosition = entity.getOnPos();
-        LOGGER.debug("Start position of search is at: [{}]", entityPosition);
+        debugLog("Start position of search is at: [{}]", entityPosition);
 
         int entityX = Mth.floor(entityPosition.getX());
         int entityZ = Mth.floor(entityPosition.getZ());
@@ -173,7 +174,7 @@ public class PortalTropics implements ITeleporter {
         int foundY = y;
         int foundZ = entityZ;
 
-        LOGGER.debug("Sea level of {} is at a y of [{}]", level, level.getSeaLevel());
+        debugLog("Sea level of {} is at a y of [{}]", level, TropicraftDimension.getSeaLevel(level));
 
         //Check if the entity's new adjusted position based off the world's terrain height is already a valid place
         if (!isPositionSafe(level, entityX, y, entityZ)) {
@@ -194,8 +195,8 @@ public class PortalTropics implements ITeleporter {
                             foundY = y;
                             foundZ = z;
 
-                            LOGGER.debug("Current closest spot is: {}", closestSpot);
-                            LOGGER.debug("Valid x, y, z postion are [ X:{}, Y:{}, Z:{} ]", foundX, y, foundZ);
+                            debugLog("Current closest spot is: {}", closestSpot);
+                            debugLog("Valid x, y, z postion are [ X:{}, Y:{}, Z:{} ]", foundX, y, foundZ);
                         }
                     }
 
@@ -210,7 +211,7 @@ public class PortalTropics implements ITeleporter {
         }
 
         final BlockPos foundPos = new BlockPos(foundX, foundY, foundZ);
-        LOGGER.debug("Portal will be generating from this blockPos: [{}]", foundPos);
+        debugLog("Portal will be generating from this blockPos: [{}]", foundPos);
         return foundPos;
     }
 
@@ -218,8 +219,10 @@ public class PortalTropics implements ITeleporter {
         int seaLevel = world.getSeaLevel();
         int baseHeight = world.getChunkSource().getGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, world);
 
-        LOGGER.debug("Surface Height is at: [Y:{}]", y);
-        LOGGER.debug("Base Height is at: [Y:{}]", baseHeight);
+        debugLog("-----------------------------------------");
+        debugLog("Surface Y is at: [Y:{}]", y + 1);
+        debugLog("Base Height is at: [Y:{}]", baseHeight);
+        debugLog("Sea Level is at: [Y:{}]", seaLevel);
 
         BlockPos pos = new BlockPos(x, y, z);
         while (y >= seaLevel - 1 && (world.isEmptyBlock(pos) || !world.getBlockState(pos).is(TropicraftTags.Blocks.PORTAL_SURFACE))) {
@@ -229,17 +232,23 @@ public class PortalTropics implements ITeleporter {
 
         // Only generate portal between sea level and sea level + 20
         if (y > seaLevel + 20 || y < seaLevel) {
-            LOGGER.debug("The Height wasn't in the given range [63 - 83]");
+            debugLog("The Height wasn't above the given seaLevel Y:[{}]", seaLevel);
             return false;
         }
 
         // Remove positions that have a major difference between what i'm guessing is the top most position of the chunk before carvers and other such generation features
         if (baseHeight - y >= 3) {
-            LOGGER.debug("It seems that there might be a cave or deep crevasse");
+            debugLog("It seems that there might be a cave or deep crevasse");
             return false;
         }
 
         return true;
+    }
+
+    private static void debugLog(String debugInfo, Object... variables){
+        if(!FMLEnvironment.production){
+            LOGGER.debug(debugInfo, variables);
+        }
     }
 
     public static void placePortalStructure(ServerLevel level, BlockPos pos) {
