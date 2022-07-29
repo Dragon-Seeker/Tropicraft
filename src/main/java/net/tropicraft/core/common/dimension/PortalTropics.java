@@ -174,12 +174,18 @@ public class PortalTropics implements ITeleporter {
     }
 
     public static BlockPos findSafePortalPos(ServerLevel level, Entity entity) {
+        return findSafePortalPos(level, entity.getOnPos());
+    }
+
+    public static BlockPos findSafePortalPos(ServerLevel level, BlockPos entityPosition) {
+        debugLog("Start portal search");
+
         int searchArea = 16;
         double closestSpot = -1D;
 
-        BlockPos entityPosition = entity.getOnPos();
-        debugLog("Start position of search is at: [{}]", entityPosition);
         level.getStructureManager().get(PORTAL_TEMPLATE).ifPresent((template) -> portalStructureSize = template.getSize());
+
+        debugLog("Starting position of search method is at: [{}]", entityPosition);
 
         int entityX = Mth.floor(entityPosition.getX());
         int entityZ = Mth.floor(entityPosition.getZ());
@@ -195,15 +201,15 @@ public class PortalTropics implements ITeleporter {
         //Check if the entity's new adjusted position based off the world's terrain height is already a valid place
         if (!isPositionSafe(level, entityX, y, entityZ)) {
             for (int x = entityX - searchArea; x <= entityX + searchArea; x++) {
-                double distX = (x + 0.5D) - entity.getX();
+                double distX = (x + 0.5D) - entityPosition.getX();
                 for (int z = entityZ - searchArea; z <= entityZ + searchArea; z++) {
-                    double distZ = (z + 0.5D) - entity.getZ();
+                    double distZ = (z + 0.5D) - entityPosition.getZ();
 
                     // Find topmost solid block at this x,z location
                     y = getTerrainHeightAt(level, x, z);
 
                     if (isPositionSafe(level, x, y, z)) {
-                        double distY = (y + 0.5D) - entity.getY();
+                        double distY = (y + 0.5D) - entityPosition.getY();
                         double distance = distX * distX + distY * distY + distZ * distZ;
                         if (closestSpot < 0.0D || distance < closestSpot) {
                             closestSpot = distance;

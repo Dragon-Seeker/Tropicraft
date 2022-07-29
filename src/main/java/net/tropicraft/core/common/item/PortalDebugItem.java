@@ -38,9 +38,10 @@ public class PortalDebugItem extends Item {
 
     public enum EnchanterMode {
         PORTAL_CREATION(0, "tropicraft.enchanterMode.creation", ChatFormatting.AQUA),
-        PORTAL_SEARCH(1, "tropicraft.enchanterMode.search", ChatFormatting.GREEN),
-        PORTAL_DESTRUCTION(2, "tropicraft.enchanterMode.destroy", ChatFormatting.RED),
-        PORTAL_DEBUG(3, "Debug Mode", ChatFormatting.LIGHT_PURPLE);
+        PORTAL_CREATION_SEARCHING(1, "Creation Search", ChatFormatting.BLUE),
+        PORTAL_SEARCH(2, "tropicraft.enchanterMode.search", ChatFormatting.GREEN),
+        PORTAL_DESTRUCTION(3, "tropicraft.enchanterMode.destroy", ChatFormatting.RED),
+        PORTAL_DEBUG(4, "Debug Mode", ChatFormatting.LIGHT_PURPLE);
 
         private String translationKey;
         private int id;
@@ -110,7 +111,7 @@ public class PortalDebugItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
-        if(!pContext.getLevel().isClientSide && pContext.getPlayer() instanceof ServerPlayer serverPlayer) {
+        if(!pContext.getLevel().isClientSide() && pContext.getPlayer() instanceof ServerPlayer serverPlayer) {
             final boolean hasPermission = serverPlayer.canUseGameMasterBlocks() ||
                     serverPlayer.getServer().isSingleplayerOwner(serverPlayer.getGameProfile()) ||
                     TropicraftConfig.portalEnchanterWhitelist.get().contains(serverPlayer.getUUID().toString());
@@ -119,9 +120,23 @@ public class PortalDebugItem extends Item {
                 ServerLevel world = (ServerLevel) pContext.getLevel();
                 BlockPos clickedPos = pContext.getClickedPos();
 
-                if (((PortalDebugItem) pContext.getItemInHand().getItem()).getEnchanterMode() == EnchanterMode.PORTAL_CREATION) {
+                EnchanterMode mode = ((PortalDebugItem) pContext.getItemInHand().getItem()).getEnchanterMode();
+
+                if (mode == EnchanterMode.PORTAL_CREATION || mode == EnchanterMode.PORTAL_CREATION_SEARCHING) {
                     if (!isPortalTooClose(world, clickedPos)) {
-                        PortalTropics.placePortalStructure(world, clickedPos);
+                        if(mode == EnchanterMode.PORTAL_CREATION_SEARCHING) {
+                            long startTime = System.currentTimeMillis();
+                            LOGGER_WAND.debug("Starting portal placement Search");
+
+                            BlockPos portalPos = PortalTropics.findSafePortalPos(world, clickedPos);
+
+                            PortalTropics.placePortalStructure(world, portalPos);
+
+                            long finishTime = System.currentTimeMillis();
+                            LOGGER_WAND.debug("It took {} seconds for TeleporterTropics.placeInPortal to complete", (finishTime - startTime) / 1000.0F);
+                        } else {
+                            PortalTropics.placePortalStructure(world, clickedPos);
+                        }
 
                         if (!FMLEnvironment.production) {
                             serverPlayer.displayClientMessage(new TextComponent("Debug: Portal was created!"), false);
@@ -132,11 +147,11 @@ public class PortalDebugItem extends Item {
                         serverPlayer.sendMessage(new TranslatableComponent("tropicraft.portalEnchanterProximityWarning"), ChatType.GAME_INFO, serverPlayer.getUUID());
                         return InteractionResult.FAIL;
                     }
-                }else if(((PortalDebugItem) pContext.getItemInHand().getItem()).getEnchanterMode() == EnchanterMode.PORTAL_DEBUG && !FMLEnvironment.production){
+                }
+                else if(mode == EnchanterMode.PORTAL_DEBUG && !FMLEnvironment.production){
                     PortalTropics.findSafePortalPos(world, serverPlayer);
                 }
-            }
-            else{
+            } else {
                 serverPlayer.sendMessage(new TranslatableComponent("tropicraft.portalEnchanterWarning"), ChatType.GAME_INFO, serverPlayer.getUUID());
                 return InteractionResult.FAIL;
             }
