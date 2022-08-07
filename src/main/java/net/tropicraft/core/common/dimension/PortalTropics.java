@@ -56,7 +56,7 @@ public class PortalTropics implements ITeleporter {
 
     private final ServerLevel level;
 
-    public static final int SEARCH_AREA = 256;//128;
+    public static final int SEARCH_AREA = 128;//128;
 
     public PortalTropics(ServerLevel level) {
         this.level = level;
@@ -174,21 +174,23 @@ public class PortalTropics implements ITeleporter {
     }
 
     public static BlockPos findSafePortalPos(ServerLevel level, Entity entity) {
-        return findSafePortalPos(level, entity.getOnPos());
+        Vec3 vecPos = entity.position();
+
+        return findSafePortalPos(level, new BlockPos(Mth.floor(vecPos.x), Mth.floor(vecPos.y), Mth.floor(vecPos.z)));
     }
 
     public static BlockPos findSafePortalPos(ServerLevel level, BlockPos entityPosition) {
         debugLog("Start portal search");
 
-        int searchArea = 16;
+        final int searchArea = 24;
         double closestSpot = -1D;
 
         level.getStructureManager().get(PORTAL_TEMPLATE).ifPresent((template) -> portalStructureSize = template.getSize());
 
         debugLog("Starting position of search method is at: [{}]", entityPosition);
 
-        int entityX = Mth.floor(entityPosition.getX());
-        int entityZ = Mth.floor(entityPosition.getZ());
+        final int entityX = entityPosition.getX();
+        final int entityZ = entityPosition.getZ();
 
         int y = getTerrainHeightAt(level, entityX, entityZ);
 
@@ -201,17 +203,17 @@ public class PortalTropics implements ITeleporter {
         //Check if the entity's new adjusted position based off the world's terrain height is already a valid place
         if (!isPositionSafe(level, entityX, y, entityZ)) {
             for (int x = entityX - searchArea; x <= entityX + searchArea; x++) {
-                double distX = (x + 0.5D) - entityPosition.getX();
+                double distX = x - entityPosition.getX();
                 for (int z = entityZ - searchArea; z <= entityZ + searchArea; z++) {
-                    double distZ = (z + 0.5D) - entityPosition.getZ();
+                    double distZ = z - entityPosition.getZ();
 
                     // Find topmost solid block at this x,z location
                     y = getTerrainHeightAt(level, x, z);
 
                     if (isPositionSafe(level, x, y, z)) {
-                        double distY = (y + 0.5D) - entityPosition.getY();
+                        double distY = y - entityPosition.getY();
                         double distance = distX * distX + distY * distY + distZ * distZ;
-                        if (closestSpot < 0.0D || distance < closestSpot) {
+                        if (closestSpot < 0.0D || distance < closestSpot ) {
                             closestSpot = distance;
                             foundX = x;
                             foundY = y;
@@ -232,8 +234,10 @@ public class PortalTropics implements ITeleporter {
             }
         }
 
-        final BlockPos foundPos = new BlockPos(foundX, foundY, foundZ);
+        final var foundPos = new BlockPos(foundX, foundY, foundZ);
+
         debugLog("Portal will be generating from this blockPos: [{}]", foundPos);
+
         return foundPos;
     }
 
@@ -249,20 +253,27 @@ public class PortalTropics implements ITeleporter {
         debugLog("Sea Level is at: [Y:{}]", seaLevel);
 
         BlockPos pos = new BlockPos(x, surfaceY, z);
+
         while (surfaceY >= seaLevel - 1 && (world.isEmptyBlock(pos) || world.getBlockState(pos).is(BlockTags.IMPERMEABLE) || !world.getBlockState(pos).is(TropicraftTags.Blocks.PORTAL_SURFACE))) {
             surfaceY = pos.getY();
             pos = pos.below();
         }
 
-        // Only generate portal between sea level and sea level + 20
+        // Only Generate portal above seaLevel
         if (surfaceY < seaLevel) { //y > seaLevel + 20 ||
-            debugLog("The Height wasn't above the given seaLevel Y:[{}]", seaLevel);
+            debugLog("The Height wasn't above the given seaLevel of {}, Y:[{}], ", seaLevel, surfaceY);
+
+            placeTestBlockAtPos(world, Blocks.BLUE_STAINED_GLASS, pos);
+
             return false;
         }
 
         // Remove positions that have a major difference between what i'm guessing is the top most position of the chunk before carvers and other such generation features
         if (baseHeight - surfaceY >= 3) {
             debugLog("It seems that there might be a cave or deep crevasse");
+
+            placeTestBlockAtPos(world, Blocks.GRAY_STAINED_GLASS, pos);
+
             return false;
         }
 
@@ -278,12 +289,14 @@ public class PortalTropics implements ITeleporter {
         var blocksAbovePosition = 0;
         var blocksBelowPosition = 0;
 
-        double failedBlockPercentage = (1.0 / 10.0);
+        double failedBlockPercentage = (1.5 / 10.0);//(1.0 / 10.0);
 
         for(int xOff = 0; xOff < portalStructureSize.getX(); xOff++){
             for(int zOff = 0; zOff < portalStructureSize.getZ(); zOff++){
                 if((blocksAbovePosition / ((float) portalArea) > failedBlockPercentage) || (blocksBelowPosition / ((float) portalArea) > failedBlockPercentage)){
                     debugLog("There area for where the portal will be placed doesn't seem that flat: {}", new BlockPos(x, y, z));
+
+                    placeTestBlockAtPos(world, Blocks.YELLOW_STAINED_GLASS, pos);
                     return false;
                 }
 
@@ -356,5 +369,12 @@ public class PortalTropics implements ITeleporter {
             }
         }
         return 0;
+    }
+
+    public static void placeTestBlockAtPos(ServerLevel world, Block block, BlockPos pos){
+        BlockPos posOffsetted = pos.offset(0, 20, 0);
+
+        world.setBlock(posOffsetted, block.defaultBlockState(), Block.UPDATE_ALL);
+        world.sendBlockUpdated(posOffsetted, Blocks.AIR.defaultBlockState(), block.defaultBlockState(), Block.UPDATE_ALL);
     }
 }
